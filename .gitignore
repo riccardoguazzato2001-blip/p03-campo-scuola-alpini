@@ -1,4 +1,10 @@
-# Materiale di lavoro interno — non fa parte del sito pubblicato
+# Materiale di lavoro interno — non fa parte del sito pubblicato.
+# Regola per POSIZIONE: qualunque file interno futuro va messo in _interno/ e
+# resta fuori dal repo senza dover aggiungere una riga qui ogni volta.
+_interno/
+
+# Regole per estensione/nome (storiche): restano come rete di sicurezza per i
+# file interni ancora sparsi nella cartella del sito.
 *.md
 *.xlsx
 Link-immagini.txt

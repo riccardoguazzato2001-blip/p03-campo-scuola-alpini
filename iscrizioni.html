@@ -117,6 +117,14 @@
         <form class="accesso-form" data-accesso-form="email" novalidate>
           <label class="accesso-label" for="accesso-email">La tua email</label>
           <input type="email" id="accesso-email" placeholder="tua-email@esempio.it" autocomplete="email" inputmode="email">
+          <!-- Anti-spam: NON compilare. Fuori schermo, lo riempiono solo i bot.
+               Nessun `required` e nessun `name` riconosciuto dai moduli: resta
+               inerte per l'estrattore dei campi obbligatori. Lo legge lo script
+               e lo verifica il backend (_richiediOtp in Code.gs). -->
+          <span aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+            <label>Fax<input type="text" name="fax" tabindex="-1" autocomplete="off"></label>
+          </span>
+          <input type="hidden" name="modulo-reso-il" value="">
           <button type="submit" class="btn btn-outline btn-sm">Invia codice</button>
         </form>
         <p class="accesso-privacy">
@@ -709,6 +717,14 @@
             </div>
           </div>
 
+          <!-- Anti-spam: NON compilare. Fuori schermo (anche dal PDF), lo riempiono
+               solo i bot. Nessun `required`: inerte per l'estrattore dei campi
+               obbligatori. Verifica lato server in _sembraSpam() (Code.gs). -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+            <label>Fax<input type="text" name="fax" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <input type="hidden" name="modulo-reso-il" value="">
+
           <button type="submit" class="btn btn-primary btn-block">Invia richiesta di iscrizione</button>
         </div>
         <p class="form-note" style="padding:0 var(--space-lg);">L'invio registra la richiesta nel foglio dell'organizzazione e carica gli allegati (incluso il modulo firmato, obbligatorio). Se l'invio non riuscisse, manda il modulo a <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a>.</p>
@@ -916,6 +932,14 @@
         </div>
 
       </div>
+
+      <!-- Anti-spam: NON compilare. Fuori schermo (anche dal PDF), lo riempiono
+           solo i bot. Nessun `required`: inerte per l'estrattore dei campi
+           obbligatori. Verifica lato server in _sembraSpam() (Code.gs). -->
+      <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+        <label>Fax<input type="text" name="fax" tabindex="-1" autocomplete="off"></label>
+      </div>
+      <input type="hidden" name="modulo-reso-il" value="">
 
       <div class="mod-actions">
         <button type="submit" class="btn btn-primary btn-block">Invia richiesta di ammissione a socio</button>

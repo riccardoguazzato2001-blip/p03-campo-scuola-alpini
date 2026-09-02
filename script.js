@@ -1205,8 +1205,24 @@ const CAMPI_NON_INVIATI = ['turno-org', 'tenda-org']; // read-only, li compila l
 const VALORE_SI = 'Sì';
 const VALORE_NO = 'No';
 
+/* Anti-abuso lato invio, in coppia col backend (Code.gs). Due segnali, nessuno
+   dei quali ostacola una persona vera:
+   - honeypot: un campo di testo fuori schermo (name="fax") che un umano non vede
+     e non compila; se arriva valorizzato, e' un bot che riempie tutti gli input.
+   - tempo di compilazione: la pagina scrive l'istante di rendering in un campo
+     nascosto (name="modulo-reso-il"); un invio a meno di pochi secondi non e'
+     umano. Entrambi i campi finiscono da soli in raccogliCampi() -> `campi`. */
+const CAMPO_HONEYPOT = 'fax';
+const CAMPO_TS_MODULO = 'modulo-reso-il';
+
+function timbraModulo(form) {
+  const ts = form.querySelector('[name="' + CAMPO_TS_MODULO + '"]');
+  if (ts) ts.value = String(Date.now());
+}
+
 function initFormsBackend() {
   document.querySelectorAll('form[data-form-backend]').forEach(form => {
+    timbraModulo(form);
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       inviaForm(form);
@@ -1315,6 +1331,7 @@ function inviaForm(form) {
       success.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     form.reset();
+    timbraModulo(form); // reset() ha riportato modulo-reso-il a "": ritimbra per un eventuale secondo invio
   };
 
   // Backend non ancora configurato: il sito si comporta come prima (demo), senza rompersi.
@@ -1557,6 +1574,7 @@ function initAccessoBozze() {
   };
 
   // --- passo 1: chiedi il codice ---
+  timbraModulo(formEmail); // istante di rendering, per il controllo anti-bot lato backend
   formEmail.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = (campoEmail.value || '').trim();
@@ -1569,7 +1587,14 @@ function initAccessoBozze() {
     const testo = btn.textContent;
     btn.disabled = true; btn.textContent = 'Invio del codice…';
     avvisa('');
-    chiama({ azione: 'richiedi-otp', email })
+    const hp = formEmail.querySelector('[name="' + CAMPO_HONEYPOT + '"]');
+    const ts = formEmail.querySelector('[name="' + CAMPO_TS_MODULO + '"]');
+    chiama({
+      azione: 'richiedi-otp',
+      email,
+      honeypot: hp ? hp.value : '',
+      resoIl: ts ? ts.value : '',
+    })
       .then(r => {
         if (r && r.status === 'ok') {
           emailInVerifica = email.toLowerCase();
@@ -1803,16 +1828,26 @@ function initAccessoBozze() {
 let promessaLibreriePdf = null;
 function caricaLibreriePdf() {
   if (promessaLibreriePdf) return promessaLibreriePdf;
-  const caricaScript = (src) => new Promise((risolvi, rifiuta) => {
+  // integrity = hash SRI del file alla versione fissata: se la CDN restituisse un
+  // file diverso (compromissione, cache avvelenata) il browser lo scarta invece
+  // di eseguirlo. crossOrigin 'anonymous' e' obbligatorio perche' SRI valga su
+  // una risorsa di terze parti. Se cambi la versione qui sopra, rigenera l'hash:
+  //   curl -sSL <url> | openssl dgst -sha384 -binary | openssl base64 -A
+  const caricaScript = (src, integrity) => new Promise((risolvi, rifiuta) => {
     const s = document.createElement('script');
     s.src = src;
+    if (integrity) { s.integrity = integrity; s.crossOrigin = 'anonymous'; }
     s.async = false; // gli script creati via JS sono async per default: qui serve ordine deterministico
     s.onload = () => risolvi();
     s.onerror = () => rifiuta(new Error('risorsa non raggiungibile: ' + src));
     document.head.appendChild(s);
   });
-  promessaLibreriePdf = caricaScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js')
-    .then(() => caricaScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js'))
+  promessaLibreriePdf = caricaScript(
+      'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js',
+      'sha384-en/ztfPSRkGfME4KIm05joYXynqzUgbsG5nMrj/xEFAHXkeZfO3yMK8QQ+mP7p1/')
+    .then(() => caricaScript(
+      'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+      'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H'))
     .catch((err) => { promessaLibreriePdf = null; throw err; });
   return promessaLibreriePdf;
 }

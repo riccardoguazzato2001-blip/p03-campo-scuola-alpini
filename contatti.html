@@ -101,6 +101,12 @@
           <textarea id="messaggio" name="messaggio" rows="5" required></textarea>
         </div>
       </div>
+      <!-- Anti-spam: NON compilare. Fuori schermo, invisibile a chi usa il sito;
+           lo riempiono solo i bot. Controllo lato backend (Codice.gs). -->
+      <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+        <label>Fax<input type="text" name="fax" tabindex="-1" autocomplete="off"></label>
+      </div>
+      <input type="hidden" name="modulo-reso-il" value="">
       <button type="submit" class="btn btn-primary btn-block mt-sm">Invia messaggio</button>
       <p class="form-success" style="margin-top:0.8rem;">Grazie! Il tuo messaggio è stato inviato: ti rispondiamo il prima possibile.</p>
       <p class="form-error" style="margin-top:0.8rem;">Invio non riuscito. Riprova, oppure scrivici direttamente a camposcuolaasb24@gmail.com.</p>
