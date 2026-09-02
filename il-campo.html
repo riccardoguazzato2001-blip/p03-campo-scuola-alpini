@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Campo Scuola — Campo Scuola Giovani Alpini ASB</title>
+<meta name="description" content="Cos'è il Campo Scuola Giovani Alpini di Almenno San Bartolomeo: programma, attività, info pratiche per i genitori e sicurezza.">
+<script src="cookie-consent.js"></script>
+<link rel="icon" type="image/png" href="foto/sito/logo-ufficiale-web.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="foto/sito/logo-ufficiale-web.png" alt="Logo Campo Scuola Giovani Alpini ASB" class="brand-mark">
+      <span class="brand-text">Campo Scuola<br><small>Giovani Alpini ASB</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="il-campo.html" class="active">Il Campo</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="galleria.html">Galleria</a>
+      <a href="merch.html">Merchandising</a>
+      <a href="sponsor.html">Sponsor</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contatti.html">Contatti</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="contatti.html" class="btn btn-outline btn-sm">Contatti</a>
+      <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — bottone Iscriviti della navbar
+      <a href="iscrizioni.html" class="btn btn-primary btn-sm">Iscriviti</a>
+      -->
+    </div>
+    <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Header video: riprese drone del campo 2026 (0176, 0181, 0182, 0183). File web 1080p
+     generati da "VIDEO DRONE CAMPO SCUOLA 2026/" con ottimizza-video-web-il-campo.sh: gli
+     originali pesano 97 MB e non sono servibili su web. Stesso carosello dell'index
+     (initHeroCarousel() in script.js), avanza sull'evento "ended" per clip di lunghezza diversa. -->
+<section class="hero">
+  <video class="hero-media hero-slide is-active" src="video/campo-hero-01-dji_0176.mp4" muted playsinline
+         preload="auto" poster="video/campo-hero-poster.jpg" aria-hidden="true"></video>
+  <video class="hero-media hero-slide" src="video/campo-hero-02-dji_0181.mp4" muted playsinline
+         preload="none" aria-hidden="true"></video>
+  <video class="hero-media hero-slide" src="video/campo-hero-03-dji_0182.mp4" muted playsinline
+         preload="none" aria-hidden="true"></video>
+  <video class="hero-media hero-slide" src="video/campo-hero-04-dji_0183.mp4" muted playsinline
+         preload="none" aria-hidden="true"></video>
+  <!-- Fermo immagine per chi ha attivato "riduci animazioni". -->
+  <div class="hero-media hero-slide hero-fermo-immagine" style="background-image:url('video/campo-hero-poster.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content reveal">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Il Campo Scuola</p>
+    <span class="eyebrow">8-14 anni · Oasi del Brembo</span>
+    <h1>Il Campo Scuola Giovani Alpini</h1>
+    <p class="lead">Un campo estivo residenziale che unisce natura, avventura e formazione, per ragazzi dalla 3ª elementare alla 3ª media.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid grid-2" style="align-items:center;">
+      <div class="reveal">
+        <span class="eyebrow">Cos'è</span>
+        <h2>Un'esperienza formativa, non solo un campo estivo</h2>
+        <p class="mt-sm">Il Campo Scuola è un <strong>movimento educativo per ragazzi basato sul volontariato</strong>, apolitico e aperto a tutti senza distinzione di origine, razza o religione, secondo i principi dell'Associazione Nazionale Alpini (ANA).</p>
+        <p class="mt-sm">Il percorso accompagna i ragazzi dalla 3ª elementare fino all'ingresso, da adulti, nello staff del campo: caposquadra, istruttore, logistico o cuoco. Circa il <strong>60% dei partecipanti torna</strong> l'anno successivo.</p>
+      </div>
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/lezione-tende-aperto.jpg" alt="Lezione all'aperto tra le tende del campo" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- Timeline storica: testi tratti da frasi-libro-sito.md (libro "...una tenda, mille storie..."),
+     foto/libro non usate altrove sul sito (galleria.html usa le prime 160, questa sezione ne
+     aggiunge 64 diverse). Modello ispirato al componente "Timeline" di Aceternity
+     (prompt_timeline), riadattato in HTML/CSS/JS statico: barra sticky a sinistra + linea con
+     gradiente che si riempie con lo scroll (initTimelineScroll() in script.js). -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="timeline-intro reveal">
+      <figure class="timeline-intro-photo">
+        <img src="foto/libro/pagina-010-01.jpg" alt="Giancarlo Beltrame, autore del libro «...una tenda, mille storie...»" width="632" height="820" loading="lazy">
+        <figcaption>Giancarlo Beltrame, autore del libro</figcaption>
+      </figure>
+      <div class="section-head">
+        <span class="eyebrow">"...una tenda, mille storie..."</span>
+        <h2>Quindici anni di storia, edizione per edizione</h2>
+        <p>Dal libro <em>"...una tenda, mille storie..."</em> di Giancarlo Beltrame (2026), scritto per il 15° anniversario del campo scuola: come siamo cresciuti, un&rsquo;edizione alla volta, dal 2011 a oggi.</p>
+      </div>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2011</strong>1ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2011 — 1ª edizione</h3>
+        <span class="timeline-stat">62 allievi/e · 3 giorni</span>
+        <blockquote>Per questa prima edizione, trattandosi di un'iniziativa che non aveva precedenti né all'interno del gruppo alpini almennese ma, soprattutto, neppure a livello dell'A.N.A. nazionale, Diego Brumana e Mauro Guazzato, i due suoi ideatori, si trovano nella complessa situazione di dover &lsquo;inventarsi&rsquo; tutto.</blockquote>
+        <blockquote>Ulteriore regola tuttora in vigore e voluta sin da questa edizione fu il divieto dell'uso di telefoni cellulari o di qualsiasi altro dispositivo elettronico durante tutta la loro permanenza al campo. Una condizione necessaria per ristabilire le relazioni interpersonali &lsquo;reali&rsquo; e non mediate dalla tecnologia.</blockquote>
+        <p class="timeline-note">Prima edizione: 62 partecipanti (58% bambine), sede al Parco del Roccolone. Niente ancora di militare — solo protezione civile.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-024-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-024-01.jpg" alt="1ª edizione del campo scuola, 2011, Parco del Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-021-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-021-01.jpg" alt="1ª edizione del campo scuola, 2011, Parco del Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-036-06.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-036-06.jpg" alt="1ª edizione del campo scuola, 2011, Parco del Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-024-03.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-024-03.jpg" alt="1ª edizione del campo scuola, 2011, Parco del Roccolone" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2012</strong>2ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2012 — 2ª edizione</h3>
+        <span class="timeline-stat">54 allievi/e · 4 giorni</span>
+        <blockquote>Il successo della 1° edizione conferma in Brumana e Guazzato la validità del loro progetto che venne riproposto l'anno successivo con la stessa struttura e ubicazione al parco del Roccolone.</blockquote>
+        <p class="timeline-note">Nasce in questa edizione il logo del campo scuola (disegnato da Germano Faletti) e la prima divisa per istruttori e prefetti.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-025-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-025-02.jpg" alt="2ª edizione del campo scuola, 2012, Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-027-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-027-01.jpg" alt="2ª edizione del campo scuola, 2012, Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-029-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-029-01.jpg" alt="2ª edizione del campo scuola, 2012, Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-031-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-031-01.jpg" alt="2ª edizione del campo scuola, 2012, Roccolone" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2013</strong>3ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2013 — 3ª edizione</h3>
+        <span class="timeline-stat">105 allievi/e · 6 giorni</span>
+        <blockquote>Per la 3° edizione del 2013 viene presa la decisione di accogliere la richiesta, emersa già al termine della 1° edizione, di permettere la prosecuzione dell'esperienza del campo a bambini/e di 5° elementare anche dopo il loro passaggio alle scuole medie.</blockquote>
+        <blockquote>Ma proprio questi numeri rendono evidente agli organizzatori come lo spazio del Roccolone non sia più adeguato per l'organizzazione del campo scuola. Inizia, quindi, la ricerca di una nuova ubicazione.</blockquote>
+        <p class="timeline-note">Il campo raddoppia i partecipanti rispetto al 2012 e capisce di aver bisogno di più spazio: nasce l'esigenza che porterà a Campino.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-032-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-032-01.jpg" alt="3ª edizione del campo scuola, 2013, ultimo anno al Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-034-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-034-02.jpg" alt="3ª edizione del campo scuola, 2013, ultimo anno al Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-035-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-035-01.jpg" alt="3ª edizione del campo scuola, 2013, ultimo anno al Roccolone" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-037-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-037-01.jpg" alt="3ª edizione del campo scuola, 2013, ultimo anno al Roccolone" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2014</strong>4ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2014 — 4ª edizione</h3>
+        <span class="timeline-stat">160 allievi/e · 7 giorni</span>
+        <blockquote>Molte le novità di questa quarta edizione del campo scuola. Quella più importante è la diretta conseguenza della considerevole crescita dei partecipanti al campo.</blockquote>
+        <blockquote>Un accordo che si è dimostrato, sino ad oggi, la soluzione ideale alle necessità del campo scuola.</blockquote>
+        <p class="timeline-note">Il campo scuola trasloca da Roccolone a Campino, sede tuttora attuale, su un terreno di circa 9.000 mq lungo il fiume Brembo, concesso dalla famiglia Rota Nodari.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-040-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-040-01.jpg" alt="4ª edizione del campo scuola, 2014, nuova sede di Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-042-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-042-01.jpg" alt="4ª edizione del campo scuola, 2014, nuova sede di Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-045-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-045-01.jpg" alt="4ª edizione del campo scuola, 2014, nuova sede di Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-047-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-047-01.jpg" alt="4ª edizione del campo scuola, 2014, nuova sede di Campino" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2015</strong>5ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2015 — 5ª edizione</h3>
+        <span class="timeline-stat">208 + 30 + 10 allievi/e</span>
+        <blockquote>Molte le novità anche in questa edizione, a conferma del costante impegno dei suoi ideatori ed organizzatori nel migliorare la struttura delle attività del campo.</blockquote>
+        <blockquote>È importante educare i giovani alla cultura della sicurezza e questo campo scuola è un vero e proprio modello formativo per i ragazzi delle scuole primarie e secondarie.</blockquote>
+        <p class="timeline-note">Prima apertura sperimentale ai bambini di 3ª elementare, primi ospiti stranieri (Danimarca), prima sfilata alpina a Trescore Balneario. — Simona Bordonali, Assessore alla Protezione Civile di Regione Lombardia, in visita al campo.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-049-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-049-01.jpg" alt="5ª edizione del campo scuola, 2015, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-053-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-053-01.jpg" alt="5ª edizione del campo scuola, 2015, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-058-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-058-01.jpg" alt="5ª edizione del campo scuola, 2015, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-063-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-063-01.jpg" alt="5ª edizione del campo scuola, 2015, Campino" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2016</strong>6ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2016 — 6ª edizione</h3>
+        <span class="timeline-stat">308 allievi/e · doppio turno</span>
+        <blockquote>La 6° edizione del 2016 registra un'ulteriore impennata delle adesioni salite a 308, rendendo necessario lo sdoppiamento del turno settimanale.</blockquote>
+        <blockquote>Il campo almennese diventa e rimane fino ad oggi ufficialmente l'unico campo scuola dell'Area 2 – Zona 5 – dell'A.N.A., che riunisce i 14 gruppi alpini della bassa Valle Brembana.</blockquote>
+        <p class="timeline-note">Nascono i turni distinti per fascia d'età e la prima Cappella da campo (San Francesco).</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-064-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-064-01.jpg" alt="6ª edizione del campo scuola, 2016, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-067-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-067-01.jpg" alt="6ª edizione del campo scuola, 2016, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-072-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-072-02.jpg" alt="6ª edizione del campo scuola, 2016, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-076-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-076-02.jpg" alt="6ª edizione del campo scuola, 2016, Campino" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2017</strong>7ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2017 — 7ª edizione</h3>
+        <span class="timeline-stat">314 allievi/e</span>
+        <blockquote>Negli anni questo Campo Scuola si è sempre evoluto, migliorato e professionalizzato per poter accogliere le esigenze delle nuove generazioni nel miglior modo possibile. La nostra soluzione vincente è stata quella di miscelare la tradizione con una gestione giovane ed accattivante composta al 90% da ragazzi dai 16 ai 22 anni.</blockquote>
+        <blockquote>La proposta è quindi quella di una crescita di anno in anno, dove l'allievo che frequenta la 2ª media ha la possibilità, l'anno successivo, di entrare nei ranghi come STAFF. In questo modo si diventa per la prima volta partecipi alla vita attiva dell'apparato organizzativo del Campo Scuola.</blockquote>
+        <p class="timeline-note">Mauro Guazzato, dall'articolo pubblicato su “Lo Scarpone”, rivista ufficiale dell'A.N.A.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-077-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-077-01.jpg" alt="7ª edizione del campo scuola, 2017, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-079-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-079-02.jpg" alt="7ª edizione del campo scuola, 2017, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-051-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-051-02.jpg" alt="7ª edizione del campo scuola, 2017, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-085-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-085-01.jpg" alt="7ª edizione del campo scuola, 2017, Campino" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2018</strong>8ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2018 — 8ª edizione</h3>
+        <span class="timeline-stat">362 allievi/e</span>
+        <blockquote>Il 2018 registra un'ulteriore impennata delle iscrizioni tanto da non riuscire ad accoglierle tutte e, per la prima volta, si crea una lista d'attesa.</blockquote>
+        <p class="timeline-note">Nasce la Scuola di Formazione (SdF) per i ragazzi di 3ª media, futuri capisquadra e istruttori. Le squadre diventano “brigate” (Cadore, Julia, Orobica, Taurinense, Tridentina), richiamando i nomi storici del corpo degli alpini.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-086-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-086-02.jpg" alt="8ª edizione del campo scuola, 2018, nasce la Scuola di Formazione" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-095-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-095-02.jpg" alt="8ª edizione del campo scuola, 2018, nasce la Scuola di Formazione" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-096-04.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-096-04.jpg" alt="8ª edizione del campo scuola, 2018, nasce la Scuola di Formazione" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-096-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-096-01.jpg" alt="8ª edizione del campo scuola, 2018, nasce la Scuola di Formazione" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2019</strong>9ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2019 — 9ª edizione</h3>
+        <span class="timeline-stat">472 allievi/e · 600+ persone</span>
+        <blockquote>Nonostante il duro colpo, l'organizzazione di questa 9° edizione riprende immediatamente registrando nuovi numeri record di partecipanti.</blockquote>
+        <blockquote>Il logo riporta un'aquila, simbolo del corpo degli alpini, che cura ed educa i suoi aquilotti e la scritta &lsquo;Unus Pro Omnibus&rsquo;, metafora di quello che è il fine ultimo del campo scuola: crescere le nuove generazioni ai valori ed ai principi del volontariato alpino nel quale il singolo si mette al servizio degli altri.</blockquote>
+        <p class="timeline-note">Sul nuovo logo della Scuola di Formazione, disegnato quest'anno.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-097-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-097-02.jpg" alt="9ª edizione del campo scuola, 2019, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-100-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-100-01.jpg" alt="9ª edizione del campo scuola, 2019, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-101-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-101-02.jpg" alt="9ª edizione del campo scuola, 2019, Campino" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-103-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-103-01.jpg" alt="9ª edizione del campo scuola, 2019, Campino" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2020</strong>L'anno del Covid</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2020 — L'anno del Covid</h3>
+        <span class="timeline-stat">edizione sospesa</span>
+        <blockquote>Si è trattato di un periodo drammatico vissuto dalle nostre comunità, in cui è emerso con forza il ruolo essenziale che il volontariato svolge per il benessere collettivo.</blockquote>
+        <blockquote>L'impegno dimostrato dai giovani cresciuti al campo scuola, oltre che motivo di orgoglio, ha dato un ulteriore slancio ai suoi organizzatori per la ripresa tanto che, dopo la sospensione forzata del 2020, nel 2021 riaprirà, unico campo nell'intera Regione Lombardia, vincendo la propria sfida contro la pandemia ancora presente seppur indebolita.</blockquote>
+        <p class="timeline-note">Capitolo speciale del libro, dedicato alla pandemia e al ruolo degli alpini nell'ospedale da campo alla Fiera di Bergamo, montato in pochi giorni dai volontari — molti cresciuti proprio al campo scuola.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-126-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-126-02.jpg" alt="2020, l'anno del Covid: i volontari cresciuti al campo scuola" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-127-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-127-01.jpg" alt="2020, l'anno del Covid: i volontari cresciuti al campo scuola" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2021</strong>10ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2021 — 10ª edizione</h3>
+        <span class="timeline-stat">561 allievi/e</span>
+        <blockquote>Fu così che l'impossibile divenne possibile e la 10° edizione del campo scuola riuscì a svolgersi nel rispetto di un protocollo di sicurezza sanitaria.</blockquote>
+        <blockquote>Un risultato eccezionale premiato dalla Regione Lombardia con l'erogazione di un contributo straordinario di 15mila euro in quanto unico campo scuola che si era dimostrato in grado di riprendere l'attività in Lombardia, oltre che unico nell'ambito dell'intera A.N.A. Nazionale.</blockquote>
+        <p class="timeline-note">Da questa edizione il campo smette di essere smontato ogni anno: tendone, cucina e servizi diventano strutture fisse a Campino.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-112-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-112-01.jpg" alt="10ª edizione del campo scuola, 2021, il campo diventa struttura permanente" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-116-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-116-02.jpg" alt="10ª edizione del campo scuola, 2021, il campo diventa struttura permanente" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-121-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-121-01.jpg" alt="10ª edizione del campo scuola, 2021, il campo diventa struttura permanente" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-131-07.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-131-07.jpg" alt="10ª edizione del campo scuola, 2021, il campo diventa struttura permanente" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2022</strong>11ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2022 — 11ª edizione</h3>
+        <span class="timeline-stat">658 allievi/e · record</span>
+        <blockquote>Con un aumento di quasi cento partecipanti il numero di allievi accolti al campo sale a 658.</blockquote>
+        <p class="timeline-note">Il massimo mai registrato nella storia del campo scuola. La sanità del campo passa interamente al G.I.M.C.A. (Gruppo Intervento Medico Chirurgico Alpino); nasce il supporto psicologico dedicato ai genitori e agli allievi più fragili.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-154-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-154-02.jpg" alt="11ª edizione del campo scuola, 2022, record di partecipanti" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-132-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-132-01.jpg" alt="11ª edizione del campo scuola, 2022, record di partecipanti" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-138-03.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-138-03.jpg" alt="11ª edizione del campo scuola, 2022, record di partecipanti" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-143-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-143-01.jpg" alt="11ª edizione del campo scuola, 2022, record di partecipanti" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2023</strong>12ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2023 — 12ª edizione</h3>
+        <span class="timeline-stat">619 allievi/e · 6 turni</span>
+        <blockquote>Molte le novità anche in questa 12° edizione, a conferma della vitalità e dinamicità che caratterizza l'organizzazione del campo scuola almennese, che è alla base del suo successo.</blockquote>
+        <blockquote>Come avviene per gli open day scolastici, il campo in queste due giornate è aperto, dalla mattina al tardo pomeriggio, al libero accesso dei visitatori.</blockquote>
+        <p class="timeline-note">Sull'Open Camp, la giornata di porte aperte introdotta quest'anno. I turni diventano sei, uno per ogni fascia scolastica dalla 3ª elementare alla SdF.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-144-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-144-02.jpg" alt="12ª edizione del campo scuola, 2023, nasce l'Open Camp" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-145-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-145-02.jpg" alt="12ª edizione del campo scuola, 2023, nasce l'Open Camp" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-154-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-154-01.jpg" alt="12ª edizione del campo scuola, 2023, nasce l'Open Camp" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-155-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-155-01.jpg" alt="12ª edizione del campo scuola, 2023, nasce l'Open Camp" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2024</strong>13ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2024 — 13ª edizione</h3>
+        <span class="timeline-stat">670 allievi/e · record storico</span>
+        <blockquote>Sono 670 gli iscritti a questa edizione, con un aumento in tutte le fasce d'età.</blockquote>
+        <blockquote>Una scelta coerente con i principi ispiratori che hanno dato vita al campo scuola, fondati sul crescere le nuove generazioni ai principi dell'attenzione all'altro e della solidarietà. Una scelta che mal si concilia con qualsiasi istruzione di guerra.</blockquote>
+        <p class="timeline-note">Sull'abbandono della “giornata del soldato”, l'unico momento a tema militare rimasto nel programma.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-156-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-156-02.jpg" alt="13ª edizione del campo scuola, 2024, nuovo record storico" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-159-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-159-02.jpg" alt="13ª edizione del campo scuola, 2024, nuovo record storico" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-163-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-163-02.jpg" alt="13ª edizione del campo scuola, 2024, nuovo record storico" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-179-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-179-01.jpg" alt="13ª edizione del campo scuola, 2024, nuovo record storico" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2025</strong>14ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2025 — 14ª edizione</h3>
+        <span class="timeline-stat">602 allievi/e · 70° del Gruppo</span>
+        <blockquote>Il costante lavoro di aggiornamento e efficientamento organizzativo prosegue senza sosta edizione dopo edizione.</blockquote>
+        <p class="timeline-note">Il campo scuola coincide con i festeggiamenti per il 70° anniversario di fondazione del Gruppo Alpini di Almenno San Bartolomeo (1955): sfilata degli allievi, presentazione del libro sulla storia del gruppo.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-166-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-166-01.jpg" alt="14ª edizione del campo scuola, 2025, 70° anniversario del Gruppo Alpini" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-172-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-172-01.jpg" alt="14ª edizione del campo scuola, 2025, 70° anniversario del Gruppo Alpini" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-165-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-165-01.jpg" alt="14ª edizione del campo scuola, 2025, 70° anniversario del Gruppo Alpini" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-184-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-184-02.jpg" alt="14ª edizione del campo scuola, 2025, 70° anniversario del Gruppo Alpini" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-sticky">
+        <div class="timeline-dot"></div>
+        <h3 class="timeline-year"><strong>2026</strong>15ª edizione</h3>
+      </div>
+      <div class="timeline-content reveal">
+        <h3 class="timeline-year-mobile">2026 — 15ª edizione</h3>
+        <span class="timeline-stat">542 allievi/e · 39 giorni</span>
+        <blockquote>Per una durata complessiva di apertura del campo di 39 giorni che, confrontati con i 3 giorni delle prime edizioni al parco del Roccolone, costituiscono un'altra misura significativa della crescita registrata dal campo scuola in questi primi 15 anni di attività, che rafforza l'altra misura costituita dal numero dei partecipanti passati dai 63 del 2011 ai 542 del 2026.</blockquote>
+        <p class="timeline-note">Quindici anni di crescita in una riga: da 3 giorni e 62 ragazzi nel 2011, a 39 giorni e oltre 500 ragazzi nel 2026.</p>
+        <div class="grid grid-4 timeline-images">
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-185-02.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-185-02.jpg" alt="15ª edizione del campo scuola, 2026, oggi" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-216-04.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-216-04.jpg" alt="15ª edizione del campo scuola, 2026, oggi" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-205-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-205-01.jpg" alt="15ª edizione del campo scuola, 2026, oggi" loading="lazy"></div>
+          <div class="gallery-item" data-group="timeline" data-img="foto/libro/pagina-217-01.jpg"><img class="real-photo placeholder-square" src="foto/libro/pagina-217-01.jpg" alt="15ª edizione del campo scuola, 2026, oggi" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-line"><div class="timeline-line-fill"></div></div>
+  </div>
+  <div class="container">
+    <div class="callout timeline-closing reveal">
+      <p>"Leggete, studiate e lavorate sempre con etica e con passione; ragionate con la vostra testa e imparate a dire di no; siate ribelli per giusta causa, difendete sempre la natura e i più deboli; non siate conformisti e non accodatevi al carro del vincitore; siate forti e siate liberi, altrimenti quando sarete vecchi e deboli rimpiangerete le montagne che non avete salito e le battaglie che non avete combattuto."</p>
+      <p style="text-align:right;color:var(--color-text-muted);font-size:var(--fs-sm);">— Mario Rigoni Stern, chiusura del libro, citazione scelta dagli organizzatori per la guida dei capisquadra</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Dove</span>
+      <h2>Oasi del Brembo — Via Campino</h2>
+      <p>Un'area naturale di circa 11.000 m² lungo il fiume Brembo, ad Almenno San Bartolomeo (BG). I ragazzi dormono in tende, divisi in brigate: niente cellulari durante il turno.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Programma</span>
+      <h2>Le attività proposte</h2>
+      <p>Un programma tecnico e sportivo pensato per fasce d'età, con attività diverse per elementari e medie.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="card reveal">
+        <div class="card-body">
+          <span class="tag">Elementari</span>
+          <h3>Scoperta e manualità</h3>
+          <ul style="list-style:disc;padding-left:1.2rem;color:var(--color-text-muted);font-size:var(--fs-sm);">
+            <li>Attività manuali e in natura</li>
+            <li>Costruzione della canna da pesca</li>
+            <li>Corso di nodi</li>
+            <li>Giochi e bagni al fiume</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="card-body">
+          <span class="tag">Medie</span>
+          <h3>Formazione e avventura</h3>
+          <ul style="list-style:disc;padding-left:1.2rem;color:var(--color-text-muted);font-size:var(--fs-sm);">
+            <li>Nozioni di protezione civile</li>
+            <li>Primo soccorso alpino e sanificazione</li>
+            <li>Escursioni e pernottamenti (bivacchi)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-4 mt-lg">
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/sito/reali/orienteering-cartina.jpg" alt="Orienteering con cartina nel bosco" loading="lazy"><div class="card-body"><h4>Orienteering</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/sito/reali/gruppo-zaini-arrampicata.jpg" alt="Gruppo con zaini davanti alla parete di arrampicata" loading="lazy"><div class="card-body"><h4>Parete di arrampicata</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/libro/pagina-155-07.jpg" alt="Radio e telegrafo" loading="lazy"><div class="card-body"><h4>Radio e telegrafo</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/sito/reali/tiro-con-arco.jpg" alt="Lezione di tiro con l'arco" loading="lazy"><div class="card-body"><h4>Tiro con l'arco</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/libro/pagina-172-01.jpg" alt="Autodifesa" loading="lazy"><div class="card-body"><h4>Autodifesa</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/sito/reali/delegazione-esercito-ana.jpg" alt="Giornata con delegazione dell'Esercito e ANA" loading="lazy"><div class="card-body"><h4>Giornate con i militari</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/libro/pagina-178-01.jpg" alt="Prevenzione incendi (AIB)" loading="lazy"><div class="card-body"><h4>Prevenzione incendi (AIB)</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-square" src="foto/sito/reali/cinofili-soccorso.jpg" alt="Volontaria con cane delle unità cinofile" loading="lazy"><div class="card-body"><h4>Unità cinofile</h4></div></div>
+    </div>
+
+    <div class="grid grid-3 mt-lg">
+      <div class="card reveal"><img class="real-photo placeholder-16-9" src="foto/sito/reali/corso-nodi-bosco.jpg" alt="Corso di nodi nel bosco" loading="lazy"><div class="card-body"><h4>Corso di nodi</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-16-9" src="foto/sito/reali/lezione-sicurezza-fiume.jpg" alt="Lezione sulla sicurezza in riva al fiume" loading="lazy"><div class="card-body"><h4>Sicurezza al fiume</h4></div></div>
+      <div class="card reveal"><img class="real-photo placeholder-16-9" src="foto/sito/reali/corso-primo-soccorso.jpg" alt="Corso di primo soccorso con manichino" loading="lazy"><div class="card-body"><h4>Primo soccorso</h4></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Per i genitori</span>
+      <h2>Info pratiche e sicurezza</h2>
+      <p>Trattandosi di un campo per minorenni, sicurezza e comunicazione con le famiglie sono centrali.</p>
+    </div>
+    <div class="grid grid-2">
+      <div class="callout reveal">
+        <h4>Cosa portare</h4>
+        <ul>
+          <li>Elenco completo del materiale da portare: è riportato nel modulo di iscrizione</li>
+          <li>Documenti e autorizzazioni richieste al momento dell'iscrizione</li>
+          <li>Abbigliamento da campeggio ed escursione</li>
+          <li>Regolamento delle iscrizioni, anch'esso incluso nel modulo di iscrizione</li>
+        </ul>
+      </div>
+      <div class="callout reveal">
+        <h4>Sicurezza e contatti emergenza</h4>
+        <ul>
+          <li>Presenza costante di infermieri e medici volontari (Ospedale da Campo ANA)</li>
+          <li>Staff con oltre 100 volontari tra caposquadra e istruttori</li>
+          <li>Numero dedicato per chiamate urgenti delle famiglie durante il turno: <a href="tel:+393421907958">342 1907958</a></li>
+          <li>Regolamento completo disponibile nel modulo di iscrizione</li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-lg">
+      <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — bottone di chiusura pagina
+      <a href="iscrizioni.html" class="btn btn-primary">Vai alle iscrizioni</a>
+      -->
+      <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — bottone "Iscriviti" visibile ma non ancora
+           operativo: il click mostra un avviso "iscrizioni non ancora aperte"
+           (initIscrizioniChiuse() in script.js). Senza JS il link apre iscrizioni.html,
+           che mostra gia' la stessa comunicazione. -->
+      <a href="iscrizioni.html" class="btn btn-primary" data-iscrizioni-avviso>Iscriviti</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="foto/sito/logo-ufficiale-web.png" alt="Campo Scuola Giovani Alpini ASB" class="brand-mark"> Campo Scuola Giovani Alpini ASB</div>
+        <p>Gruppo Alpini Almenno San Bartolomeo — campo scuola estivo per ragazzi 8-14 anni, nell'Oasi del Brembo.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/camposcuolagiovanialpini/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7C16.6 3.6 15.5 3.5 14.2 3.5c-2.6 0-4.4 1.6-4.4 4.5v2.9H7v3.1h2.8V21h3.7z"/></svg></a>
+          <a href="https://www.instagram.com/campoalpini.almennosb/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        </div>
+        <p class="footer-credit">Sito realizzato da <a href="https://siti.quadralabs.eu/" target="_blank" rel="noopener">QUADRALABS</a></p>
+      </div>
+      <div>
+        <h4>Il Campo</h4>
+        <ul>
+          <li><a href="il-campo.html">Il Campo Scuola</a></li>
+          <li><a href="calendario.html">Calendario</a></li>
+          <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — voce Iscrizioni nel footer
+          <li><a href="iscrizioni.html">Iscrizioni</a></li>
+          -->
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Il Gruppo</h4>
+        <ul>
+          <li><a href="galleria.html">Galleria</a></li>
+          <li><a href="sponsor.html">Sponsor</a></li>
+          <li><a href="merch.html">Merchandising</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>Via Campino, Almenno San Bartolomeo (BG)</li>
+          <li><a href="tel:+390350267127">+39 035 0267127</a></li>
+          <li><a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Campo Scuola Giovani Alpini — Gruppo Alpini Almenno San Bartolomeo</span>
+      <span><a href="privacy.html">Privacy</a> &middot; <a href="cookie.html">Cookie Policy</a> &middot; <button type="button" class="cc-prefs-link">Preferenze cookie</button></span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox">
+  <div class="lightbox-content">
+    <img class="lightbox-img" src="" alt="">
+    <div class="placeholder placeholder-16-9" style="display:none;">FOTO</div>
+  </div>
+  <p class="lightbox-caption"></p>
+  <button class="lightbox-close" aria-label="Chiudi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lightbox-prev" aria-label="Precedente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <button class="lightbox-next" aria-label="Successiva"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Materiale di lavoro interno — non fa parte del sito pubblicato
+*.md
+*.xlsx
+Link-immagini.txt
+desktop.ini
+_temp/
+.gstack/
+ottimizza-foto-web.py
+ottimizza-video-web.sh
+ottimizza-video-web-il-campo.sh
+liberatoria-immagine-minori-capisquadra.pdf
+
+# Backend Google Apps Script — vive nell'editor Apps Script, non va servito staticamente
+apps-script/
+apps-script-contatti/
+
+# Foto merch originali ad alta risoluzione — il sito usa le versioni -web
+foto/merch/
+foto/merch-v2/

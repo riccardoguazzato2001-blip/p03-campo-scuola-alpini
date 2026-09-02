@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ISCRIZIONI-NASCOSTE 2026-08-24 — title e description originali, da ripristinare quando si riaprono:
+     title:       Iscrizioni — Campo Scuola Giovani Alpini ASB
+     description: Modulo di iscrizione al Campo Scuola Giovani Alpini di Almenno San Bartolomeo:
+                  riproduzione digitale fedele del modulo ufficiale MOD.ALLIEVO-COMPLETO, turni,
+                  costi, autorizzazioni. -->
+<title>Iscrizioni non ancora aperte — Campo Scuola Giovani Alpini ASB</title>
+<meta name="description" content="Le iscrizioni al Campo Scuola Giovani Alpini di Almenno San Bartolomeo per l'estate 2026 non sono ancora aperte: il modulo sara' pubblicato qui appena il Gruppo Alpini le apre.">
+<script src="cookie-consent.js"></script>
+<link rel="icon" type="image/png" href="foto/sito/logo-ufficiale-web.png">
+<link rel="stylesheet" href="style.css">
+<!-- jsPDF + html2canvas NON sono piu' caricati qui: le carica caricaLibreriePdf() in
+     script.js solo quando l'utente clicca "Scarica modulo compilato" (azione esplicita,
+     funzionale, nessuna richiesta di terze parti al caricamento della pagina). -->
+</head>
+<!-- ISCRIZIONI-NASCOSTE 2026-08-24 — iscrizioni oscurate temporaneamente su richiesta.
+     Per riaprirle: togliere data-iscrizioni-chiusa dal <body> qui sotto e rimettere i
+     link commentati nelle altre pagine (cercare ISCRIZIONI-NASCOSTE in tutto il sito). -->
+<body data-iscrizioni-chiusa="true">
+
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="foto/sito/logo-ufficiale-web.png" alt="Logo Campo Scuola Giovani Alpini ASB" class="brand-mark">
+      <span class="brand-text">Campo Scuola<br><small>Giovani Alpini ASB</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="il-campo.html">Il Campo</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="galleria.html">Galleria</a>
+      <a href="merch.html">Merchandising</a>
+      <a href="sponsor.html">Sponsor</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contatti.html">Contatti</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="contatti.html" class="btn btn-outline btn-sm">Contatti</a>
+      <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — bottone Iscriviti della navbar
+      <a href="iscrizioni.html" class="btn btn-primary btn-sm">Iscriviti</a>
+      -->
+    </div>
+    <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="page-hero" style="background-image:linear-gradient(180deg, rgba(20,51,31,0.45) 0%, rgba(20,51,31,0.88) 100%), url('foto/sito/hero-iscrizioni.jpg');background-size:cover;background-position:center;">
+  <div class="container">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Iscrizioni</p>
+    <span class="eyebrow">Estate 2026</span>
+    <h1>Iscrizioni al Campo Scuola</h1>
+    <p class="iscrizioni-contenuto">Modulo digitale — riproduzione fedele del modulo ufficiale cartaceo "MOD.ALLIEVO-COMPLETO", 15ª Edizione 2026.</p>
+    <p class="avviso-iscrizioni-chiuse-testo">Le iscrizioni al campo scuola 2026 non sono ancora aperte.</p>
+  </div>
+</section>
+
+<!-- Avviso mostrato al posto del modulo finche' il <body> ha data-iscrizioni-chiusa. -->
+<section class="avviso-iscrizioni-chiuse">
+  <div class="container">
+    <div class="avviso-iscrizioni-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <rect x="4" y="10" width="16" height="11" rx="2"/>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke-linecap="round"/>
+      </svg>
+      <h2>Iscrizioni non ancora aperte</h2>
+      <p>Il modulo di iscrizione al Campo Scuola 2026 sara' pubblicato qui appena il Gruppo Alpini
+         apre le iscrizioni. Nel frattempo puoi vedere turni e date nel calendario, oppure scriverci
+         per essere avvisato quando si apre.</p>
+      <div class="hero-actions" style="justify-content:center;">
+        <a href="calendario.html" class="btn btn-primary">Vedi turni e date</a>
+        <a href="contatti.html" class="btn btn-outline">Chiedi informazioni</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="iscrizioni-contenuto">
+<div class="mod-page-wrap">
+  <div class="container">
+    <!-- ACCESSO FACOLTATIVO PER SALVARE I PROGRESSI (2026-07-27) ==============
+         Serve al passaggio "scarica PDF -> stampa -> firma a mano -> scansiona ->
+         RICARICA la pagina per allegare": senza salvataggio, quel reload azzera
+         68 campi. Chi non accede compila e invia esattamente come prima.
+
+         ⚠ DEVE STARE FUORI da entrambi i <form> del modulo. `genera_artefatti.py`
+         estrae i campi obbligatori dagli attributi `required` che trova dentro il
+         tag di apertura del modulo iscrizione e il primo tag di chiusura form: un
+         campo di questo blocco finito lì dentro diventerebbe un obbligatorio del
+         modulo, e ogni invio verrebbe rifiutato per un campo che non c'entra nulla.
+         (Nota: qui non si cita per esteso l'attributo id del modulo — con la
+         vecchia versione dell'estrattore questo commento veniva scambiato per
+         l'inizio del form; ora l'estrattore cerca il tag, non la stringa.)
+         Per lo stesso motivo l'email qui NON ha `required`: la valida lo script.
+         Va tenuto anche fuori da ogni `.mod-pdfpage`, altrimenti finisce nel PDF.
+         Lo mostra/nasconde initAccessoBozze() in script.js. ==================== -->
+    <section class="accesso-box" data-accesso-bozze hidden>
+
+      <div data-accesso-passo="email">
+        <h3 class="accesso-titolo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M5 3h11l3 3v15H5z" stroke-linejoin="round"/>
+            <path d="M9 3v6h6V3M8 14h8M8 17.5h5" stroke-linecap="round"/>
+          </svg>
+          Vuoi salvare i tuoi progressi?
+        </h3>
+        <p class="accesso-testo">
+          Utile perché più avanti dovrai <strong>ricaricare questa pagina</strong> per allegare il modulo
+          firmato: con l'accesso ritrovi i campi già compilati, e puoi riprendere anche da un altro
+          dispositivo. <strong>Facoltativo:</strong> puoi compilare e inviare tutto in un'unica sessione, come prima.
+        </p>
+        <form class="accesso-form" data-accesso-form="email" novalidate>
+          <label class="accesso-label" for="accesso-email">La tua email</label>
+          <input type="email" id="accesso-email" placeholder="tua-email@esempio.it" autocomplete="email" inputmode="email">
+          <button type="submit" class="btn btn-outline btn-sm">Invia codice</button>
+        </form>
+        <p class="accesso-privacy">
+          Inserendo la tua email per salvare i progressi, conserviamo i dati che stai scrivendo fino
+          all'invio dell'iscrizione o al massimo per <strong>30 giorni</strong>, poi vengono cancellati.
+          Non serve una password: ti arriva un codice a 6 cifre. Vedi l'<a href="privacy.html">informativa privacy</a>.
+        </p>
+      </div>
+
+      <div data-accesso-passo="codice" hidden>
+        <h3 class="accesso-titolo">Controlla la posta</h3>
+        <p class="accesso-testo">
+          Abbiamo inviato un codice a <strong data-accesso-destinatario></strong>. Scade tra 10 minuti.
+          Se non arriva, guarda nello spam — oppure ignora e compila il modulo senza accedere.
+        </p>
+        <form class="accesso-form" data-accesso-form="codice" novalidate>
+          <label class="accesso-label" for="accesso-codice">Codice a 6 cifre</label>
+          <input type="text" id="accesso-codice" inputmode="numeric" autocomplete="one-time-code"
+                 maxlength="6" placeholder="______" class="accesso-codice-input">
+          <button type="submit" class="btn btn-primary btn-sm">Conferma</button>
+        </form>
+      </div>
+
+      <div data-accesso-passo="attivo" hidden>
+        <div class="accesso-striscia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="accesso-striscia-testo">
+            Accesso come <strong data-accesso-email-attiva></strong>
+            · <span data-accesso-salvataggio>nessun salvataggio ancora</span>
+          </span>
+          <span class="accesso-azioni">
+            <button type="button" class="btn btn-outline btn-sm" data-accesso-altro-figlio hidden>Nuova iscrizione per un altro figlio (svuota il modulo)</button>
+            <button type="button" class="accesso-link" data-accesso-esci>Esci</button>
+          </span>
+        </div>
+        <div class="accesso-ripristino" data-accesso-ripristino hidden>
+          <p data-accesso-ripristino-testo></p>
+          <span class="accesso-azioni">
+            <button type="button" class="btn btn-primary btn-sm" data-accesso-riprendi>Riprendi</button>
+            <button type="button" class="btn btn-outline btn-sm" data-accesso-inizia-vuoto>Inizia da zero</button>
+          </span>
+        </div>
+      </div>
+
+      <p class="accesso-messaggio" data-accesso-messaggio hidden></p>
+    </section>
+
+    <!-- data-form-backend = quale foglio del Google Sheet riceve questa submission.
+         Lo legge initFormsBackend() in script.js e lo manda come `formType` allo
+         script Apps Script. Finche' l'URL del backend non e' configurato in
+         script.js (BACKEND_URL), il form ricade sul comportamento dimostrativo.
+         data-bozza = questo modulo partecipa al salvataggio automatico. -->
+    <form class="mod-sheet" id="modulo-iscrizione" data-form-backend="iscrizione" data-bozza>
+
+      <div class="mod-sheet-header">
+        <div class="mod-org">
+          <strong>ASSOCIAZIONE NAZIONALE ALPINI — SEZIONE DI BERGAMO</strong><br>
+          Gruppo di Almenno San Bartolomeo — Nucleo di Protezione Civile<br>
+          Via IV Novembre, 64 — 24030 Almenno San Bartolomeo (BG)<br>
+          Tel. sede Gruppo: 035 644114 · Tel. sede Camposcuola: 035 19771585<br>
+          <a href="mailto:camposcuolaasb24@gmail.com" style="color:#fff;">camposcuolaasb24@gmail.com</a> · <a href="https://www.gruppoalpiniasb.it" target="_blank" rel="noopener" style="color:#fff;">www.gruppoalpiniasb.it</a>
+        </div>
+        <div class="mod-title">
+          <div class="mod-edition">15ª Edizione</div>
+          <h2>Modulo d'iscrizione — Campo Scuola Giovani Alpini 2026</h2>
+          <div style="font-size:var(--fs-xs);opacity:0.85;">Area 2 zona 5 — Almenno San Bartolomeo (BG)</div>
+        </div>
+      </div>
+
+      <div class="mod-body">
+
+        <!-- Lettera guida — testo integrale -->
+        <div class="mod-intro">
+          <h3>Guida per l'iscrizione alla 15ª Edizione del Campo Scuola Giovani Alpini 2026</h3>
+          <p><strong>Carissimi Genitori,</strong> siamo lieti di allegare i moduli d'iscrizione al Camposcuola. Vi suggeriamo di seguire questi punti oltre alla compilazione dettagliata del modulo:</p>
+          <ol>
+            <li>Il modulo d'iscrizione 2026, per essere accettato, dovrà essere inviato completamente compilato — meglio ancora se già con i documenti allegati richiesti — via email; se per forza maggiore mancasse qualche documento, avrete tempo di inviarcelo entro e non oltre il <strong>31/5/2026</strong>. L'accettazione dell'allievo avverrà solo dopo aver soddisfatto:
+              <ul>
+                <li>presa visione, verifica e accettazione dei certificati sanitari richiesti da parte del nostro responsabile Sanitario (senza questa verifica non possiamo procedere e l'iscrizione resterà in sospeso);</li>
+                <li>disponibilità dei posti in tenda;</li>
+                <li>pagamento del contributo, da versare con bonifico entro e non oltre il 31-5-2026, oppure in presenza presso la sede del campo scuola <strong>sabato 23 maggio, ore 10:00–16:00 (abbiamo il POS)</strong>.</li>
+              </ul>
+            </li>
+            <li>Le iscrizioni devono avvenire solo online; le date sopraindicate riguardano unicamente il versamento del contributo. Per necessità tecnico-operative: cellulare <strong>342 190 7958</strong> — tel. fisso al Campo <strong>342 1092306</strong>. Tutto va inviato a <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a>. Per chi avesse bisogno di fattura: <strong>aggiungere il 22% di IVA</strong> al valore del contributo.</li>
+            <li>Dopo l'invio: riceverete a stretto giro un "ok ricevuto" (se non arriva dopo qualche giorno, chiamateci: potrebbe esserci un problema con la posta elettronica). Dopo un tempo variabile per la trascrizione delle domande, agli allievi accettati invieremo: conferma di iscrizione, Guida al Camposcuola 2026, elenco abbigliamento e attrezzature 2026. Per gli allievi non accettati o in lista d'attesa invieremo comunque una comunicazione.</li>
+            <li>Il pagamento dell'Album fotografico online avviene assieme al contributo per l'iscrizione.</li>
+            <li>Il modulo d'iscrizione è strettamente personale e non va inoltrato ad altri: chi volesse partecipare deve scaricarlo da <a href="https://www.gruppoalpiniasb.it" target="_blank" rel="noopener">www.gruppoalpiniasb.it</a> (disponibile dal 1° febbraio 2026) o richiederlo via email.</li>
+          </ol>
+          <div class="mod-highlight">
+            <strong>P.S. — Un contatto riservato.</strong> Come per gli scorsi anni, mettiamo a disposizione <strong>Daniela Valsecchi</strong> per comunicazioni ed informazioni riservate necessarie per valutare l'iscrizione di vostro figlio/a. È importante condividere informazioni di tipo medico (patologie, farmaci, patologie pregresse), relazionali, fatiche emotive, necessità particolari o paure che meritano attenzione per un miglior soggiorno al Camposcuola. Daniela condividerà queste informazioni solo con i responsabili, lo staff educativo e il dott. Nicola Gaffuri, per individuare strategie educative corrette, garantendo l'assoluta privacy.<br>
+            Contatti: <a href="mailto:azzurradani@gmail.com">azzurradani@gmail.com</a> · 347 1896109 (inviare prima un messaggio con nome, cognome e richiesta di appuntamento telefonico).
+          </div>
+          <p style="text-align:right;font-style:italic;">Con i migliori saluti, Mauro Guazzato</p>
+        </div>
+
+      </div>
+      <!-- Le 4 pagine del modulo cartaceo (pag. 3-6 del PDF) sono riprodotte qui sotto
+           a due colonne (sidebar informativa + colonna campi), stesso ordine e stessa
+           posizione della pagina originale. Immagini reali estratte dal PDF. -->
+
+        <!-- PAGINA 3 del PDF — Dati anagrafici dell'allievo -->
+        <div class="mod-pdfpage">
+          <div class="mod-pdfpage-label">Pagina 1 del modulo — Dati anagrafici</div>
+          <div class="mod-pdfpage-sidebar">
+            <div class="mod-logo-grid">
+              <img src="img/modulo-iscrizione/logo-ana-alpini.png" alt="Logo Associazione Nazionale Alpini">
+              <img src="img/modulo-iscrizione/logo-campo-scuola-cartwheel.jpeg" alt="Logo Campo Scuola Giovani Alpini">
+              <img src="img/modulo-iscrizione/logo-campo-scuola-alpino-badge.png" alt="Logo Campo Scuola Alpino — Associazione Nazionale Alpini Sezione di Bergamo">
+              <img src="img/modulo-iscrizione/logo-scuola-formazione-shield.png" alt="Stemma Scuola di Formazione Giovani Alpini — Unus Pro Omnibus">
+            </div>
+            <div class="mod-org-contact">
+              <strong>CAMPOSCUOLA<br>GIOVANI ALPINI ASB</strong>
+              Via Campino<br>24030 – Almenno San Bartolomeo (BG)<br>
+              Telefono Ufficio: 342 1092306<br>Cell. alpini: 342 19 07 958<br>
+              <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a><br>
+              <a href="https://www.gruppoalpiniasb.it" target="_blank" rel="noopener">www.gruppoalpiniasb.it</a><br>
+              <a href="https://www.facebook.com/camposcuolagiovanialpini/" target="_blank" rel="noopener">facebook.com/camposcuolagiovanialpini</a>
+            </div>
+            <div class="mod-edition-box">
+              <div class="mod-edition-num">15ª</div>
+              <div class="mod-edition-label">Edizione</div>
+              <div class="mod-edition-title">CAMPOSCUOLA GIOVANI ALPINI<br>ALMENNO SAN BARTOLOMEO (BG)</div>
+              <div>Area 2 zona 5</div>
+              <div class="mod-edition-year">2026</div>
+            </div>
+          </div>
+          <div class="mod-pdfpage-content">
+            <div class="mod-grid" style="border-top:1px solid var(--color-border);">
+              <div class="mod-field">
+                <label for="turno-org">Turno <em>(a cura dell'organizzazione)</em></label>
+                <input type="text" id="turno-org" name="turno-org" readonly placeholder="assegnato dall'organizzazione">
+              </div>
+              <div class="mod-field">
+                <label for="tenda-org">N. di tenda <em>(a cura dell'organizzazione)</em></label>
+                <input type="text" id="tenda-org" name="tenda-org" readonly placeholder="assegnato dall'organizzazione">
+              </div>
+            </div>
+            <div class="mod-green-title-box">Dati anagrafici dell'allievo (in stampatello)</div>
+            <div class="mod-grid">
+              <div class="mod-field mod-full">
+                <label for="cognome-allievo">Cognome</label>
+                <input type="text" id="cognome-allievo" name="cognome-allievo" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="nome-allievo">Nome</label>
+                <input type="text" id="nome-allievo" name="nome-allievo" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="via">Via</label>
+                <input type="text" id="via" name="via" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="citta-residenza">Città</label>
+                <input type="text" id="citta-residenza" name="citta-residenza" required>
+              </div>
+              <div class="mod-field">
+                <label for="cap">CAP</label>
+                <input type="text" id="cap" name="cap" inputmode="numeric" maxlength="5" required>
+              </div>
+              <div class="mod-field">
+                <label for="provincia">Prov.</label>
+                <input type="text" id="provincia" name="provincia" maxlength="2" style="text-transform:uppercase;" required>
+              </div>
+              <div class="mod-field mod-full">
+                <div class="mod-radio-row">
+                  <label class="mod-radio"><input type="radio" name="sesso" value="maschio" id="sesso-m" required> Maschio</label>
+                  <label class="mod-radio"><input type="radio" name="sesso" value="femmina" id="sesso-f" required> Femmina</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mod-photo-row">
+              <div>
+                <span class="mod-field-label">Foto recente</span>
+                <p class="mod-legal" style="margin-bottom:0;">Nel caso non l'abbiate come fototessera, fatela voi con il cellulare e allegatela ai documenti che ci invierete.</p>
+                <input type="file" id="foto-allievo" name="foto-allievo" accept="image/*" style="margin-top:0.4rem;">
+              </div>
+              <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" style="width:90px;height:90px;color:var(--color-text);flex-shrink:0;">
+                <circle cx="50" cy="50" r="45"/>
+                <circle cx="66" cy="40" r="4.5" fill="currentColor" stroke="none"/>
+                <path d="M30 38q9 -7 18 0" stroke-linecap="round"/>
+                <path d="M30 62q20 18 40 0" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="mod-icon-row">
+              <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="M32 8 L8 24 L20 42 L30 34 L30 92 L70 92 L70 34 L80 42 L92 24 L68 8 Q50 22 32 8 Z"/></svg>
+              <div class="mod-field">
+                <label for="taglia">Inserire la taglia o l'età che dimostra</label>
+                <input type="text" id="taglia" name="taglia" required>
+              </div>
+            </div>
+
+            <p class="mod-legal mt-sm"><strong>NB:</strong> per chi avesse già frequentato il Campo negli anni precedenti è invitato a presentarsi il primo giorno di inizio campo in divisa completa o almeno con quello che possiede. Nel caso la divisa non fosse più idonea per ragioni di taglia verrà sostituita con una nuova.</p>
+
+            <table class="mod-table" style="margin-top:0.3rem;">
+              <thead><tr><th colspan="2">Telefoni ed email per comunicazioni d'emergenza</th><th>Rif. genitore o grado di parentela</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td colspan="2"><input type="tel" id="tel-emergenza-1" name="tel-emergenza-1" required style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="parentela-1" name="parentela-1" required style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><input type="tel" id="tel-emergenza-2" name="tel-emergenza-2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="parentela-2" name="parentela-2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><input type="tel" id="tel-emergenza-3" name="tel-emergenza-3" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="parentela-3" name="parentela-3" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+                <tr>
+                  <td style="font-weight:700;">EMAIL</td>
+                  <td colspan="2"><input type="email" id="email-iscrizione" name="email-iscrizione" required style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="mod-field mod-full" style="border:1px solid var(--color-border);padding:0.5rem 0.7rem;">
+              <label for="anni-precedenti">Ha frequentato il Campo negli anni</label>
+              <input type="text" id="anni-precedenti" name="anni-precedenti" placeholder="Es. 2024, 2025 — lascia vuoto se è la prima volta">
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGINA 4 del PDF — Turni, pagamento, nascita/scuola, responsabilità, privacy -->
+        <div class="mod-pdfpage">
+          <div class="mod-pdfpage-label">Pagina 2 del modulo — Turni, pagamento, responsabilità, privacy</div>
+          <div class="mod-pdfpage-sidebar">
+            <p class="mod-legal" style="color:var(--color-white);">Di seguito i turni con le relative classi scolastiche a cui abbiamo dedicato per ognuno un periodo specifico. <strong>ATTENZIONE !!! : non è possibile far fare all'allievo un turno diverso dalla sua classe scolastica.</strong></p>
+            <div class="mod-sidebar-img-box">
+              <img src="img/modulo-iscrizione/calendario-turni-2026.jpeg" alt="Calendario turni 2026: 1° turno 3ª elementare 25-27/6 €75,00 iva esclusa; 2° turno 4ª elementare 29/6-4/7 €255,00 iva esclusa; 3° turno 5ª elementare 6-11/7 €265,00 iva esclusa; 4° turno 1ª media 13-18/7 €285,00 iva esclusa; 5° turno 2ª media 20-25/7 €285,00 iva esclusa; 6° turno 3ª media 27/7-2/8 €290,00 iva esclusa (turno con un giorno in più per celebrazione della 15ª edizione del camposcuola)">
+            </div>
+            <div class="mod-yellow-box">N.B: il 6° turno SdF della 3ª media è dedicato agli allievi che hanno partecipato almeno una volta al Camposcuola negli anni precedenti. Per le nuove richieste faremo colloquio con nostri responsabili per valutare loro interesse a partecipare e proseguire in futuro con l'organizzazione Alpina.</div>
+
+            <div class="mod-green-title-box">Pagamento contributo</div>
+            <p class="mod-legal" style="color:var(--color-white);text-align:center;"><strong>Tramite Bonifico:</strong><br>Campo Scuola Almenno San Bartolomeo A.P.S.<br>Banco Popolare, filiale Brembate di Sopra<br><strong>IBAN: IT60 M 05034 52660 000000017437</strong><br><em>Causale: (cognome nome dell'allievo) contributo per Campo Scuola 2026</em></p>
+            <p class="mod-legal" style="color:var(--color-white);text-align:center;">Oppure per chi lo preferisse — <strong>Pagamento in Presenza:</strong><br>Sabato 23 maggio, ore 10:00–16:00, orario continuato, abbiamo il POS</p>
+            <div class="mod-radio-row" style="background:var(--color-white);color:var(--color-text);padding:0.5rem;border-radius:var(--radius-sm);">
+              <label class="mod-radio"><input type="radio" name="pagamento" value="bonifico" id="pag-bonifico" required> Bonifico</label>
+              <label class="mod-radio"><input type="radio" name="pagamento" value="presenza" id="pag-presenza" required> In presenza</label>
+            </div>
+
+            <div class="mod-icon-row" style="background:var(--color-white);border:none;">
+              <svg viewBox="0 0 100 60" fill="currentColor" aria-hidden="true" style="width:44px;height:30px;color:var(--color-text);">
+                <circle cx="20" cy="20" r="12"/><path d="M4 56c0-14 10-22 16-22s16 8 16 22z"/>
+                <circle cx="50" cy="16" r="10"/><path d="M37 56c0-12 8-19 13-19s13 7 13 19z"/>
+                <circle cx="80" cy="20" r="12"/><path d="M64 56c0-14 10-22 16-22s16 8 16 22z"/>
+              </svg>
+              <span class="mod-legal" style="margin:0;">Vuoi segnalare compagni che vorresti in tenda?</span>
+            </div>
+            <table class="mod-table" style="background:var(--color-white);color:var(--color-text);">
+              <thead><tr><th>Cognome</th><th>Nome</th></tr></thead>
+              <tbody>
+                <tr><td><input type="text" id="compagno-1" name="compagno-1" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;" placeholder="Cognome"></td><td><input type="text" id="compagno-1-nome" name="compagno-1-nome" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;" placeholder="Nome"></td></tr>
+                <tr><td><input type="text" id="compagno-2" name="compagno-2" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;" placeholder="Cognome"></td><td><input type="text" id="compagno-2-nome" name="compagno-2-nome" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;" placeholder="Nome"></td></tr>
+              </tbody>
+            </table>
+            <p class="mod-legal" style="color:var(--color-white);font-weight:700;">Per ragioni organizzative non possiamo accettare oltre i due nominativi né garantirne la richiesta — tenete conto che i posti in tenda sono limitati.</p>
+          </div>
+          <div class="mod-pdfpage-content">
+            <div class="mod-grid" style="border-top:1px solid var(--color-border);">
+              <div class="mod-field mod-full">
+                <label for="data-nascita">Data di nascita <em>(GG/MESE/ANNO)</em></label>
+                <input type="date" id="data-nascita" name="data-nascita" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="luogo-nascita">Luogo di nascita</label>
+                <input type="text" id="luogo-nascita" name="luogo-nascita" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="nazionalita">Nazionalità</label>
+                <input type="text" id="nazionalita" name="nazionalita" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="codice-fiscale-allievo">Codice fiscale</label>
+                <input type="text" id="codice-fiscale-allievo" name="codice-fiscale-allievo" maxlength="16" style="text-transform:uppercase;" required>
+              </div>
+            </div>
+
+            <div class="mod-green-title-box">Dati sulla scuola di provenienza</div>
+            <div class="mod-grid">
+              <div class="mod-field mod-full">
+                <label for="nome-scuola">Nome della scuola</label>
+                <input type="text" id="nome-scuola" name="nome-scuola" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="luogo-scuola">Luogo</label>
+                <input type="text" id="luogo-scuola" name="luogo-scuola" required>
+              </div>
+              <div class="mod-field mod-full">
+                <label for="turno">Classe frequentata 2025/2026</label>
+                <input type="text" id="turno" name="turno" placeholder="Es. 3ª elementare, 1ª media…" required>
+              </div>
+            </div>
+
+            <div class="mod-green-title-box" style="margin-top:var(--space-sm);">Responsabilità e autorizzazione</div>
+            <div style="border:1px solid var(--color-border);border-top:none;padding:0.6rem 0.7rem;">
+              <p class="mod-legal"><strong>Io sottoscritto</strong></p>
+              <div class="mod-field mb-sm" style="margin-bottom:var(--space-sm);">
+                <label for="nome-genitore-resp">Nome cognome del genitore compilatore o dell'esercente la potestà genitoriale (in stampatello)</label>
+                <input type="text" id="nome-genitore-resp" name="nome-genitore-resp" required>
+              </div>
+              <p class="mod-legal">In qualità di genitore o di esercente la potestà genitoriale, confermo tutti i dati da me riportati e trasmessi, autorizzo mio/a figlio/a a partecipare al Campo Scuola. Dichiaro di essere a conoscenza delle finalità, del programma e del Regolamento e di approvarli sollevando il Gruppo Alpini di Almenno SB, lo Staff Organizzatore, gli istruttori e i caposquadra per fatti e/o circostanze che dovessero verificarsi per il mancato rispetto delle disposizioni impartite dai responsabili e per gli infortuni derivanti dall'inosservanza di ordini o prescrizioni. Autorizzo gratuitamente il Gruppo Alpini, anche in conformità al D.Lgs. n. 196/2003 e dal GDPR in vigore, ad effettuare durante il Campo Scuola e in tutte le attività o manifestazioni derivanti da esso, immagini fotografiche e registrazioni audio-video di mio figlio, da utilizzare esclusivamente per scopi istituzionali dell'ANA per documentare e promuovere le attività tramite siti internet, canali radiotelevisivi, social-network, pubblicazioni, mostre, corsi di formazione, convegni ed altre iniziative promosse dall'Associazione Alpini.</p>
+              <div class="mod-signature">
+                <span class="mod-signature-caption">Firma del genitore o dell'esercente la potestà genitoriale, per accettazione</span>
+                <div class="mod-field">
+                  <label for="firma-resp">Firma digitale: nome e cognome</label>
+                  <input type="text" id="firma-resp" name="firma-resp" required>
+                </div>
+                <div class="mod-field">
+                  <label for="data-firma-resp">Data</label>
+                  <input type="date" id="data-firma-resp" name="data-firma-resp" required>
+                </div>
+                <div class="mod-signature-blank">Firma autografa: <span class="mod-signature-line"></span></div>
+              </div>
+            </div>
+
+            <div class="mod-green-title-box" style="margin-top:var(--space-sm);">Autorizzazione e finalità del trattamento dei dati</div>
+            <div style="border:1px solid var(--color-border);border-top:none;padding:0.6rem 0.7rem;">
+              <p class="mod-legal">Gentile Signore/a, desideriamo informarLa che i dati personali che ha fornito al Gruppo Alpini di Almenno S. Bartolomeo compilando questo modulo sono trattati in ottemperanza con quanto previsto dal Regolamento Europeo sulla protezione dei dati personali n. 2016/679, dal D.Lgs. 30 giugno 2003, n. 196 e dal GDPR in vigore, che hanno l'obiettivo di proteggere i diritti e le libertà fondamentali delle persone fisiche, in particolare il diritto alla protezione dei dati personali. La invitiamo a prendere visione delle modalità con le quali vengono trattati i Suoi dati personali: il trattamento è effettuato con l'ausilio di mezzi elettronici o comunque automatizzati e i dati sono trasmessi attraverso reti telematiche. I medesimi dati sono trattati anche con modalità cartacea. Il Titolare adotta misure tecniche e organizzative adeguate a garantire un livello di sicurezza idoneo rispetto alla tipologia dei dati trattati. Titolare del trattamento dei Suoi dati è il Gruppo Alpini Almenno San Bartolomeo, con sede in Via IV Novembre, 64 – 24030 Almenno San Bartolomeo BG. Il responsabile del trattamento è il capogruppo pro tempore del Gruppo Alpini di Almenno San Bartolomeo.</p>
+              <div class="mod-radio-row mb-sm" style="margin-bottom:var(--space-sm);">
+                <label class="mod-radio"><input type="radio" name="consenso-privacy-scelta" value="acconsento" id="acconsento" required> Acconsento</label>
+                <label class="mod-radio"><input type="radio" name="consenso-privacy-scelta" value="non-acconsento" id="non-acconsento" required> Non acconsento</label>
+              </div>
+              <p class="mod-legal">I dati saranno conservati dal Gruppo Alpini di Almenno S. Bartolomeo per <strong>5 anni</strong>, periodo nel quale i dati rilasciati non verranno elaborati, trattati, trasferiti e/o ceduti a terzi se non per le finalità legate all'esecuzione dell'attività Campo Scuola. In qualsiasi momento è suo diritto richiedere al titolare del trattamento, mediante comunicazione scritta anche via email a <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a>, la cancellazione definitiva dei suoi dati.</p>
+              <div class="mod-signature">
+                <span class="mod-signature-caption">Firma del genitore o dell'esercente la potestà genitoriale, per accettazione</span>
+                <div class="mod-field">
+                  <label for="firma-privacy">Firma digitale: nome e cognome</label>
+                  <input type="text" id="firma-privacy" name="firma-privacy" required>
+                </div>
+                <div class="mod-field">
+                  <label for="data-firma-privacy">Data</label>
+                  <input type="date" id="data-firma-privacy" name="data-firma-privacy" required>
+                </div>
+                <div class="mod-signature-blank">Firma autografa: <span class="mod-signature-line"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGINA 5 del PDF — Settore sanitario -->
+        <div class="mod-pdfpage">
+          <div class="mod-pdfpage-label">Pagina 3 del modulo — Settore sanitario 2026</div>
+          <div class="mod-pdfpage-sidebar">
+            <div style="background:var(--color-white);color:var(--color-danger);text-align:center;font-family:var(--font-heading);font-weight:800;padding:0.7rem;text-transform:uppercase;">SETTORE SANITARIO<br>2026</div>
+            <div class="mod-orange-box">
+              <strong>ATTENZIONE GENITORI!!!</strong>
+              devono essere segnalati, nell'iscrizione, intolleranze alimentari, allergie anche se lievi, patologie e/o terapie in atto o previste. Il nostro responsabile medico sanitario del Campo avrà facoltà di non accettare iscrizioni di allievi con gravi patologie che non gli permettano il normale svolgimento di tutte o parte delle attività di Campo programmate.<br><br>
+              I genitori sono tenuti a comunicare per iscritto ad autorizzare l'uso di farmaci, indicando la posologia. I farmaci dovranno essere consegnati una volta giunti al Campo al Personale Sanitario o chi ne fa le sue veci. Le confezioni devono riportare in modo chiaro il nome e cognome dell'allievo a cui appartengono e la posologia per l'assunzione.
+            </div>
+            <div class="mod-sidebar-img-box" style="max-width:220px;margin:0 auto;">
+              <img src="img/modulo-iscrizione/logo-sanita-alpina-gimca.jpeg" alt="Logo Sanità Alpina G.I.M.C.A.">
+            </div>
+            <div class="mod-yellow-box">
+              <strong>Copia documenti dell'allievo da allegare:</strong>
+              <ul style="padding-left:1.1rem;margin-top:0.3rem;">
+                <li>Certificato di attività ludico motoria o, se già in possesso, certificato d'idoneità all'attività sportiva non agonistica</li>
+                <li>Certificato delle vaccinazioni</li>
+                <li>Tessera sanitaria</li>
+                <li>Carta d'identità</li>
+              </ul>
+              <strong style="display:block;margin-top:0.5rem;">Copia documenti del genitore compilatore da allegare:</strong>
+              <ul style="padding-left:1.1rem;margin-top:0.3rem;">
+                <li>Tessera sanitaria</li>
+                <li>Carta d'identità</li>
+              </ul>
+            </div>
+            <!-- Un upload per ogni documento richiesto dal modulo cartaceo (4 allievo + 2 genitore),
+                 invece di un unico campo multiplo: nel foglio backend ogni documento ha la sua
+                 colonna, cosi' l'organizzazione filtra "a chi manca il certificato vaccinazioni"
+                 senza aprire nessuna cartella. `color` esplicito perche' questo blocco bianco sta
+                 dentro la sidebar verde scura (vedi bug testo bianco-su-bianco in CLAUDE.md P03). -->
+            <div class="mod-upload-grid mod-full" style="background:var(--color-white);color:var(--color-text);padding:0.6rem 0.7rem;">
+              <span class="mod-field-label">Carica qui le copie dei documenti</span>
+              <p class="form-note" style="margin:0;">Foto o PDF, massimo 5 MB per file. Se un documento non ce l'hai ancora puoi lasciarlo vuoto e inviarcelo entro il 31/5/2026.</p>
+
+              <div class="mod-upload-sep">Documenti dell'allievo</div>
+              <div class="mod-field">
+                <label for="doc-certificato-sportivo">Certificato attività ludico motoria o d'idoneità sportiva non agonistica</label>
+                <input type="file" id="doc-certificato-sportivo" name="doc-certificato-sportivo" accept="image/*,.pdf">
+              </div>
+              <div class="mod-field">
+                <label for="doc-vaccinazioni">Certificato delle vaccinazioni</label>
+                <input type="file" id="doc-vaccinazioni" name="doc-vaccinazioni" accept="image/*,.pdf">
+              </div>
+              <div class="mod-field">
+                <label for="doc-tessera-sanitaria-allievo">Tessera sanitaria dell'allievo</label>
+                <input type="file" id="doc-tessera-sanitaria-allievo" name="doc-tessera-sanitaria-allievo" accept="image/*,.pdf">
+              </div>
+              <div class="mod-field">
+                <label for="doc-carta-identita-allievo">Carta d'identità dell'allievo</label>
+                <input type="file" id="doc-carta-identita-allievo" name="doc-carta-identita-allievo" accept="image/*,.pdf">
+              </div>
+
+              <div class="mod-upload-sep">Documenti del genitore compilatore</div>
+              <div class="mod-field">
+                <label for="doc-tessera-sanitaria-genitore">Tessera sanitaria del genitore</label>
+                <input type="file" id="doc-tessera-sanitaria-genitore" name="doc-tessera-sanitaria-genitore" accept="image/*,.pdf">
+              </div>
+              <div class="mod-field">
+                <label for="doc-carta-identita-genitore">Carta d'identità del genitore</label>
+                <input type="file" id="doc-carta-identita-genitore" name="doc-carta-identita-genitore" accept="image/*,.pdf">
+              </div>
+            </div>
+          </div>
+          <div class="mod-pdfpage-content">
+            <div class="mod-green-title-box">Dichiarazione liberatoria: il sottoscritto</div>
+            <div class="mod-grid">
+              <div class="mod-field mod-full">
+                <label for="nome-genitore-san">Nome e cognome del genitore o dell'esercente la potestà genitoriale (in stampatello)</label>
+                <input type="text" id="nome-genitore-san" name="nome-genitore-san" required>
+              </div>
+              <div class="mod-field">
+                <label for="data-nascita-genitore">Data nascita <em>(GG/MESE/ANNO)</em></label>
+                <input type="date" id="data-nascita-genitore" name="data-nascita-genitore" required>
+              </div>
+              <div class="mod-field">
+                <label for="cf-genitore">Codice Fiscale</label>
+                <input type="text" id="cf-genitore" name="cf-genitore" maxlength="16" style="text-transform:uppercase;" required>
+              </div>
+            </div>
+            <p class="mod-legal mt-sm">Dichiaro con la presente di autorizzare e consentire che i medici, gli infermieri e gli operatori sanitari volontari presenti presso il Campo Scuola Giovani Alpini nel periodo dello svolgimento del Campo, eseguano sulla persona fisica di mio figlio/a qualunque trattamento sanitario necessario ed urgente nonché tutte le cure di routine e/o la somministrazione dei farmaci a lui prescritti, da me dichiarati e consegnati alla direzione del Campo Scuola, sollevando il personale medico, infermieristico e volontariato da ogni responsabilità dando sin da ora rato e valido il loro operato.</p>
+            <div class="mod-signature">
+              <span class="mod-signature-caption">Data · firma del genitore o dell'esercente la potestà genitoriale</span>
+              <div class="mod-field">
+                <label for="firma-liberatoria">Firma digitale: nome e cognome</label>
+                <input type="text" id="firma-liberatoria" name="firma-liberatoria" required>
+              </div>
+              <div class="mod-field">
+                <label for="data-firma-liberatoria">Data</label>
+                <input type="date" id="data-firma-liberatoria" name="data-firma-liberatoria" required>
+              </div>
+              <div class="mod-signature-blank">Firma autografa: <span class="mod-signature-line"></span></div>
+            </div>
+
+            <div class="mod-green-title-box" style="margin-top:var(--space-sm);">Protocollo sanitario</div>
+            <div style="border:1px solid var(--color-border);border-top:none;padding:0.6rem 0.7rem;">
+              <p class="mod-legal">Inoltre prendo visione e condivido le misure ed il protocollo sanitario attuato dalla Direzione Sanitaria del Campo Scuola che prevede ed attua durante lo svolgimento del Campo, le seguenti procedure:</p>
+              <ul style="padding-left:1.3rem;font-size:var(--fs-xs);line-height:1.65;margin-bottom:var(--space-sm);">
+                <li>Presenza di personale sanitario dalle ore 8,00 alle 20,00</li>
+                <li>Presenza in tenda o brigata, durante la notte, di caposquadra a segnalare tempestivamente problemi di qualsiasi natura</li>
+                <li>Chiamata 112 per interventi sanitari urgenti 24 ore su 24</li>
+              </ul>
+              <div class="mod-signature">
+                <span class="mod-signature-caption">Data · firma del genitore o dell'esercente la potestà genitoriale</span>
+                <div class="mod-field">
+                  <label for="firma-protocollo">Firma digitale: nome e cognome</label>
+                  <input type="text" id="firma-protocollo" name="firma-protocollo" required>
+                </div>
+                <div class="mod-field">
+                  <label for="data-firma-protocollo">Data</label>
+                  <input type="date" id="data-firma-protocollo" name="data-firma-protocollo" required>
+                </div>
+                <div class="mod-signature-blank">Firma autografa: <span class="mod-signature-line"></span></div>
+              </div>
+            </div>
+
+            <table class="mod-table mt-sm">
+              <thead>
+                <tr><th colspan="3">Farmaci consegnati alla direzione sanitaria <em>(da compilarsi all'arrivo al campo)</em></th></tr>
+                <tr><th>Nome del farmaco</th><th>Posologia</th><th>Note varie</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="text" id="farmaco-1-nome" name="farmaco-1-nome" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-1-posologia" name="farmaco-1-posologia" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-1-note" name="farmaco-1-note" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="farmaco-2-nome" name="farmaco-2-nome" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-2-posologia" name="farmaco-2-posologia" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-2-note" name="farmaco-2-note" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="farmaco-3-nome" name="farmaco-3-nome" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-3-posologia" name="farmaco-3-posologia" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-3-note" name="farmaco-3-note" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="farmaco-4-nome" name="farmaco-4-nome" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-4-posologia" name="farmaco-4-posologia" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                  <td><input type="text" id="farmaco-4-note" name="farmaco-4-note" style="width:100%;border:none;background:transparent;font-family:inherit;font-size:inherit;"></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="form-note">Facoltativo — una riga per farmaco, si ricompila comunque all'arrivo al campo.</p>
+
+            <p class="mod-legal" style="font-style:italic;font-weight:700;">Note relative alle allergie, intolleranze e patologie dell'allievo <em>(in stampatello — indicare "nessuna" se non applicabile)</em>:</p>
+            <div class="mod-grid mod-grid-1">
+              <div class="mod-field">
+                <label for="allergie">Allergie e intolleranze alimentari</label>
+                <textarea id="allergie" name="allergie" rows="2" required></textarea>
+              </div>
+              <div class="mod-field">
+                <label for="patologie">Patologie e/o terapie in atto o previste</label>
+                <textarea id="patologie" name="patologie" rows="2" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGINA 6 del PDF — Regolamento del Campo Scuola -->
+        <div class="mod-pdfpage">
+          <div class="mod-pdfpage-label">Pagina 4 del modulo — Regolamento 2026</div>
+          <div class="mod-pdfpage-sidebar">
+            <div class="mod-green-title-box mod-big" style="color:#ff6b5b;">REGOLAMENTO<br>DEL CAMPO<br>SCUOLA<div style="font-size:var(--fs-sm);color:var(--color-white);margin-top:0.4rem;">Area 2 Zona 5</div></div>
+            <div class="mod-sidebar-img-box">
+              <img src="img/modulo-iscrizione/guida-al-campo-cover.png" alt="Copertina Guida al Campo — Campo Scuola Giovani Alpini, con i loghi istituzionali (bandiera italiana, UE, Regione Lombardia, Comune, ANA, Protezione Civile Volontariato, Sanità Alpina G.I.M.C.A.) e i dati di contatto del Campo Scuola">
+            </div>
+            <div style="background:var(--color-primary);padding:0.7rem;text-align:center;">
+              <strong style="font-family:var(--font-heading);">GUIDA AL CAMPOSCUOLA</strong>
+              <p class="mod-legal" style="color:var(--color-white);margin-top:0.4rem;">Nel momento dell'iscrizione vi verrà spedito via email la "GUIDA AL CAMPOSCUOLA" dell'anno in corso; vi preghiamo vivamente di farlo studiare bene ai vostri figli perché i suoi contenuti serviranno a regolare la loro permanenza al campo.</p>
+              <p class="mod-legal" style="color:var(--color-white);">n.b.: I posti sono limitati ai posti tenda, per cui ci si riserva la facoltà di accettare o non, a nostro insindacabile giudizio, le richieste di iscrizioni. La conferma dell'accettazione avviene sempre con nostra comunicazione.</p>
+            </div>
+            <div class="mod-yellow-box" style="text-align:center;">
+              <strong style="font-size:var(--fs-md);">Prenota il tuo Album Fotografico online</strong>
+              <div class="mod-icon-row" style="border:none;justify-content:center;">
+                <img src="img/modulo-iscrizione/logo-album-fotografico.png" alt="Logo Campo Scuola Giovani Alpini (icona album fotografico)" style="width:44px;height:44px;flex-shrink:0;">
+                <span>per chi lo desidera prenotare metta una crocetta sul logo, e versi un contributo aggiuntivo all'iscrizione di <strong>€ 5,00</strong>. A fine campo riceverà un codice per scaricare le foto che desidera.</span>
+              </div>
+              <label class="mod-check" style="justify-content:center;margin-top:0.5rem;"><input type="checkbox" id="album-foto" name="album-foto"><span>Prenoto l'Album Fotografico (+€5,00)</span></label>
+            </div>
+          </div>
+          <div class="mod-pdfpage-content">
+            <p class="mod-legal"><strong>Partecipazione ed iscrizione</strong> — La partecipazione al Campo Scuola richiede l'accettazione del presente regolamento, degli impegni proposti e la collaborazione diretta alla realizzazione dell'esperienza. In quest'ottica, ogni partecipante, secondo le proprie capacità ed il livello di maturazione, è invitato a dare il proprio contributo alle attività del Campo, nel rispetto di sé, degli altri, degli orari, della struttura ospitante e del regolamento.</p>
+            <div class="mod-green-title-box">Regolamento 2026</div>
+            <table class="mod-table" style="margin-top:0;">
+              <tbody>
+                <tr><td class="mod-num-cell">1</td><td style="width:8rem;">Pulizia</td><td>Nello stile di sobrietà del Campo Scuola, ognuno provvede personalmente alla cura e alla pulizia della tenda, del proprio posto letto che gli è stato assegnato e collabora alla gestione e alla pulizia degli ambienti e dei servizi comuni.</td></tr>
+                <tr><td class="mod-num-cell">2</td><td>Vietato oggetti</td><td>Nel Campo Scuola, a fronte delle norme di sicurezza e per non vanificare gli sforzi volti ad offrire un'esperienza educativa intensa e socializzante: è vietato ai partecipanti l'uso di apparecchi ad alta tensione, di oggetti pericolosi (coltelli, taglierini, accendini, puntatori laser, ecc.) e la detenzione di medicinali (anche quelli espressamente citati nel modulo di iscrizione salvo permesso del Responsabile Sanitario). È vietato portare con sé apparecchi tecnologici in genere (Mp3, iPod, Tablet, telefoni cellulari, giochi elettronici, macchine fotografiche, computer) che, oltre a disturbare il regolare svolgimento delle attività, interferiscono con lo spirito educativo e sociale dell'attività. Lo staff educativo si riserva la facoltà di ritirare tali apparecchi ed attivare la procedura di espulsione dell'allievo dal campo.</td></tr>
+                <tr><td class="mod-num-cell">3</td><td>Telefoni cellulari</td><td>Telefoni Cellulari sono severamente vietati, in caso di assoluta necessità i genitori potranno contattare i Responsabili del Campo sul numero di telefonia mobile e fisso fornitogli.</td></tr>
+                <tr><td class="mod-num-cell">4</td><td>Responsabilità</td><td>In qualità di genitore o di esercente la potestà genitoriale, confermo tutti i dati da me riportati e trasmessi, autorizzo mio/a figlio/a a partecipare al Campo Scuola. Dichiaro di essere a conoscenza delle finalità, del programma e del Regolamento e di approvarli sollevando il Gruppo Alpini di Almenno SB, lo Staff Organizzatore, gli istruttori e i caposquadra per fatti e/o circostanze che dovessero verificarsi per il mancato rispetto delle disposizioni impartite dai responsabili e per gli infortuni derivanti dall'inosservanza di ordini o prescrizioni. Autorizzo gratuitamente il Gruppo Alpini, anche in conformità al D.Lgs. n. 196/2003 e dal GDPR in vigore ad effettuare durante il Campo Scuola e in tutte le attività o manifestazioni derivanti da esso, immagini fotografiche e registrazioni audio-video di mio figlio, da utilizzare esclusivamente per scopi istituzionali dell'ANA per documentare e promuovere le attività tramite siti internet, canali radiotelevisivi, social-network, pubblicazioni, mostre, corsi di formazione, convegni ed altre iniziative promosse dall'Associazione. Bagagli e oggetti personali viaggiano sotto la responsabilità del proprietario e l'Associazione non potrà in ogni caso ritenersi responsabili della perdita o danneggiamento degli stessi. Qualora venisse accertato che, per cause imputabili ad uno o più partecipanti, si siano verificati danni alle attrezzature, ai materiali o ai locali delle strutture ospitanti il Campo Scuola, l'Organizzazione si serva il diritto di chiederne il risarcimento a colui che li ha causati (nel caso ai genitori). Comportamenti non consoni al clima del Campo Scuola o che disattendono le indicazioni del Responsabile, saranno oggetto di opportuni richiami ed eventuale segnalazione ai genitori. Nei casi più gravi potrà essere chiesto di lasciare il Campo senza alcun rimborso della quota versata.</td></tr>
+                <tr><td class="mod-num-cell">5</td><td>Quota iscrizione</td><td>La Quota di iscrizione comprende: vitto (colazione, pranzo, merenda e cena), alloggio, materiali per le attività, copertura assicurativa, abbigliamento, trasporti, corsi, energia, acqua, smaltimento di rifiuti e delle acque nere, gadget e premi. In caso di rinuncia o malattia fino a 30 gg prima dell'inizio del campo, è prevista la restituzione del 100% della quota. Oltre il suddetto termine per ovvie ragioni di acquisti già fatti, è prevista la restituzione del 50% della quota. Mentre l'interruzione del turno per qualsiasi ragione non darà diritto alla restituzione intera o parziale del contributo versato.</td></tr>
+                <tr><td class="mod-num-cell">6</td><td>Numero posti esauriti</td><td>Al fine di assicurare il miglior conseguimento degli scopi associativi, qualora il numero degli iscritti al Campo fossero in numero superiore ai posti disponibili la Direzione, a proprio insindacabile giudizio e senza alcun altro obbligo se non quello di preavviso da comunicarsi almeno 30 giorni prima dell'inizio si riserva la facoltà di annullare l'iscrizione dell'allievo con conseguente restituzione totale della somma eventualmente versata.</td></tr>
+                <tr><td class="mod-num-cell">7</td><td>Causa di forza maggiore</td><td>Nel caso in cui non si dovesse raggiungere il numero minimo sufficiente al funzionamento del Campo o per altri gravi motivi come ad esempio meteorologici, naturali o comunque di forza maggiore la Direzione potrà comunicare l'annullamento dello svolgimento del Campo stesso; in tal coso si provvederà alla restituzione della somma versata.</td></tr>
+              </tbody>
+            </table>
+
+            <p class="mod-legal" style="font-weight:700;">Bisogna apporre tutte e due le firme dei genitori per approvazione.</p>
+            <div class="mod-signature">
+              <span class="mod-signature-caption">Letto approvato e sottoscritto — Genitore 1</span>
+              <div class="mod-field">
+                <label for="firma-reg-1">Firma digitale: nome e cognome</label>
+                <input type="text" id="firma-reg-1" name="firma-reg-1" required>
+              </div>
+              <div class="mod-field">
+                <label for="data-firma-reg-1">Data</label>
+                <input type="date" id="data-firma-reg-1" name="data-firma-reg-1" required>
+              </div>
+              <div class="mod-signature-blank">Firma autografa: <span class="mod-signature-line"></span></div>
+            </div>
+            <div class="mod-signature">
+              <span class="mod-signature-caption">Letto approvato e sottoscritto — Genitore 2</span>
+              <div class="mod-field">
+                <label for="firma-reg-2">Firma digitale: nome e cognome</label>
+                <input type="text" id="firma-reg-2" name="firma-reg-2" required>
+              </div>
+              <div class="mod-field">
+                <label for="data-firma-reg-2">Data</label>
+                <input type="date" id="data-firma-reg-2" name="data-firma-reg-2" required>
+              </div>
+              <div class="mod-signature-blank">Firma autografa: <span class="mod-signature-line"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mod-body" style="padding-top:0;">
+          <div class="mod-yellow-box mb-sm" style="margin-bottom:var(--space-sm);">
+            <label class="mod-check"><input type="checkbox" id="fattura" name="fattura"><span>Ho bisogno di fattura (aggiungo il <strong>22% di IVA</strong> al valore del contributo — dalla lettera guida, pag. 1)</span></label>
+          </div>
+        </div>
+
+        <div class="mod-actions" style="flex-direction:column;align-items:stretch;">
+          <button type="button" id="btn-scarica-pdf" class="btn btn-outline">Scarica modulo compilato (PDF)</button>
+
+          <!-- Passo obbligatorio introdotto il 2026-07-26: il genitore deve firmare a mano
+               il PDF pre-compilato (niente più dati da ricopiare) e allegarne la scansione
+               completa. `required` sull'input -> il browser blocca l'invio se manca; la
+               validazione lato server e' generata in Code.gs (vedi genera_artefatti.py). -->
+          <div class="mod-yellow-box" style="margin:var(--space-sm) 0;">
+            <strong>Passo obbligatorio prima di inviare:</strong> stampa il PDF appena scaricato,
+            <strong>firma a mano</strong> in tutti i punti richiesti (responsabilità e autorizzazione,
+            consenso privacy, liberatoria sanitaria, protocollo sanitario, regolamento — entrambe le
+            firme dei genitori), poi carica qui la scansione di <strong>tutte</strong> le pagine firmate.
+            <div class="mod-field mod-full" style="border:none;padding:0.4rem 0 0;">
+              <label for="scansione-modulo-firmato">Scansione del modulo firmato (immagine o PDF, max 5 MB)</label>
+              <input type="file" id="scansione-modulo-firmato" name="scansione-modulo-firmato" accept="image/*,.pdf" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Invia richiesta di iscrizione</button>
+        </div>
+        <p class="form-note" style="padding:0 var(--space-lg);">L'invio registra la richiesta nel foglio dell'organizzazione e carica gli allegati (incluso il modulo firmato, obbligatorio). Se l'invio non riuscisse, manda il modulo a <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a>.</p>
+        <p class="form-success mt-sm" style="margin:0 var(--space-lg) var(--space-lg);">Richiesta registrata! Riceverai a breve una email "ok ricevuto", seguita dalla conferma di iscrizione dopo la verifica sanitaria.</p>
+        <p class="form-error mt-sm" style="margin:0 var(--space-lg) var(--space-lg);"></p>
+    </form>
+
+    <p class="mod-footer-note text-center" style="max-width:794px;margin:var(--space-md) auto 0;">
+      L'iscrizione ufficiale avviene tramite il modulo del Gruppo Alpini: si scarica, si compila, si firma e si invia via email a <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a> (modulo disponibile dal 1° febbraio 2026 su <a href="https://www.gruppoalpiniasb.it" target="_blank" rel="noopener">gruppoalpiniasb.it</a>). Fonte del contenuto: <a href="MOD.ALLIEVO-COMPLETO.pdf" target="_blank" rel="noopener">modulo ufficiale 2026 (PDF)</a>.
+    </p>
+  </div>
+</div>
+
+<div class="mod-page-wrap">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:var(--space-md);">
+      <span class="eyebrow">Passo 2 — obbligatorio</span>
+      <h2>Iscrizione all'Associazione (Socio A.P.S.)</h2>
+      <p class="mt-sm" style="max-width:640px;margin-left:auto;margin-right:auto;">Da quest'anno la partecipazione al Campo è riservata ai soci dell'Associazione "Campo Scuola Almenno San Bartolomeo A.P.S." (Codice del Terzo Settore). Oltre al modulo sopra, compila anche questa richiesta di ammissione a socio — riproduzione fedele del modulo ufficiale <a href="Modulo.APS.pdf" target="_blank" rel="noopener">Modulo.APS.pdf</a>.</p>
+    </div>
+
+    <form class="mod-sheet" id="modulo-aps" data-form-backend="aps" data-bozza>
+
+      <div class="mod-sheet-header">
+        <div class="mod-org">
+          <strong>CAMPO SCUOLA ALMENNO SAN BARTOLOMEO A.P.S.</strong><br>
+          Via Campino — 24030 Almenno S. Bartolomeo (BG)<br>
+          Tel. +39 342 1907958 · 342 1092306<br>
+          <a href="mailto:camposcuolaasb24@gmail.com" style="color:#fff;">camposcuolaasb24@gmail.com</a> · <a href="https://www.gruppoalpiniasb.it" target="_blank" rel="noopener" style="color:#fff;">www.gruppoalpiniasb.it</a><br>
+          Sede legale: Via G. Ungaretti, 69 — 24030 Almenno S. Bartolomeo (BG) · P.IVA e C.F. 04919360166 · PEC: camposcuolaasb@pec.it
+        </div>
+        <div class="mod-title">
+          <div class="mod-edition">Unus Pro Omnibus</div>
+          <h2>Richiesta di ammissione a Socio Ordinario</h2>
+        </div>
+      </div>
+
+      <div class="mod-body">
+
+        <div class="mod-intro">
+          <h3>Integrazione iscrizione al Campo Scuola "Giovani Alpini" — Ammissione a Socio</h3>
+          <p><strong>Gentili Genitori,</strong> vi ringraziamo per aver iscritto i vostri figli al Campo Scuola "Giovani Alpini".</p>
+          <p>Come sapete, da quest'anno la gestione del campo sarà affidata all'Associazione "Campo Scuola Almenno San Bartolomeo A.P.S.". Per ragioni organizzative, assicurative e di legge (Codice del Terzo Settore), la partecipazione alle attività è riservata solo ai soci della predetta Associazione.</p>
+          <p>Avendo già ricevuto i dati anagrafici dei ragazzi e dei genitori tramite il modulo di iscrizione al campo, vi è richiesto di compilare questo modulo di integrazione.</p>
+          <p>Con la presente desideriamo informarvi che:</p>
+          <ol>
+            <li><strong>Quota Associativa:</strong> una parte della quota di iscrizione, già versata o che verserete, (pari a <strong>10,00 €</strong>) verrà ufficialmente imputata come quota associativa annuale per il minore, senza alcun aggravio di costi.</li>
+            <li><strong>Iscrizione al Libro Soci:</strong> diventando associati, i ragazzi verranno automaticamente iscritti nel Libro dei Soci dell'APS, garantendo così la copertura assicurativa e il diritto di partecipazione all'evento e all'Associazione stessa.</li>
+            <li><strong>Accettazione Statuto:</strong> con la partecipazione al campo, si intende accettato lo Statuto dell'Associazione "Campo Scuola Almenno San Bartolomeo A.P.S." (disponibile per la consultazione presso la nostra sede).</li>
+          </ol>
+          <div class="mod-highlight">
+            <strong>Cosa dovete fare?</strong> Al fine di una corretta gestione amministrativa, vi chiediamo di compilare e sottoscrivere in tutte le sue parti il modulo qui sotto per la richiesta di ammissione Socio del partecipante (in caso di minore, il genitore dovrà sottoscrivere la richiesta) e di trasmetterlo per mail oppure di consegnare il cartaceo quando porterete i ragazzi al campo.
+          </div>
+          <p style="text-align:right;font-style:italic;">Il Direttivo Campo Scuola Almenno San Bartolomeo APS</p>
+        </div>
+
+        <div class="mod-green-title-box">Dati del maggiorenne o del genitore</div>
+        <div class="mod-grid" style="border-top:none;">
+          <div class="mod-field mod-full">
+            <label for="aps-cognome-genitore">Cognome e Nome</label>
+            <input type="text" id="aps-cognome-genitore" name="aps-cognome-genitore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-luogo-nascita-genitore">Luogo di nascita</label>
+            <input type="text" id="aps-luogo-nascita-genitore" name="aps-luogo-nascita-genitore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-prov-nascita-genitore">Prov. di nascita</label>
+            <input type="text" id="aps-prov-nascita-genitore" name="aps-prov-nascita-genitore" maxlength="2" style="text-transform:uppercase;">
+          </div>
+          <div class="mod-field">
+            <label for="aps-data-nascita-genitore">Data di nascita</label>
+            <input type="date" id="aps-data-nascita-genitore" name="aps-data-nascita-genitore" required>
+          </div>
+          <div class="mod-field mod-full">
+            <label for="aps-residenza-genitore">Residenza</label>
+            <input type="text" id="aps-residenza-genitore" name="aps-residenza-genitore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-telefono-genitore">Telefono</label>
+            <input type="tel" id="aps-telefono-genitore" name="aps-telefono-genitore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-email-genitore">Mail</label>
+            <input type="email" id="aps-email-genitore" name="aps-email-genitore" required>
+          </div>
+          <div class="mod-field mod-full">
+            <label class="mod-check"><input type="checkbox" id="aps-potesta-genitoriale" name="aps-potesta-genitoriale" required><span>In qualità di esercente la potestà genitoriale del/della minore</span></label>
+          </div>
+        </div>
+
+        <div class="mod-green-title-box" style="margin-top:var(--space-sm);">Dati del minore (aspirante socio)</div>
+        <div class="mod-grid">
+          <div class="mod-field mod-full">
+            <label for="aps-cognome-minore">Cognome e Nome</label>
+            <input type="text" id="aps-cognome-minore" name="aps-cognome-minore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-luogo-nascita-minore">Luogo di nascita</label>
+            <input type="text" id="aps-luogo-nascita-minore" name="aps-luogo-nascita-minore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-prov-nascita-minore">Prov. di nascita</label>
+            <input type="text" id="aps-prov-nascita-minore" name="aps-prov-nascita-minore" maxlength="2" style="text-transform:uppercase;">
+          </div>
+          <div class="mod-field">
+            <label for="aps-data-nascita-minore">Data di nascita</label>
+            <input type="date" id="aps-data-nascita-minore" name="aps-data-nascita-minore" required>
+          </div>
+          <div class="mod-field mod-full">
+            <label for="aps-residenza-minore">Residenza</label>
+            <input type="text" id="aps-residenza-minore" name="aps-residenza-minore" required>
+          </div>
+          <div class="mod-field">
+            <label for="aps-telefono-minore">Telefono <em>(se presente)</em></label>
+            <input type="tel" id="aps-telefono-minore" name="aps-telefono-minore">
+          </div>
+          <div class="mod-field">
+            <label for="aps-email-minore">Mail <em>(se presente)</em></label>
+            <input type="email" id="aps-email-minore" name="aps-email-minore">
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--color-border);border-top:none;padding:0.6rem 0.7rem;">
+          <ul style="padding-left:1.2rem;font-size:var(--fs-sm);line-height:1.7;margin-bottom:var(--space-sm);">
+            <li>avendo preso visione dello Statuto dell'Organizzazione di volontariato;</li>
+            <li>condividendo la democraticità della struttura, l'elettività e la gratuità delle cariche associative;</li>
+            <li>consapevole delle finalità di solidarietà sociale che l'Organizzazione di volontariato promuove;</li>
+            <li>dichiarando l'inesistenza di pendenze penali a suo carico;</li>
+          </ul>
+          <p class="mod-legal" style="text-align:center;font-weight:700;text-transform:uppercase;">Chiede</p>
+          <label class="mod-check" style="margin-bottom:var(--space-sm);"><input type="checkbox" id="aps-richiesta-ammissione" name="aps-richiesta-ammissione" required><span>Di ammettere il/la minore sopra indicato/a quale socio ordinario dell'Associazione, versando contestualmente la quota annuale stabilita (pari a <strong>10,00 €</strong>), già versata nella quota d'iscrizione del Campo Scuola Giovani Alpini 2026.</span></label>
+          <div class="mod-signature">
+            <span class="mod-signature-caption">Luogo e data · Firma — richiesta di ammissione</span>
+            <div class="mod-field">
+              <label for="aps-luogo-firma-1">Luogo</label>
+              <input type="text" id="aps-luogo-firma-1" name="aps-luogo-firma-1" required>
+            </div>
+            <div class="mod-field">
+              <label for="aps-data-firma-1">Data</label>
+              <input type="date" id="aps-data-firma-1" name="aps-data-firma-1" required>
+            </div>
+            <div class="mod-field mod-full">
+              <label for="aps-firma-1">Firma digitale: nome e cognome</label>
+              <input type="text" id="aps-firma-1" name="aps-firma-1" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagina 3 del Modulo.APS.pdf — Informativa privacy -->
+        <div class="mod-green-title-box" style="margin-top:var(--space-lg);">Informativa al trattamento dei dati personali</div>
+        <div style="border:1px solid var(--color-border);border-top:none;padding:0.6rem 0.7rem;">
+          <p class="mod-legal">Ai sensi e nel rispetto del D.Lgs. 196/03, in materia di trattamento di dati personali e misure minime di sicurezza, l'Associazione "Campo Scuola Almenno San Bartolomeo A.P.S." in qualità di titolare del trattamento, è tenuta a fornire alcune informazioni riguardanti l'utilizzo di tali dati:</p>
+          <p class="mod-legal"><strong>Fonte dei dati personali</strong> — i dati personali dei soci sono direttamente e liberamente forniti dall'interessato.</p>
+          <p class="mod-legal"><strong>Finalità del trattamento a cui sono destinati i dati</strong> — i dati personali sono trattati nell'ambito della normale attività dell'associazione e secondo le seguenti finalità:</p>
+          <ul style="padding-left:1.2rem;font-size:var(--fs-xs);line-height:1.65;margin-bottom:var(--space-sm);">
+            <li>a) per le quali non occorre il consenso sulla base di obblighi di legge, precontrattuali o contrattuali: tenuta e gestione dei libri sociali e previsti dallo statuto; finalità connesse con lo scopo e la natura dell'associazione, come previsto dallo statuto; finalità connesse a obblighi previsti da leggi, nonché da disposizioni impartite da autorità a ciò legittimate dalla legge; accertamento, esercizio o difesa di un diritto in sede giudiziale e stragiudiziale (legittimo interesse);</li>
+            <li>b) per il trattamento (ad esclusione della comunicazione) nell'ambito delle legittime attività dell'associazione di dati appartenenti a categorie particolari di dati personali (relativi allo stato di salute, all'origine razziale ed etnica, alla vita ed orientamento sessuale, biometrici o genetici) riguardanti i membri, gli ex membri o le persone che hanno regolari contatti con l'associazione;</li>
+            <li>c) per le quali l'interessato ha facoltà di manifestare o no il consenso per finalità funzionali all'attività dell'associazione (ad es. promozione, invio periodico di comunicazioni elettroniche, ecc.).</li>
+          </ul>
+          <p class="mod-legal"><strong>Modalità di trattamento dei dati</strong> — per trattamento dei dati si intende la loro raccolta, registrazione, organizzazione, conservazione, elaborazione, modificazione, cancellazione e distruzione ovvero la combinazione di due o più di tali operazioni. In relazione alle sopraindicate finalità, il trattamento dei dati personali avviene mediante strumenti manuali, informatici e telematici, con logiche strettamente correlate alle finalità stesse e, comunque, in modo da garantire la sicurezza e la riservatezza. I dati personali saranno dunque trattati in modo lecito e secondo correttezza, raccolti e registrati per scopi determinati, espliciti e legittimi, esatti, e se necessario aggiornati, pertinenti, completi e non eccedenti rispetto alle finalità del trattamento, protetti con misure adeguate di sicurezza. Non è svolto un processo decisionale automatizzato (ad es. di profilazione). Il trattamento avverrà prevalentemente in Italia e UE, ma potrebbe anche svolgersi in paesi extra-UE ed extra-SEE qualora ritenuto funzionale all'efficiente assolvimento delle finalità perseguite nel rispetto delle garanzie a favore degli interessati. I dati non saranno oggetto di diffusione.</p>
+          <p class="mod-legal"><strong>Periodo di conservazione</strong> — i dati personali saranno conservati, in generale, fintanto che perdurano le finalità del trattamento: ad esempio saranno conservati per tutta la durata del rapporto contrattuale e, dopo la sua conclusione, fino al termine della prescrizione legale (10 anni) purché il rapporto non si rinnovi nuovamente.</p>
+          <p class="mod-legal"><strong>Conferimento dei dati e conseguenze del rifiuto</strong> — nel caso in cui l'interessato non comunichi i propri dati anagrafici non sarà possibile procedere all'erogazione dei servizi richiesti dall'interessato. Tutti i dati non necessari per procedere all'erogazione dei servizi richiesti dall'interessato, sono facoltativi.</p>
+          <p class="mod-legal"><strong>Categorie di destinatari</strong> — i dati (solo quelli indispensabili) sono comunicati a incaricati e responsabili del trattamento, tanto interni all'organizzazione della scrivente, quanto esterni, che svolgono specifici compiti ed operazioni, nei casi ed ai soggetti previsti dalla legge.</p>
+          <p class="mod-legal"><strong>Diritti dell'interessato</strong> — in ogni momento potrà: esercitare i Suoi diritti (accesso, rettifica, cancellazione, limitazione, portabilità, opposizione, assenza di processi di decisione automatizzati) quando previsto nei confronti del titolare del trattamento, ai sensi degli artt. dal 15 al 22 del GDPR; proporre reclamo al Garante (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>); qualora il trattamento si basi sul consenso, revocare tale consenso prestato, tenuto conto che la revoca del consenso non pregiudica la liceità del trattamento basata sul consenso prima della revoca.</p>
+          <p class="mod-legal"><strong>Recapiti e contatti</strong> — il Titolare del trattamento dei dati è l'Associazione "Campo Scuola Almenno San Bartolomeo A.P.S." nella persona del suo presidente pro-tempore, Donghi Domenico, domiciliato per questo incarico c/o la sede dell'Associazione — mail <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a>.</p>
+        </div>
+
+        <div class="mod-green-title-box" style="margin-top:var(--space-sm);">Presa visione e ulteriori consensi dell'interessato</div>
+        <div style="border:1px solid var(--color-border);border-top:none;padding:0.6rem 0.7rem;">
+          <p class="mod-legal">Ai sensi del Reg. (UE) 2016/679, io sottoscritto/a, in qualità di titolare della responsabilità genitoriale del/della minore, prendo atto dell'informativa di cui sopra ed in particolare relativa al trattamento, mediante strumenti elettronici e non, in Italia, in UE ed eventualmente al di fuori, adottando tutte le misure di sicurezza necessarie, dei dati personali richiesti per l'adesione all'Associazione "Campo Scuola Almenno San Bartolomeo A.P.S.".</p>
+          <div class="mod-grid">
+            <div class="mod-field mod-full">
+              <label for="aps-nome-sottoscritto-privacy">Io sottoscritto/a</label>
+              <input type="text" id="aps-nome-sottoscritto-privacy" name="aps-nome-sottoscritto-privacy" required>
+            </div>
+            <div class="mod-field mod-full">
+              <label class="mod-check"><input type="checkbox" id="aps-titolare-responsabilita" name="aps-titolare-responsabilita" required><span>Titolare della responsabilità genitoriale del/della minore</span></label>
+            </div>
+            <div class="mod-field mod-full">
+              <label for="aps-nome-minore-privacy">Nome e cognome del/della minore</label>
+              <input type="text" id="aps-nome-minore-privacy" name="aps-nome-minore-privacy" required>
+            </div>
+          </div>
+          <p class="mod-legal">Inoltre, al trattamento dei dati personali per finalità funzionali all'attività dell'associazione quali ad es. promozione ed invio periodico di comunicazioni elettroniche, ecc.:</p>
+          <div class="mod-radio-row mb-sm" style="margin-bottom:var(--space-sm);">
+            <label class="mod-radio"><input type="radio" name="aps-consenso-marketing" value="acconsento" id="aps-marketing-si" required> Acconsento</label>
+            <label class="mod-radio"><input type="radio" name="aps-consenso-marketing" value="non-acconsento" id="aps-marketing-no" required> Non acconsento</label>
+          </div>
+          <div class="mod-signature">
+            <span class="mod-signature-caption">Luogo e data · Firma — informativa privacy</span>
+            <div class="mod-field">
+              <label for="aps-luogo-firma-2">Luogo</label>
+              <input type="text" id="aps-luogo-firma-2" name="aps-luogo-firma-2" required>
+            </div>
+            <div class="mod-field">
+              <label for="aps-data-firma-2">Data</label>
+              <input type="date" id="aps-data-firma-2" name="aps-data-firma-2" required>
+            </div>
+            <div class="mod-field mod-full">
+              <label for="aps-firma-2">Firma digitale: nome e cognome</label>
+              <input type="text" id="aps-firma-2" name="aps-firma-2" required>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mod-actions">
+        <button type="submit" class="btn btn-primary btn-block">Invia richiesta di ammissione a socio</button>
+        <button type="button" id="btn-scarica-pdf-aps" class="btn btn-outline">Scarica modulo compilato (PDF)</button>
+      </div>
+      <p class="form-note" style="padding:0 var(--space-lg);">L'invio registra la richiesta nel foglio dell'organizzazione, nel tab dedicato al modulo APS. Se l'invio non riuscisse, manda il modulo a <a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a>.</p>
+      <p class="form-success mt-sm" style="margin:0 var(--space-lg) var(--space-lg);">Richiesta di ammissione a socio registrata! L'Associazione la userà per l'iscrizione al Libro Soci dell'A.P.S.</p>
+      <p class="form-error mt-sm" style="margin:0 var(--space-lg) var(--space-lg);"></p>
+    </form>
+
+    <p class="mod-footer-note text-center" style="max-width:794px;margin:var(--space-md) auto 0;">
+      Fonte del contenuto: <a href="Modulo.APS.pdf" target="_blank" rel="noopener">modulo ufficiale di ammissione a Socio A.P.S. (PDF)</a>.
+    </p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="grid grid-2" style="align-items:center;">
+      <div class="reveal">
+        <span class="eyebrow">Il primo giorno</span>
+        <h2>Il saluto prima del turno</h2>
+        <p class="mt-sm">Zaino in spalla e saluto ai genitori: comincia così ogni turno del campo scuola.</p>
+      </div>
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/saluto-arrivo-campo.jpg" alt="Saluto tra genitore e figlio il giorno dell'arrivo al campo" loading="lazy">
+    </div>
+  </div>
+</section>
+
+</div><!-- /.iscrizioni-contenuto -->
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="foto/sito/logo-ufficiale-web.png" alt="Campo Scuola Giovani Alpini ASB" class="brand-mark"> Campo Scuola Giovani Alpini ASB</div>
+        <p>Gruppo Alpini Almenno San Bartolomeo — campo scuola estivo per ragazzi 8-14 anni, nell'Oasi del Brembo.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/camposcuolagiovanialpini/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7C16.6 3.6 15.5 3.5 14.2 3.5c-2.6 0-4.4 1.6-4.4 4.5v2.9H7v3.1h2.8V21h3.7z"/></svg></a>
+          <a href="https://www.instagram.com/campoalpini.almennosb/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        </div>
+        <p class="footer-credit">Sito realizzato da <a href="https://siti.quadralabs.eu/" target="_blank" rel="noopener">QUADRALABS</a></p>
+      </div>
+      <div>
+        <h4>Il Campo</h4>
+        <ul>
+          <li><a href="il-campo.html">Il Campo Scuola</a></li>
+          <li><a href="calendario.html">Calendario</a></li>
+          <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — voce Iscrizioni nel footer
+          <li><a href="iscrizioni.html">Iscrizioni</a></li>
+          -->
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Il Gruppo</h4>
+        <ul>
+          <li><a href="galleria.html">Galleria</a></li>
+          <li><a href="sponsor.html">Sponsor</a></li>
+          <li><a href="merch.html">Merchandising</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>Via Campino, Almenno San Bartolomeo (BG)</li>
+          <li><a href="tel:+390350267127">+39 035 0267127</a></li>
+          <li><a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Campo Scuola Giovani Alpini — Gruppo Alpini Almenno San Bartolomeo</span>
+      <span><a href="privacy.html">Privacy</a> &middot; <a href="cookie.html">Cookie Policy</a> &middot; <button type="button" class="cc-prefs-link">Preferenze cookie</button></span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

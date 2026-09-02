@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario Eventi — Campo Scuola Giovani Alpini ASB</title>
+<meta name="description" content="Calendario dei turni del Campo Scuola 2026 e degli eventi annuali del Gruppo Alpini di Almenno San Bartolomeo.">
+<script src="cookie-consent.js"></script>
+<link rel="icon" type="image/png" href="foto/sito/logo-ufficiale-web.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="foto/sito/logo-ufficiale-web.png" alt="Logo Campo Scuola Giovani Alpini ASB" class="brand-mark">
+      <span class="brand-text">Campo Scuola<br><small>Giovani Alpini ASB</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="il-campo.html">Il Campo</a>
+      <a href="calendario.html" class="active">Calendario</a>
+      <a href="galleria.html">Galleria</a>
+      <a href="merch.html">Merchandising</a>
+      <a href="sponsor.html">Sponsor</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contatti.html">Contatti</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="contatti.html" class="btn btn-outline btn-sm">Contatti</a>
+      <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — bottone Iscriviti della navbar
+      <a href="iscrizioni.html" class="btn btn-primary btn-sm">Iscriviti</a>
+      -->
+    </div>
+    <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="page-hero" style="background-image:linear-gradient(180deg, rgba(20,51,31,0.45) 0%, rgba(20,51,31,0.88) 100%), url('foto/sito/hero-calendario.jpg');background-size:cover;background-position:center;">
+  <div class="container">
+    <p class="breadcrumb"><a href="index.html">Home</a> / Calendario</p>
+    <span class="eyebrow">Estate 2026</span>
+    <h1>Calendario Eventi</h1>
+    <p>I sei turni del campo scuola e gli appuntamenti del Gruppo Alpini durante l'anno.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="calendar-single reveal">
+      <div class="calendar-nav">
+        <button type="button" id="cal-prev" class="cal-nav-btn" aria-label="Mese precedente">&lsaquo;</button>
+        <h2 id="cal-month-label">—</h2>
+        <button type="button" id="cal-next" class="cal-nav-btn" aria-label="Mese successivo">&rsaquo;</button>
+      </div>
+      <div class="month-grid" id="cal-grid"></div>
+    </div>
+
+    <div class="month-activities reveal">
+      <h3 id="activities-month-label">Attività</h3>
+      <div id="activities-list" class="social-events-list"></div>
+      <p id="activities-empty" class="activities-empty" style="display:none;">Nessuna attività in programma questo mese.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Momenti dell'anno</span>
+      <h2>Cerimonie e serate del campo</h2>
+      <p>Alzabandiera, falò e momenti conviviali che scandiscono ogni turno.</p>
+    </div>
+    <div class="grid grid-3">
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/falo-tramonto-cerchio.jpg" alt="Cerchio attorno al fuoco al tramonto" loading="lazy">
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/falo-notte-gruppo.jpg" alt="Falò serale, rito di fine turno" loading="lazy">
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/falo-abbraccio-cerchio.jpg" alt="Cerchio con le braccia sulle spalle attorno al falò" loading="lazy">
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/alzabandiera-dallalto-1.jpg" alt="Alzabandiera visto dall'alto" loading="lazy">
+      <img class="real-photo placeholder-4-3 reveal" src="foto/sito/reali/alzabandiera-dallalto-2.jpg" alt="Alzabandiera con bandiera italiana ed europea" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><img src="foto/sito/logo-ufficiale-web.png" alt="Campo Scuola Giovani Alpini ASB" class="brand-mark"> Campo Scuola Giovani Alpini ASB</div>
+        <p>Gruppo Alpini Almenno San Bartolomeo — campo scuola estivo per ragazzi 8-14 anni, nell'Oasi del Brembo.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/camposcuolagiovanialpini/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7C16.6 3.6 15.5 3.5 14.2 3.5c-2.6 0-4.4 1.6-4.4 4.5v2.9H7v3.1h2.8V21h3.7z"/></svg></a>
+          <a href="https://www.instagram.com/campoalpini.almennosb/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        </div>
+        <p class="footer-credit">Sito realizzato da <a href="https://siti.quadralabs.eu/" target="_blank" rel="noopener">QUADRALABS</a></p>
+      </div>
+      <div>
+        <h4>Il Campo</h4>
+        <ul>
+          <li><a href="il-campo.html">Il Campo Scuola</a></li>
+          <li><a href="calendario.html">Calendario</a></li>
+          <!-- ISCRIZIONI-NASCOSTE 2026-08-24 — voce Iscrizioni nel footer
+          <li><a href="iscrizioni.html">Iscrizioni</a></li>
+          -->
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Il Gruppo</h4>
+        <ul>
+          <li><a href="galleria.html">Galleria</a></li>
+          <li><a href="sponsor.html">Sponsor</a></li>
+          <li><a href="merch.html">Merchandising</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contatti</h4>
+        <ul>
+          <li>Via Campino, Almenno San Bartolomeo (BG)</li>
+          <li><a href="tel:+390350267127">+39 035 0267127</a></li>
+          <li><a href="mailto:camposcuolaasb24@gmail.com">camposcuolaasb24@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Campo Scuola Giovani Alpini — Gruppo Alpini Almenno San Bartolomeo</span>
+      <span><a href="privacy.html">Privacy</a> &middot; <a href="cookie.html">Cookie Policy</a> &middot; <button type="button" class="cc-prefs-link">Preferenze cookie</button></span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

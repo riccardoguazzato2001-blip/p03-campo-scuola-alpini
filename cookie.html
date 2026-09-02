@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Policy — Campo Scuola Giovani Alpini ASB</title>
+<script src="cookie-consent.js"></script>
+<link rel="icon" type="image/png" href="foto/sito/logo-ufficiale-web.png">
+<link rel="stylesheet" href="style.css">
+<style>
+  .privacy-wrap { padding: var(--space-xl) 0; max-width: 820px; }
+  .privacy-wrap h2 { font-size: var(--fs-lg); margin: var(--space-lg) 0 var(--space-xs); color: var(--color-primary-dark); }
+  .privacy-wrap h3 { font-size: var(--fs-md); margin: var(--space-md) 0 var(--space-xs); color: var(--color-primary-dark); }
+  .privacy-wrap p, .privacy-wrap li { color: var(--color-text-muted); margin-bottom: 0.6rem; }
+  .privacy-wrap ul { padding-left: 1.3rem; list-style: disc; }
+  .cookie-table { width: 100%; border-collapse: collapse; margin: var(--space-sm) 0 var(--space-md); font-size: var(--fs-sm); }
+  .cookie-table th, .cookie-table td { border: 1px solid var(--color-border); padding: 0.55rem 0.7rem; text-align: left; vertical-align: top; }
+  .cookie-table th { background: var(--color-bg-alt); font-family: var(--font-heading); color: var(--color-primary-dark); }
+  .cookie-table td { color: var(--color-text-muted); }
+  .table-scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="foto/sito/logo-ufficiale-web.png" alt="Logo Campo Scuola Giovani Alpini ASB" class="brand-mark">
+      <span class="brand-text">Campo Scuola<br><small>Giovani Alpini ASB</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">&larr; Torna al sito</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container privacy-wrap">
+  <h1>Cookie Policy</h1>
+
+  <p>Questa pagina spiega quali cookie e strumenti simili usa il sito e come gestire il consenso.
+  Per il trattamento dei dati personali (moduli iscrizioni e contatti) vedi l'<a href="privacy.html">Informativa Privacy</a>.</p>
+
+  <h2>Cosa sono i cookie</h2>
+  <p>I cookie sono piccoli file che un sito salva nel browser. Rientrano nella stessa disciplina anche tecnologie
+  equivalenti come <code>localStorage</code>. Si distinguono in:</p>
+  <ul>
+    <li><strong>Tecnici / necessari</strong>: servono al funzionamento del sito. Non richiedono consenso.</li>
+    <li><strong>Funzionali e di terze parti</strong>: attivano servizi esterni (in questo sito: tipografia e mappa).
+    Vengono caricati <strong>solo dopo un consenso esplicito</strong>.</li>
+    <li><strong>Di profilazione / marketing</strong>: <strong>questo sito non ne usa</strong>.</li>
+  </ul>
+
+  <h2>1. Strumenti tecnici (sempre attivi)</h2>
+  <p>Sono impostati da questo dominio, non trasmettono dati a terzi e non richiedono consenso.</p>
+  <div class="table-scroll">
+  <table class="cookie-table">
+    <thead>
+      <tr><th>Nome</th><th>Tipo</th><th>Finalit&agrave;</th><th>Durata</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>cc_consent_v1</code></td>
+        <td>localStorage, primo dominio</td>
+        <td>Memorizza la scelta fatta su questo banner cookie, per non richiederla a ogni visita.</td>
+        <td>Finch&eacute; non viene cancellata dall'utente o modificata da "Preferenze cookie".</td>
+      </tr>
+      <tr>
+        <td><code>camposcuola-sessione-2026</code></td>
+        <td>localStorage, primo dominio</td>
+        <td>Solo nella pagina Iscrizioni (quando attiva): mantiene lo stato di accesso al modulo dopo la
+        verifica via email. Contiene solo il token di sessione, non i dati compilati nel modulo.</td>
+        <td>Fino al logout o alla scadenza della sessione.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Calendario eventi (connessione tecnica a Google Sheets)</h3>
+  <p>Le pagine Home e Calendario leggono gli eventi da un foglio Google pubblico
+  (<code>docs.google.com</code>) usato come semplice archivio dei contenuti. &Egrave; una richiesta di
+  <strong>soli dati, senza cookie e senza credenziali</strong>: a Google arrivano l'indirizzo IP e l'URL del
+  foglio, nient'altro. Serve a far funzionare il calendario, quindi non viene disattivata dal banner.
+  In una versione di produzione si pu&ograve; valutare di spostare questi dati su un backend proprio.</p>
+
+  <h2>2. Servizi funzionali e di terze parti (previo consenso)</h2>
+  <p>Restano <strong>disattivati</strong> finch&eacute; non si acconsente dal banner o da "Preferenze cookie".
+  Senza consenso il sito usa i font di sistema e la mappa resta un segnaposto (con possibilit&agrave; di
+  caricarla solo per quella volta).</p>
+  <div class="table-scroll">
+  <table class="cookie-table">
+    <thead>
+      <tr><th>Servizio</th><th>Fornitore</th><th>Dove</th><th>Dati / cookie</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Google Fonts</td>
+        <td>Google Ireland Ltd. / Google LLC (USA)</td>
+        <td>Tutte le pagine (tipografia)</td>
+        <td>Nessun cookie, ma la richiesta ai domini <code>fonts.googleapis.com</code> e
+        <code>fonts.gstatic.com</code> comunica a Google l'indirizzo IP e i dati tecnici del browser.</td>
+      </tr>
+      <tr>
+        <td>Google Maps (mappa incorporata)</td>
+        <td>Google Ireland Ltd. / Google LLC (USA)</td>
+        <td>Home page (footer) e pagina Contatti</td>
+        <td>Google imposta propri cookie sul dominio <code>google.com</code> (es. preferenze e sicurezza del
+        servizio mappe) e riceve l'indirizzo IP. Governati dalla
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">privacy policy di Google</a>.</td>
+      </tr>
+      <tr>
+        <td>jsDelivr (librerie jsPDF e html2canvas)</td>
+        <td>jsDelivr / Prospect One</td>
+        <td>Solo pagina Iscrizioni, e <strong>solo</strong> se l'utente clicca "Scarica modulo compilato"
+        (non al caricamento della pagina)</td>
+        <td>Nessun cookie; la richiesta a <code>cdn.jsdelivr.net</code> comunica l'indirizzo IP. Serve a generare
+        il PDF del modulo nel browser.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>3. Pagamenti con carta &mdash; Stripe</h2>
+  <p>Il negozio (pagina Merchandising) user&agrave; <strong>Stripe</strong> per i pagamenti con carta. Riguardo ai cookie:</p>
+  <ul>
+    <li>questo sito <strong>non carica alcuno script Stripe</strong> e <strong>non imposta alcun cookie Stripe</strong>;</li>
+    <li>cliccando "Paga con carta" l'utente <strong>lascia il sito</strong> e viene portato su
+    <code>buy.stripe.com</code> (Stripe Payments Europe, Ltd.), che applica la propria
+    <a href="https://stripe.com/it/privacy" target="_blank" rel="noopener">informativa privacy</a> e la propria
+    <a href="https://stripe.com/it/legal/cookies-policy" target="_blank" rel="noopener">cookie policy</a>;</li>
+    <li>i cookie eventualmente impostati l&agrave; sono <strong>strettamente necessari</strong> al pagamento e alla
+    prevenzione delle frodi e <strong>non richiedono consenso su questo sito</strong>, perch&eacute; non sono
+    impostati da questo sito;</li>
+    <li>al momento il pagamento con carta <strong>non &egrave; ancora attivo</strong> (i link Stripe sono segnaposto).</li>
+  </ul>
+  <p><em>Nota di manutenzione:</em> se in futuro si integrasse <code>js.stripe.com</code> direttamente su
+  <code>merch.html</code> (es. Stripe Checkout incorporato o Payment Element), i relativi cookie
+  (<code>__stripe_mid</code>, <code>__stripe_sid</code>) verrebbero gestiti da questo sito e andrebbe aggiunta
+  una categoria dedicata nel banner e in questa pagina.</p>
+
+  <h2>4. Come dare, modificare o revocare il consenso</h2>
+  <ul>
+    <li>Al primo accesso compare un banner con "Accetta tutti", "Rifiuta" e "Personalizza". Nessuna opzione
+    &egrave; preselezionata e la semplice chiusura o lo scorrimento della pagina non valgono come consenso.</li>
+    <li>In qualsiasi momento si pu&ograve; cambiare scelta dal link <strong>"Preferenze cookie"</strong> nel
+    fondo di ogni pagina.</li>
+    <li>Revocando il consenso la pagina viene ricaricata e i servizi di terze parti tornano disattivati.</li>
+    <li>&Egrave; anche possibile cancellare cookie e dati dei siti dalle impostazioni del browser
+    (sezione Privacy / Cookie).</li>
+  </ul>
+
+  <h2>Titolare</h2>
+  <p>Gruppo Alpini Almenno San Bartolomeo, Via IV Novembre 64, 24030 Almenno San Bartolomeo (BG).
+  Recapiti nella <a href="contatti.html">pagina contatti</a>.</p>
+
+  <p style="margin-top:var(--space-lg);"><small>Ultimo aggiornamento: 27 agosto 2026.</small></p>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none;padding-top:0;">
+    <span>&copy; 2026 Campo Scuola Giovani Alpini &mdash; Gruppo Alpini Almenno San Bartolomeo</span>
+    <span><a href="privacy.html">Privacy</a> &middot; <button type="button" class="cc-prefs-link">Preferenze cookie</button></span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
