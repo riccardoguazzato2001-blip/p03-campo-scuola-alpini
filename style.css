@@ -92,6 +92,32 @@ p { color: var(--color-text); }
 section { padding: var(--space-2xl) 0; }
 section.section-alt { background: var(--color-bg-alt); }
 
+/* --- Sezione "Che cos'è" (home): logo come filigrana artistica ---------------
+   Il logo ufficiale sborda in basso a destra della sezione come watermark
+   discreto. Solo decorativo: pseudo-elemento, niente <img>/alt (il logo è già
+   esposto con testo alternativo in header e footer). `overflow:hidden` contiene
+   lo sbordo; `mix-blend-mode:multiply` fa sparire il disco bianco dell'immagine
+   sullo sfondo chiaro della sezione. Il testo resta sopra (z-index sul
+   container) e a piena leggibilità (opacità bassa, silhouette tenuta a margine). */
+.che-cose { position: relative; overflow: hidden; }
+.che-cose > .container { position: relative; z-index: 1; }
+.che-cose::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: auto -6% -13% auto;
+  width: min(600px, 80vw);
+  aspect-ratio: 1;
+  background: url("foto/sito/logo-ufficiale-trasparente.png") right bottom / contain no-repeat;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(305deg, #000 46%, transparent 86%);
+          mask-image: linear-gradient(305deg, #000 46%, transparent 86%);
+}
+@media (max-width: 640px) {
+  .che-cose::before { width: 76vw; inset: auto -14% -8% auto; opacity: 0.11; }
+}
+
 /* --- Utility --- */
 .text-center { text-align: center; }
 .eyebrow {

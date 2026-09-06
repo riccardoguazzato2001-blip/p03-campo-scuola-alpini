@@ -1,0 +1,19 @@
+{
+  "name": "Campo Scuola Giovani Alpini di Almenno San Bartolomeo",
+  "short_name": "Campo Alpini Almenno",
+  "description": "Campo scuola estivo per ragazzi 8-14 anni nell'Oasi del Brembo ad Almenno San Bartolomeo (Bergamo).",
+  "lang": "it",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#f2f0e8",
+  "theme_color": "#1f4d34",
+  "icons": [
+    {
+      "src": "/foto/sito/logo-ufficiale-web.png",
+      "sizes": "240x241",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
