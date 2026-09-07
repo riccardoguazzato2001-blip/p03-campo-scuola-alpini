@@ -857,25 +857,27 @@ function initTimelineScroll() {
   const fill = document.querySelector('.timeline-line-fill');
   if (!container || !line || !fill) return;
 
-  // Valori di layout che cambiano solo con un reflow/resize: letti una volta qui,
-  // non a ogni scroll (evita il read->write->read->write che faceva thrash).
-  let totalHeight = 0, vh = 0, ticking = false;
-  function measure() {
-    totalHeight = container.offsetHeight;
-    vh = window.innerHeight;
-    line.style.height = totalHeight + 'px';
-  }
-
-  // Path di scroll: una sola lettura (getBoundingClientRect), poi solo scritture.
+  // Il thrash originale non erano le letture: era la scrittura di line.style.height
+  // in mezzo a due letture (offsetHeight -> write -> getBoundingClientRect), che
+  // forzava un reflow a meta' funzione. Qui: TUTTE le letture, poi TUTTE le scritture
+  // = un solo flush di layout per frame, e valori sempre freschi (il container
+  // cambia altezza quando arrivano i webfont, senza 'resize'; vh cambia col collasso
+  // della barra indirizzi su mobile, senza 'resize').
+  let ticking = false;
   function update() {
     ticking = false;
+    // letture
+    const totalHeight = container.offsetHeight;
     const rect = container.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // scritture
+    const h = totalHeight + 'px';
+    if (line.style.height !== h) line.style.height = h;
     const startLine = vh * 0.1;
     const endLine = vh * 0.5;
     const denom = startLine - endLine + rect.height;
     let progress = denom !== 0 ? (startLine - rect.top) / denom : 0;
     progress = Math.max(0, Math.min(1, progress));
-
     fill.style.height = (progress * totalHeight) + 'px';
     fill.style.opacity = Math.max(0, Math.min(1, progress / 0.1));
   }
@@ -885,10 +887,12 @@ function initTimelineScroll() {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }
 
-  measure();
   update();
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => { measure(); update(); });
+  window.addEventListener('resize', onScroll);
+  // I webfont (iniettati da cookie-consent.js dopo il consenso) cambiano l'altezza
+  // del container senza emettere 'resize': ricalcola quando sono pronti.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
 }
 
 /* --- Sfera 3D degli sponsor (sponsor.html) ---
