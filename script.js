@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAccordion();
   initGalleryFilters();
   initBookCarousels();   // <-- caroselli "a carte impilate" per edizione (galleria)
+  initPhotoCarousels();  // <-- caroselli "a slide orizzontale" (timeline il-campo + index)
   initLightbox();
   initCalendarSingle();
   initUpcomingEvents();   // <-- card "Prossimi eventi" in index.html
@@ -2431,4 +2432,192 @@ function initBookCarousels() {
       instances.forEach((render) => render());
     }, 150);
   });
+}
+
+/* --- Caroselli foto "a slide orizzontale" (modello framer-carousel, vedi
+   prompt-carosello) — port in JS puro: niente motion/react.
+   Si applica a:
+     - le 16 griglie .grid-4.timeline-images di il-campo.html (foto libro per edizione);
+     - la griglia .grid-4 "Momenti dalle edizioni passate" di index.html, marcata
+       con [data-photo-carousel].
+   galleria.html usa un altro modello (initBookCarousels, carte impilate) e resta
+   fuori: nessun selettore qui la tocca.
+
+   Come initBookCarousels: la griglia statica e' il fallback per no-JS e per
+   prefers-reduced-motion (la guardia sotto esce prima di toccare il DOM).
+   Modello NON infinito: le frecce si disattivano ai bordi. Swipe e tastiera sono
+   aggiunte nostre, il componente originale nasce solo per desktop.
+
+   Le foto della timeline restano gli stessi nodi .gallery-item[data-group=
+   "timeline"], quindi initLightbox() continua a funzionare senza modifiche: un
+   tap breve fa partire un click() reale sulla foto in primo piano e apre la
+   lightbox; le frecce della lightbox scorrono tutto il gruppo. Le foto di
+   index.html sono <picture> nudi e restano non cliccabili, come prima. */
+function initPhotoCarousels() {
+  const grids = document.querySelectorAll('.timeline-images, [data-photo-carousel]');
+  if (!grids.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const svgArrow = (d) =>
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${d}"/></svg>`;
+
+  function mount(grid) {
+    // Slide = figli diretti della griglia che contengono un'immagine.
+    const slides = Array.from(grid.children).filter((el) => el.querySelector && el.querySelector('img'));
+    if (slides.length < 2) return;
+    const total = slides.length;
+
+    // aria-label dal titolo piu' vicino: l'edizione nella timeline, la sezione in index.
+    const host = grid.closest('.timeline-content, section') || grid.parentElement;
+    const heading = host && host.querySelector('.timeline-year-mobile, h2, h3');
+    const label = heading ? heading.textContent.trim().replace(/\s+/g, ' ') : 'Galleria foto';
+
+    const carousel = document.createElement('div');
+    carousel.className = 'photo-carousel';
+    carousel.setAttribute('role', 'group');
+    carousel.setAttribute('aria-roledescription', 'carosello');
+    carousel.setAttribute('aria-label', label);
+    carousel.tabIndex = 0;
+
+    const viewport = document.createElement('div');
+    viewport.className = 'pc-viewport';
+    const track = document.createElement('div');
+    track.className = 'pc-track';
+
+    slides.forEach((slide, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'pc-slide';
+      cell.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
+      // Le .reveal fuori campo non riceverebbero mai .is-visible: le sblocchiamo subito.
+      if (slide.classList.contains('reveal')) slide.classList.add('is-visible');
+      slide.querySelectorAll('.reveal').forEach((r) => r.classList.add('is-visible'));
+      cell.appendChild(slide);
+      track.appendChild(cell);
+    });
+    viewport.appendChild(track);
+
+    const prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'pc-btn pc-prev';
+    prev.setAttribute('aria-label', 'Foto precedente');
+    prev.innerHTML = svgArrow('M15 18l-6-6 6-6');
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'pc-btn pc-next';
+    next.setAttribute('aria-label', 'Foto successiva');
+    next.innerHTML = svgArrow('M9 18l6-6-6-6');
+    viewport.append(prev, next);
+
+    const dots = document.createElement('div');
+    dots.className = 'pc-dots';
+    const dotEls = slides.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pc-dot';
+      b.setAttribute('aria-label', 'Vai alla foto ' + (i + 1));
+      dots.appendChild(b);
+      return b;
+    });
+
+    const counter = document.createElement('p');
+    counter.className = 'pc-counter';
+    counter.setAttribute('aria-live', 'polite');
+
+    carousel.append(viewport, dots, counter);
+    grid.replaceWith(carousel);
+
+    const cells = Array.from(track.children);
+    let index = 0;
+    let down = false, moving = false, startX = 0, startY = 0, dx = 0, width = 0, pid = null;
+
+    track.addEventListener('transitionend', () => { track.style.willChange = ''; });
+
+    function paint(animate) {
+      track.style.transition = animate ? '' : 'none';
+      const drag = width ? (dx / width) * 100 : 0;
+      track.style.transform = `translate3d(${(-index * 100 + drag).toFixed(3)}%, 0, 0)`;
+      prev.disabled = index === 0;
+      next.disabled = index === total - 1;
+      counter.textContent = (index + 1) + ' / ' + total;
+      dotEls.forEach((d, i) => {
+        d.classList.toggle('is-active', i === index);
+        d.setAttribute('aria-current', i === index ? 'true' : 'false');
+      });
+      cells.forEach((c, i) => c.setAttribute('aria-hidden', i === index ? 'false' : 'true'));
+    }
+    function go(to) {
+      index = Math.max(0, Math.min(total - 1, to));
+      dx = 0;
+      track.style.willChange = 'transform';
+      paint(true);
+    }
+
+    prev.addEventListener('click', () => go(index - 1));
+    next.addEventListener('click', () => go(index + 1));
+    dotEls.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    carousel.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
+    });
+
+    // --- Swipe (pointer). I figli della slide hanno pointer-events:none via CSS,
+    //     cosi' ogni evento arriva qui e non c'e' race fra drag e click. ---
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('.pc-btn')) return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      down = true; moving = false;
+      startX = e.clientX; startY = e.clientY; dx = 0;
+      width = viewport.clientWidth;
+      pid = e.pointerId;
+    });
+    viewport.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const mx = e.clientX - startX;
+      const my = e.clientY - startY;
+      if (!moving) {
+        if (Math.abs(my) > Math.abs(mx) && Math.abs(my) > 10) { down = false; return; } // scroll verticale
+        if (Math.abs(mx) < 8) return;
+        moving = true;
+        track.style.willChange = 'transform';
+        try { viewport.setPointerCapture(pid); } catch (_) {}
+      }
+      dx = mx;
+      // resistenza ai bordi (non e' infinito)
+      if ((index === 0 && mx > 0) || (index === total - 1 && mx < 0)) dx = mx * 0.35;
+      paint(false);
+    });
+    function up() {
+      if (!down) return;
+      down = false;
+      const moved = dx;
+      if (!moving || Math.abs(moved) < 4) {           // tap: apre la lightbox (solo timeline)
+        dx = 0; paint(false);
+        moving = false;
+        track.style.willChange = '';
+        const s = slides[index];
+        if (s && s.classList.contains('gallery-item')) s.click();
+        return;
+      }
+      moving = false;
+      if (Math.abs(moved) > width * 0.15) go(index + (moved < 0 ? 1 : -1));
+      else { dx = 0; paint(true); }
+    }
+    viewport.addEventListener('pointerup', up);
+    viewport.addEventListener('pointercancel', up);
+
+    paint(false);
+  }
+
+  // Montaggio pigro: le griglie timeline sono ~16, non le costruiamo tutte al load.
+  // Fallback senza IntersectionObserver: subito.
+  if (!('IntersectionObserver' in window)) {
+    grids.forEach(mount);
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { io.unobserve(e.target); mount(e.target); }
+      });
+    }, { rootMargin: '600px 0px' });
+    grids.forEach((g) => io.observe(g));
+  }
 }
