@@ -966,7 +966,9 @@ video.hero-slide { display: block; padding: 0; object-fit: cover; width: 100%; h
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  will-change: left, top, width, height, opacity;
+  /* niente will-change: left/top/width/height non sono compositabili, quindi non
+     accelerava nulla — forzava solo ~26 layer permanenti anche a sfera ferma o fuori
+     schermo. Il loop di frame() gira gia' solo quando serve (pausa in initSponsorSphere). */
   transition: box-shadow var(--transition-fast);
 }
 .sponsor-orb:hover { box-shadow: var(--shadow-md); }
