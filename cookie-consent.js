@@ -5,28 +5,34 @@
    caricata prima del consenso.
 
    Categorie:
-     - Necessari        -> sempre attivi (aspetto sito, sessione moduli,
-                           memoria di questa scelta). Nessun consenso richiesto.
+     - Necessari         -> sempre attivi (aspetto sito, sessione moduli,
+                            memoria di questa scelta). Nessun consenso richiesto.
      - Funzionali/terze  -> Google Fonts (tipografia) + mappa Google Maps
                             (home e contatti). Connessione ai server di Google LLC.
+     - Statistiche       -> Google Analytics 4 (id G-WLB91VCM4L). Misura di
+                            traffico in forma aggregata. Cookie _ga / _ga_*.
+                            Connessione ai server di Google LLC.
 
    Stripe NON e' gestito qui: i pagamenti con carta avvengono per redirect su
    buy.stripe.com, fuori da questo dominio; nessuno script Stripe e' caricato
    dal sito. Se un domani si integra js.stripe.com sul dominio serve una nuova
    categoria in questo file e nella cookie.html.
 
-   Il file e' incluso in <head> in modo sincrono di proposito: la Fase 1 deve
-   girare prima del primo paint per iniettare i font senza sfarfallio quando il
-   consenso e' gia' stato dato. La Fase 2 (banner, embed, footer) parte al
-   DOMContentLoaded.
+   Il file e' incluso in <head> in modo sincrono di proposito:
+     - La Fase 1 gira prima del primo paint. Imposta Google Consent Mode v2 con
+       tutti i consensi su "denied" (default), inietta i font senza sfarfallio se
+       il consenso funzionale c'e' gia', e inietta Google Analytics se il
+       consenso statistico c'e' gia'.
+     - La Fase 2 (banner, embed, footer) parte al DOMContentLoaded.
    ========================================================================== */
 (function () {
   'use strict';
 
   var STORAGE_KEY = 'cc_consent_v1';
-  var VERSION = 1;
+  var VERSION = 2;
 
   var GFONTS_HREF = 'https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap';
+  var GA_ID = 'G-WLB91VCM4L';
 
   /* ---------- stato ---------- */
 
@@ -35,22 +41,71 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return null;
       var v = JSON.parse(raw);
-      if (!v || v.ver !== VERSION || typeof v.funzionali !== 'boolean') return null;
+      if (!v || v.ver !== VERSION ||
+          typeof v.funzionali !== 'boolean' ||
+          typeof v.statistiche !== 'boolean') return null;
       return v;
     } catch (e) {
       return null;
     }
   }
 
-  function salvaConsenso(funzionali) {
-    var v = { ver: VERSION, funzionali: !!funzionali, ts: new Date().toISOString() };
+  function salvaConsenso(funzionali, statistiche) {
+    var v = {
+      ver: VERSION,
+      funzionali: !!funzionali,
+      statistiche: !!statistiche,
+      ts: new Date().toISOString()
+    };
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(v));
     } catch (e) { /* navigazione privata: la scelta vale solo per la sessione */ }
     return v;
   }
 
-  /* ---------- Fase 1: font (sincrona, in <head>) ---------- */
+  /* ---------- Fase 1a: Google Analytics — bootstrap Consent Mode (sincrono) ---------- */
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+
+  // Default: tutto negato finche' l'utente non acconsente alla categoria "Statistiche".
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied'
+  });
+  window.gtag('js', new Date());
+
+  function iniettaGA() {
+    if (document.getElementById('cc-ga')) return;
+    var head = document.head || document.getElementsByTagName('head')[0];
+    if (!head) return;
+
+    window.gtag('consent', 'update', { analytics_storage: 'granted' });
+
+    var s = document.createElement('script');
+    s.id = 'cc-ga';
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    head.appendChild(s);
+
+    window.gtag('config', GA_ID);
+  }
+
+  // Scadenza forzata dei cookie GA alla revoca del consenso: variante senza dominio
+  // e variante sul dominio del sito (in locale combacia solo la prima).
+  function cancellaCookieGA() {
+    var nomi = ['_ga', '_ga_' + GA_ID.replace(/^G-/, ''), '_gid', '_gat'];
+    var epoch = 'Thu, 01 Jan 1970 00:00:00 GMT';
+    for (var i = 0; i < nomi.length; i++) {
+      document.cookie = nomi[i] + '=; expires=' + epoch + '; path=/';
+      document.cookie = nomi[i] + '=; expires=' + epoch + '; path=/; domain=' + location.hostname;
+      document.cookie = nomi[i] + '=; expires=' + epoch + '; path=/; domain=.' + location.hostname;
+    }
+  }
+
+  /* ---------- Fase 1b: font (sincrona, in <head>) ---------- */
 
   function iniettaFont() {
     if (document.getElementById('cc-gfonts')) return;
@@ -79,6 +134,14 @@
   var consensoIniziale = leggiConsenso();
   if (consensoIniziale && consensoIniziale.funzionali) {
     iniettaFont();
+  }
+  if (consensoIniziale && consensoIniziale.statistiche) {
+    iniettaGA();
+  } else if (consensoIniziale) {
+    // Consenso registrato ma categoria "Statistiche" non attiva: rimuove eventuali
+    // cookie _ga residui (es. rimessi da un beacon di chiusura di GA nell'istante
+    // in cui il consenso e' stato revocato, subito prima del reload).
+    cancellaCookieGA();
   }
 
   /* ---------- embed di terze parti (mappe) ---------- */
@@ -142,17 +205,36 @@
   /* ---------- applica una scelta ---------- */
 
   function applica(nuovo, precedente) {
-    if (nuovo.funzionali) {
-      iniettaFont();
-      applicaEmbed(true);
-      return;
+    var revocaFunzionali = !!(precedente && precedente.funzionali && !nuovo.funzionali);
+    var revocaStatistiche = !!(precedente && precedente.statistiche && !nuovo.statistiche);
+
+    if (revocaStatistiche) {
+      // Spegne GA prima del reload: senza questo il beacon di chiusura di GA
+      // rimetterebbe il cookie di sessione _ga_* subito dopo la cancellazione.
+      window['ga-disable-' + GA_ID] = true;
+      window.gtag('consent', 'update', { analytics_storage: 'denied' });
+      cancellaCookieGA();
     }
-    if (precedente && precedente.funzionali) {
-      // Consenso ritirato: ricarico per rimuovere davvero font ed embed gia' in pagina.
+
+    if (revocaFunzionali || revocaStatistiche) {
+      // Consenso ritirato: ricarico per rimuovere davvero font, embed e tag gia' in pagina.
       location.reload();
       return;
     }
-    applicaEmbed(false);
+
+    // Categorie applicate in modo indipendente (nessun early return).
+    if (nuovo.funzionali) {
+      iniettaFont();
+      applicaEmbed(true);
+    } else {
+      applicaEmbed(false);
+    }
+
+    if (nuovo.statistiche) {
+      iniettaGA();
+    } else {
+      cancellaCookieGA();
+    }
   }
 
   /* ---------- UI: banner + pannello preferenze ---------- */
@@ -169,9 +251,9 @@
     rimuovi(elPanel); elPanel = null;
   }
 
-  function decisione(funzionali) {
+  function decisione(funzionali, statistiche) {
     var prima = leggiConsenso();
-    var dopo = salvaConsenso(funzionali);
+    var dopo = salvaConsenso(funzionali, statistiche);
     chiudiTutto();
     applica(dopo, prima);
   }
@@ -186,10 +268,11 @@
       '<div class="cc-banner-inner">' +
         '<div class="cc-banner-text">' +
           '<strong>Cookie e risorse di terze parti</strong>' +
-          '<p>Usiamo solo strumenti tecnici necessari. Con il tuo consenso carichiamo anche ' +
-          'Google Fonts e la mappa Google Maps (connessione ai server di Google). ' +
-          'Nessun cookie di profilazione. I pagamenti con carta avvengono su Stripe, fuori da questo sito. ' +
-          'Dettagli nella <a href="cookie.html">Cookie Policy</a>.</p>' +
+          '<p>Usiamo strumenti tecnici necessari. Con il tuo consenso carichiamo anche ' +
+          'Google Fonts e la mappa Google Maps (connessione ai server di Google) e attiviamo ' +
+          'Google Analytics 4 per statistiche di visita in forma aggregata. ' +
+          'Nessun cookie di profilazione pubblicitaria. I pagamenti con carta avvengono su Stripe, ' +
+          'fuori da questo sito. Dettagli nella <a href="cookie.html">Cookie Policy</a>.</p>' +
         '</div>' +
         '<div class="cc-actions">' +
           '<button type="button" class="cc-btn cc-btn-ghost" data-cc-role="rifiuta">Rifiuta</button>' +
@@ -199,8 +282,8 @@
       '</div>';
     document.body.appendChild(elBanner);
 
-    elBanner.querySelector('[data-cc-role="rifiuta"]').addEventListener('click', function () { decisione(false); });
-    elBanner.querySelector('[data-cc-role="accetta"]').addEventListener('click', function () { decisione(true); });
+    elBanner.querySelector('[data-cc-role="rifiuta"]').addEventListener('click', function () { decisione(false, false); });
+    elBanner.querySelector('[data-cc-role="accetta"]').addEventListener('click', function () { decisione(true, true); });
     elBanner.querySelector('[data-cc-role="personalizza"]').addEventListener('click', apriPreferenze);
   }
 
@@ -208,6 +291,7 @@
     if (elPanel) return;
     var stato = leggiConsenso();
     var funzOn = stato ? stato.funzionali : false;
+    var statOn = stato ? stato.statistiche : false;
 
     elPanel = document.createElement('div');
     elPanel.className = 'cc-panel';
@@ -233,6 +317,16 @@
           'Comportano una connessione ai server di Google LLC. Senza consenso il sito usa i font di ' +
           'sistema e la mappa resta un segnaposto.</p>' +
         '</div>' +
+        '<div class="cc-cat">' +
+          '<div class="cc-cat-head">' +
+            '<strong>Statistiche</strong>' +
+            '<label class="cc-switch"><input type="checkbox" data-cc-role="toggle-statistiche"' + (statOn ? ' checked' : '') + '><span></span></label>' +
+          '</div>' +
+          '<p>Google Analytics 4 (Google Ireland Ltd. / Google LLC). Misura in forma aggregata le ' +
+          'pagine piu&#39; viste e come arrivano i visitatori, per migliorare il sito. Imposta i cookie ' +
+          '<code>_ga</code> e <code>_ga_WLB91VCM4L</code> (durata fino a 2 anni) e invia a Google ' +
+          'l&#39;indirizzo IP e i dati di navigazione. Senza consenso non viene caricato.</p>' +
+        '</div>' +
         '<p class="cc-panel-note">I pagamenti con carta avvengono su Stripe, fuori da questo sito: ' +
         'vedi <a href="cookie.html">Cookie Policy</a>.</p>' +
         '<div class="cc-actions">' +
@@ -249,11 +343,12 @@
       if (e.target === elPanel) chiudiPannello();
     });
     elPanel.querySelector('[data-cc-role="rifiuta-tutto"]').addEventListener('click', function () {
-      decisione(false);
+      decisione(false, false);
     });
     elPanel.querySelector('[data-cc-role="salva"]').addEventListener('click', function () {
-      var on = elPanel.querySelector('[data-cc-role="toggle-funzionali"]').checked;
-      decisione(on);
+      var f = elPanel.querySelector('[data-cc-role="toggle-funzionali"]').checked;
+      var s = elPanel.querySelector('[data-cc-role="toggle-statistiche"]').checked;
+      decisione(f, s);
     });
   }
 

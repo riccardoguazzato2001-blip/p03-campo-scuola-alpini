@@ -95,7 +95,9 @@
     <li><strong>Tecnici / necessari</strong>: servono al funzionamento del sito. Non richiedono consenso.</li>
     <li><strong>Funzionali e di terze parti</strong>: attivano servizi esterni (in questo sito: tipografia e mappa).
     Vengono caricati <strong>solo dopo un consenso esplicito</strong>.</li>
-    <li><strong>Di profilazione / marketing</strong>: <strong>questo sito non ne usa</strong>.</li>
+    <li><strong>Statistici</strong>: misurano l&rsquo;uso del sito in forma aggregata (in questo sito: Google Analytics 4).
+    Vengono caricati <strong>solo dopo un consenso esplicito</strong> e sono disattivabili in qualsiasi momento.</li>
+    <li><strong>Di profilazione pubblicitaria / marketing</strong>: <strong>questo sito non ne usa</strong>.</li>
   </ul>
 
   <h2>1. Strumenti tecnici (sempre attivi)</h2>
@@ -167,7 +169,42 @@
   </table>
   </div>
 
-  <h2>3. Pagamenti con carta &mdash; Stripe</h2>
+  <h2>3. Statistiche &mdash; Google Analytics 4 (previo consenso)</h2>
+  <p>Con il consenso alla categoria <strong>Statistiche</strong> il sito carica <strong>Google Analytics 4</strong>
+  (identificativo di misurazione <code>G-WLB91VCM4L</code>), che produce statistiche aggregate sulle pagine
+  pi&ugrave; viste e sulle sorgenti di traffico. Resta <strong>disattivato</strong> finch&eacute; non si acconsente
+  dal banner o da &ldquo;Preferenze cookie&rdquo;. &Egrave; attivo il <em>Consent Mode v2</em> di Google: prima del
+  consenso ogni archiviazione (analitica e pubblicitaria) &egrave; impostata su <code>denied</code> e nessuno
+  script di Google Analytics viene scaricato.</p>
+  <div class="table-scroll">
+  <table class="cookie-table">
+    <thead>
+      <tr><th>Nome</th><th>Fornitore</th><th>Finalit&agrave;</th><th>Durata</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>_ga</code></td>
+        <td>Google Ireland Ltd. / Google LLC (USA)</td>
+        <td>Distingue i visitatori assegnando un identificativo casuale al dispositivo/browser.</td>
+        <td>2 anni dall&rsquo;impostazione o dall&rsquo;ultimo aggiornamento.</td>
+      </tr>
+      <tr>
+        <td><code>_ga_WLB91VCM4L</code></td>
+        <td>Google Ireland Ltd. / Google LLC (USA)</td>
+        <td>Mantiene lo stato della sessione per la propriet&agrave; Google Analytics 4.</td>
+        <td>2 anni dall&rsquo;impostazione o dall&rsquo;ultimo aggiornamento.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Le richieste ai domini <code>www.googletagmanager.com</code> e <code>www.google-analytics.com</code> comunicano
+  a Google l&rsquo;indirizzo IP (che Google Analytics 4 non registra in forma integrale) e i dati di navigazione
+  (pagina visitata, referrer, tipo di dispositivo). I dati possono essere trattati da Google anche fuori
+  dall&rsquo;Unione Europea, sulla base delle garanzie previste dagli artt. 44-49 GDPR &mdash;
+  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">informativa privacy di Google</a>.
+  La base giuridica &egrave; il <strong>consenso</strong> (art. 6.1.a GDPR), revocabile in ogni momento.</p>
+
+  <h2>4. Pagamenti con carta &mdash; Stripe</h2>
   <p>Il negozio (pagina Merchandising) user&agrave; <strong>Stripe</strong> per i pagamenti con carta. Riguardo ai cookie:</p>
   <ul>
     <li>questo sito <strong>non carica alcuno script Stripe</strong> e <strong>non imposta alcun cookie Stripe</strong>;</li>
@@ -185,13 +222,16 @@
   (<code>__stripe_mid</code>, <code>__stripe_sid</code>) verrebbero gestiti da questo sito e andrebbe aggiunta
   una categoria dedicata nel banner e in questa pagina.</p>
 
-  <h2>4. Come dare, modificare o revocare il consenso</h2>
+  <h2>5. Come dare, modificare o revocare il consenso</h2>
   <ul>
     <li>Al primo accesso compare un banner con "Accetta tutti", "Rifiuta" e "Personalizza". Nessuna opzione
     &egrave; preselezionata e la semplice chiusura o lo scorrimento della pagina non valgono come consenso.</li>
+    <li>Con "Personalizza" si scelgono separatamente le categorie <strong>Funzionali e terze parti</strong> e
+    <strong>Statistiche</strong>.</li>
     <li>In qualsiasi momento si pu&ograve; cambiare scelta dal link <strong>"Preferenze cookie"</strong> nel
     fondo di ogni pagina.</li>
-    <li>Revocando il consenso la pagina viene ricaricata e i servizi di terze parti tornano disattivati.</li>
+    <li>Revocando il consenso la pagina viene ricaricata, i servizi di terze parti tornano disattivati e i
+    cookie statistici <code>_ga</code> / <code>_ga_WLB91VCM4L</code> vengono cancellati.</li>
     <li>&Egrave; anche possibile cancellare cookie e dati dei siti dalle impostazioni del browser
     (sezione Privacy / Cookie).</li>
   </ul>
@@ -200,7 +240,7 @@
   <p>Gruppo Alpini Almenno San Bartolomeo, Via IV Novembre 64, 24030 Almenno San Bartolomeo (BG).
   Recapiti nella <a href="contatti.html">pagina contatti</a>.</p>
 
-  <p style="margin-top:var(--space-lg);"><small>Ultimo aggiornamento: 27 agosto 2026.</small></p>
+  <p style="margin-top:var(--space-lg);"><small>Ultimo aggiornamento: 7 settembre 2026.</small></p>
 </main>
 
 <footer class="site-footer">
