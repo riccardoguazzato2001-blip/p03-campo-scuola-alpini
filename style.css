@@ -59,7 +59,12 @@
 
 /* --- Reset --- */
 * , *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+/* Lo scroll fluido resta solo per chi non ha chiesto meno animazioni: su mobile in
+   risparmio energetico "reduce" e' spesso attivo e i salti d'ancora devono essere
+   istantanei (niente animazione di scroll che stutter-a). */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   font-family: var(--font-body);
   color: var(--color-text);
@@ -1224,6 +1229,24 @@ video.hero-slide { display: block; padding: 0; object-fit: cover; width: 100%; h
   .sponsor-grid { grid-template-columns: 1fr 1fr; }
   .hero { min-height: 560px; }
   .page-hero { min-height: 420px; }
+}
+
+/* --- Perf mobile: alleggerimenti per uno scroll piu' fluido su telefono ---------
+   Il blur della navbar sticky va ridipinto a ogni frame di scroll sopra il contenuto
+   che scorre: e' il costo di composizione piu' alto del sito su GPU mobili. Sotto i
+   768px lo togliamo e mettiamo un fondo pieno. Le ombre grandi (--shadow-md/-lg) su
+   mobile restano visibili solo in lightbox/toast/modale/nav aperta: le rendiamo piu'
+   piccole (meno pixel sfocati da comporre). Desktop: blocco irraggiungibile, invariato. */
+@media (max-width: 768px) {
+  .navbar {
+    background: var(--color-white);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  :root {
+    --shadow-md: 0 4px 12px rgba(20, 51, 31, 0.10);
+    --shadow-lg: 0 8px 20px rgba(20, 51, 31, 0.12);
+  }
 }
 
 /* ==========================================================================
