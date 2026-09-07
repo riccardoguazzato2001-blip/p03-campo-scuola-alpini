@@ -98,7 +98,6 @@ function initHeroCarousel() {
   let current = Math.max(0, slides.findIndex(s => s.classList.contains('is-active')));
 
   // Tutte le clip tranne la prima hanno preload="none" per non scaricare 12 MB all'apertura.
-  // Quella dopo viene scaldata quando la corrente parte, cosi' al cambio i dati ci sono gia'.
   const precarica = i => {
     const v = slides[i];
     if (v.preload === 'none') { v.preload = 'auto'; v.load(); }
@@ -106,7 +105,6 @@ function initHeroCarousel() {
 
   const mostra = i => {
     const clip = slides[i];
-    precarica((i + 1) % slides.length);
 
     clip.classList.add('is-active');
     slides.forEach((v, j) => {
@@ -116,6 +114,24 @@ function initHeroCarousel() {
     });
 
     if (clip.currentTime) clip.currentTime = 0;
+
+    // La clip successiva si scalda solo quando la corrente e' quasi finita: cosi' il primo
+    // load di index.html scarica solo hero-01 (preload="auto") + poster e non ~4 MB di
+    // video mentre si scorre l'hero. Le clip cortissime (hero-04 = 0,33s) non hanno una
+    // finestra "quasi finita" utile, quindi si scaldano subito.
+    const warmNext = () => precarica((i + 1) % slides.length);
+    if (!isFinite(clip.duration) || clip.duration < 3) {
+      warmNext();
+    } else {
+      const onTime = () => {
+        if (!isFinite(clip.duration) || clip.duration - clip.currentTime < 2) {
+          clip.removeEventListener('timeupdate', onTime);
+          warmNext();
+        }
+      };
+      clip.addEventListener('timeupdate', onTime);
+    }
+
     const p = clip.play();
     if (p && p.catch) p.catch(() => {
       // play() rifiutata quasi sempre perche' i dati non sono ancora arrivati.
@@ -835,12 +851,19 @@ function initTimelineScroll() {
   const fill = document.querySelector('.timeline-line-fill');
   if (!container || !line || !fill) return;
 
-  function update() {
-    const totalHeight = container.offsetHeight;
+  // Valori di layout che cambiano solo con un reflow/resize: letti una volta qui,
+  // non a ogni scroll (evita il read->write->read->write che faceva thrash).
+  let totalHeight = 0, vh = 0, ticking = false;
+  function measure() {
+    totalHeight = container.offsetHeight;
+    vh = window.innerHeight;
     line.style.height = totalHeight + 'px';
+  }
 
+  // Path di scroll: una sola lettura (getBoundingClientRect), poi solo scritture.
+  function update() {
+    ticking = false;
     const rect = container.getBoundingClientRect();
-    const vh = window.innerHeight;
     const startLine = vh * 0.1;
     const endLine = vh * 0.5;
     const denom = startLine - endLine + rect.height;
@@ -851,9 +874,15 @@ function initTimelineScroll() {
     fill.style.opacity = Math.max(0, Math.min(1, progress / 0.1));
   }
 
+  // Un solo update per frame: lo scroll puo' emettere decine di eventi tra due frame.
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
+
+  measure();
   update();
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { measure(); update(); });
 }
 
 /* --- Sfera 3D degli sponsor (sponsor.html) ---
@@ -954,6 +983,9 @@ function initSponsorSphere() {
 
   // --- Loop di rendering ---
   function frame() {
+    // Sfera fuori dal viewport o tab in background: si ferma. velX/velY/rotX/rotY
+    // restano nello stato, quindi al rientro riparte esatta (inerzia inclusa).
+    if (!sphereVisible || document.hidden) { rafId = 0; return; }
     if (!dragging) {
       velX *= MOMENTUM_DECAY;
       velY *= MOMENTUM_DECAY;
@@ -1000,7 +1032,21 @@ function initSponsorSphere() {
     }
     rafId = requestAnimationFrame(frame);
   }
-  let rafId = requestAnimationFrame(frame);
+
+  // Il loop parte solo quando la sfera e' visibile e la tab e' in primo piano.
+  // rafId === 0 significa "loop fermo": ensureRunning() lo fa ripartire.
+  let rafId = 0, sphereVisible = true;
+  function ensureRunning() {
+    if (!rafId && sphereVisible && !document.hidden) rafId = requestAnimationFrame(frame);
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      sphereVisible = entries[0].isIntersecting;
+      ensureRunning();
+    }, { threshold: 0 }).observe(root);
+  }
+  document.addEventListener('visibilitychange', ensureRunning);
+  ensureRunning();
 
   // --- Modale: dettaglio di un singolo sponsor ---
   let modal = null;
@@ -2142,7 +2188,7 @@ function initBookCarousels() {
 
   const instances = [];
 
-  editions.forEach((edition) => {
+  function mountEdition(edition) {
     const grid = edition.querySelector('.grid');
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll('.gallery-item'));
@@ -2350,9 +2396,22 @@ function initBookCarousels() {
 
     instances.push(render);
     render();
-  });
+  }
 
-  if (!instances.length) return;
+  // Ogni edizione si costruisce solo quando sta per entrare nel viewport: a load di
+  // galleria.html non montiamo 15 caroselli (150 carte assolute con box-shadow) tutti
+  // insieme. rootMargin ampio = montaggio in anticipo, niente pop-in visibile.
+  // Fallback senza IntersectionObserver: monta tutto subito, come prima.
+  if (!('IntersectionObserver' in window)) {
+    editions.forEach(mountEdition);
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { io.unobserve(e.target); mountEdition(e.target); }
+      });
+    }, { rootMargin: '600px 0px' });
+    editions.forEach((ed) => io.observe(ed));
+  }
 
   let resizeT = 0;
   window.addEventListener('resize', () => {
