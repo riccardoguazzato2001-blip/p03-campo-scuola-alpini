@@ -95,6 +95,11 @@
     iframe.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
     var h = box.getAttribute('data-cc-h');
     if (h) iframe.style.height = h + 'px';
+    // Passthrough opzionale per embed che ne hanno bisogno (es. widget Facebook).
+    // Le mappe Google non hanno questi attributi: per loro entrambi sono no-op.
+    var allow = box.getAttribute('data-cc-allow');
+    if (allow) iframe.setAttribute('allow', allow);
+    if (box.hasAttribute('data-cc-allowfullscreen')) iframe.setAttribute('allowfullscreen', 'true');
 
     box.innerHTML = '';
     box.appendChild(iframe);
