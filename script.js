@@ -798,6 +798,12 @@ function initLightbox() {
     const label = item.dataset.caption || item.querySelector('.placeholder')?.textContent.trim() || '';
     const imgSrc = item.dataset.img || item.querySelector('img')?.getAttribute('src') || '';
     if (imgSrc && lightboxImg) {
+      // data-img punta alla variante .webp; se il browser non la carica si ripiega
+      // sull'originale JPEG (data-img-fallback), impostato da riscrivi-picture.py.
+      lightboxImg.onerror = () => {
+        const fb = item.dataset.imgFallback;
+        if (fb && lightboxImg.src.indexOf(fb) === -1) { lightboxImg.onerror = null; lightboxImg.src = fb; }
+      };
       lightboxImg.src = imgSrc;
       lightboxImg.alt = label;
       lightboxImg.style.display = '';
