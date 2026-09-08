@@ -159,24 +159,122 @@ function initHeroCarousel() {
   mostra(current);
 }
 
-/* --- Navbar sticky + hamburger mobile --- */
+/* --- Navigazione: overlay "Menu / Chiudi" -----------------------------------
+   Sostituisce la vecchia navbar (link inline + drawer hamburger) con un unico
+   pattern per desktop e mobile: bottone "Menu" -> overlay a tutto schermo.
+   - Senza JS: la classe .no-js sull'<html> (rimossa dallo <head>) fa rendere
+     l'overlay come lista statica, quindi la navigazione resta raggiungibile.
+   - prefers-reduced-motion: le transizioni sono gia' annullate dal CSS; qui
+     saltiamo solo l'attesa prima di rimettere l'attributo hidden.
+   - La pagina corrente viene marcata con aria-current="page" in base all'URL. */
 function initNavbar() {
-  const toggle = document.querySelector('.nav-toggle');
-  const links = document.querySelector('.nav-links');
-  if (!toggle || !links) return;
+  const trigger = document.querySelector('.nav-trigger');
+  const overlay = document.querySelector('.nav-overlay');
+  if (!trigger || !overlay) return;
 
-  toggle.addEventListener('click', () => {
-    const isOpen = links.classList.toggle('is-open');
-    toggle.classList.toggle('is-open', isOpen);
-    toggle.setAttribute('aria-expanded', String(isOpen));
+  const inner = overlay.querySelector('.nav-overlay__inner');
+  const menuLinks = Array.from(overlay.querySelectorAll('.nav-menu__item a[href]'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  let isOpen = false;
+  let lastFocus = null;
+  let hideTimer = null;
+
+  /* --- pagina corrente --- */
+  const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  menuLinks.forEach(a => {
+    const target = (a.getAttribute('href') || '').toLowerCase();
+    if (target === here || (here === 'index.html' && target === 'index.html')) {
+      a.setAttribute('aria-current', 'page');
+      a.setAttribute('tabindex', '-1');
+    }
   });
 
-  links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      links.classList.remove('is-open');
-      toggle.classList.remove('is-open');
+  /* --- sfondo inerte quando l'overlay e' aperto (tastiera + screen reader) --- */
+  function setBackgroundInert(on) {
+    Array.from(document.body.children).forEach(el => {
+      if (el === overlay || el.classList.contains('navbar')) return;
+      if (el.tagName === 'SCRIPT' || el.tagName === 'LINK' || el.tagName === 'TEMPLATE' || el.tagName === 'STYLE') return;
+      if (on) el.setAttribute('inert', '');
+      else el.removeAttribute('inert');
     });
+  }
+
+  function focusables() {
+    const list = [trigger];
+    overlay.querySelectorAll('a[href], button:not([disabled])').forEach(el => {
+      if (el.getAttribute('tabindex') === '-1') return;
+      if (el.offsetParent !== null) list.push(el);
+    });
+    return list;
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    if (e.key !== 'Tab') return;
+    const items = focusables();
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  function open() {
+    if (isOpen) return;
+    isOpen = true;
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    void overlay.offsetWidth; // reflow: la transizione parte dallo stato chiuso
+    overlay.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.documentElement.classList.add('nav-open');
+    setBackgroundInert(true);
+    overlay.focus({ preventScroll: true });
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    overlay.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.documentElement.classList.remove('nav-open');
+    setBackgroundInert(false);
+    document.removeEventListener('keydown', onKeydown);
+    if (lastFocus && typeof lastFocus.focus === 'function') {
+      lastFocus.focus({ preventScroll: true });
+    } else {
+      trigger.focus({ preventScroll: true });
+    }
+    const delay = reduceMotion.matches ? 0 : 900;
+    hideTimer = window.setTimeout(() => { overlay.hidden = true; hideTimer = null; }, delay);
+  }
+
+  function toggle() { isOpen ? close() : open(); }
+
+  trigger.addEventListener('click', toggle);
+  overlay.addEventListener('click', e => {
+    if (inner && !inner.contains(e.target)) close();
   });
+  menuLinks.forEach(a => a.addEventListener('click', () => {
+    if (a.target !== '_blank') close();
+  }));
+
+  /* --- motivi alpini su hover (solo desktop con puntatore) --- */
+  if (canHover.matches) {
+    const motifs = overlay.querySelectorAll('.nav-motif');
+    const clear = () => motifs.forEach(m => m.classList.remove('is-active'));
+    overlay.querySelectorAll('.nav-menu__item a[data-motif]').forEach(a => {
+      const motif = overlay.querySelector('.nav-motif[data-motif="' + a.getAttribute('data-motif') + '"]');
+      if (!motif) return;
+      const show = () => { clear(); motif.classList.add('is-active'); };
+      a.addEventListener('mouseenter', show);
+      a.addEventListener('focus', show);
+    });
+    if (inner) inner.addEventListener('mouseleave', clear);
+  }
 }
 
 /* --- Avviso "iscrizioni non ancora aperte" ---------------------------------

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute">
+  <!-- Motivi alpini usati come sfondo nell'overlay di navigazione (script.js -> initNavbar).
+       Referenziati con <use href="nav-motifs.svg#id">. Il colore arriva da currentColor,
+       impostato su .nav-motif nel CSS (crema, bassa opacita'). Solo desktop con hover;
+       nascosti su mobile e con prefers-reduced-motion. -->
+
+  <!-- 1 - Cresta di montagna -->
+  <symbol id="motif-cresta" viewBox="0 0 400 400">
+    <path d="M0 330 L64 214 L118 262 L196 108 L262 208 L318 156 L400 244 L400 400 L0 400 Z"
+          fill="currentColor" opacity="0.12"/>
+    <path d="M0 348 L84 250 L142 296 L224 158 L296 258 L356 208 L400 262"
+          fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" opacity="0.55"/>
+  </symbol>
+
+  <!-- 2 - Curve di livello -->
+  <symbol id="motif-curve" viewBox="0 0 400 400">
+    <g fill="none" stroke="currentColor" stroke-linecap="round">
+      <path d="M30 356 Q200 232 370 356" stroke-width="3" opacity="0.5"/>
+      <path d="M14 300 Q200 156 386 300" stroke-width="3" opacity="0.38"/>
+      <path d="M56 246 Q200 122 344 246" stroke-width="3" opacity="0.28"/>
+      <path d="M100 192 Q200 92 300 192" stroke-width="3" opacity="0.2"/>
+      <path d="M146 146 Q200 88 254 146" stroke-width="3" opacity="0.14"/>
+    </g>
+  </symbol>
+
+  <!-- 3 - Stella alpina -->
+  <symbol id="motif-stella" viewBox="0 0 400 400">
+    <g fill="currentColor" opacity="0.5">
+      <ellipse cx="200" cy="132" rx="21" ry="62"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(45 200 200)"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(90 200 200)"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(135 200 200)"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(180 200 200)"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(225 200 200)"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(270 200 200)"/>
+      <ellipse cx="200" cy="132" rx="21" ry="62" transform="rotate(315 200 200)"/>
+    </g>
+    <circle cx="200" cy="200" r="26" fill="currentColor" opacity="0.7"/>
+    <circle cx="200" cy="200" r="96" fill="none" stroke="currentColor" stroke-width="3" opacity="0.18"/>
+  </symbol>
+
+  <!-- 4 - Rosa dei venti -->
+  <symbol id="motif-bussola" viewBox="0 0 400 400">
+    <circle cx="200" cy="200" r="104" fill="none" stroke="currentColor" stroke-width="3" opacity="0.4"/>
+    <circle cx="200" cy="200" r="78" fill="none" stroke="currentColor" stroke-width="2" opacity="0.25"/>
+    <path d="M200 96 L216 200 L200 304 L184 200 Z" fill="currentColor" opacity="0.45"/>
+    <path d="M96 200 L200 184 L304 200 L200 216 Z" fill="currentColor" opacity="0.22"/>
+    <path d="M127 127 L205 195 L273 273 L195 205 Z" fill="currentColor" opacity="0.16"/>
+  </symbol>
+</svg>
