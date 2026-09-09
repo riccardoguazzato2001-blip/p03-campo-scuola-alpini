@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroCarousel();
   initPdfDownload();
   initPdfDownloadAps();
-  initMerchPills();
   initTimelineScroll();
   initSponsorSphere();
   initIscrizioniChiuse();
@@ -1258,50 +1257,6 @@ function initSponsorSphere() {
   }, { passive: true });
   root.addEventListener('touchend', pointerUp);
   root.addEventListener('touchcancel', pointerUp);
-}
-
-/* --- Selettore taglia + consegna merch: ricompone l'href del bottone Stripe ---
-   Ogni .btn-stripe porta un data-stripe-template con due segnaposto:
-     {size}  -> taglia (S/M/L...) oppure variante Maschio/Femmina della Mascotte
-     {ship}  -> 'spedizione' | 'ritiro', scelto nella riga .ship-pills (presente su
-                ogni card, default "Spedizione")
-   client_reference_id finale, che Stripe riporta in dashboard e nel dettaglio ordine
-   (cosi il venditore sa cosa preparare e come consegnare):
-     taglia-M-spedizione · taglia-unica-ritiro · variante-Femmina-spedizione
-   La scelta consegna la conferma comunque il cliente dentro il checkout Stripe (il
-   Payment Link espone le due opzioni "Ritiro a mano - gratis" / "Spedizione 4€"):
-   questa riga la anticipa e la fa arrivare al venditore prima del redirect.
-   Le card senza .size-pills ne .ship-pills escono subito e tengono l'href statico. */
-function aggiornaLinkStripe(card) {
-  const link = card.querySelector('.btn-stripe');
-  const template = link?.dataset.stripeTemplate;
-  if (!link || !template) return;
-  const size = card.querySelector('.size-pills button.is-active')?.dataset.size;
-  const ship = card.querySelector('.ship-pills button.is-active')?.dataset.ship;
-  let href = template;
-  if (size) href = href.replace('{size}', size);
-  if (ship) href = href.replace('{ship}', ship);
-  link.href = href;
-}
-
-function initMerchPills() {
-  document.querySelectorAll('.merch-card').forEach(card => {
-    const groups = card.querySelectorAll('.size-pills, .ship-pills');
-    if (!groups.length) return;
-
-    groups.forEach(group => {
-      const pills = group.querySelectorAll('button');
-      pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          pills.forEach(p => p.classList.remove('is-active'));
-          pill.classList.add('is-active');
-          aggiornaLinkStripe(card);
-        });
-      });
-    });
-
-    aggiornaLinkStripe(card); // allinea l'href allo stato iniziale delle pill
-  });
 }
 
 /* --- Form frontend-only: mostra conferma senza inviare dati da nessuna parte.

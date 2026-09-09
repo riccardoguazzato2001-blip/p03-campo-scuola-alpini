@@ -179,11 +179,6 @@ section.section-alt { background: var(--color-bg-alt); }
 .btn-stripe { background: #635BFF; color: var(--color-white); }
 .btn-stripe:hover { background: #7A73FF; transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .btn-stripe svg { width: 16px; height: 16px; }
-/* MERCH-VETRINA 2026-09-01 — pagamento con carta oscurato al deploy: i link Stripe
-   sono ancora PLACEHOLDER_* (manca listino definitivo + conto Stripe intestato
-   all'associazione). Per riattivare: sostituire i PLACEHOLDER in merch.html con i
-   Payment Link veri, poi togliere questa riga. */
-.btn-stripe { display: none; }
 .btn-block { width: 100%; justify-content: center; }
 .btn-sm { padding: 0.6rem 1.1rem; font-size: var(--fs-xs); }
 
@@ -999,21 +994,9 @@ video.hero-slide { display: block; padding: 0; object-fit: cover; width: 100%; h
 .merch-price { font-family: var(--font-heading); font-weight: 700; color: var(--color-accent); font-size: var(--fs-base); margin: 0.2rem 0 0.5rem; }
 .merch-price .price-note { display: block; font-family: var(--font-body); font-weight: 400; color: var(--color-text-muted); font-size: var(--fs-xs); }
 
-.size-pills, .ship-pills { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: var(--space-sm); }
-.size-pills button, .ship-pills button {
-  border: 1px solid var(--color-border);
-  background: var(--color-white);
-  border-radius: var(--radius-sm);
-  padding: 0.25rem 0.55rem;
-  font-family: var(--font-heading); font-weight: 600; font-size: var(--fs-xs);
-  color: var(--color-text);
-  transition: all var(--transition-fast);
-}
-.size-pills button:hover, .ship-pills button:hover { border-color: var(--color-primary); }
-.size-pills button.is-active, .ship-pills button.is-active { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-white); }
-/* La riga "Ritiro / Spedizione" sta subito sopra il bottone di pagamento: la stacca
-   appena dal blocco taglie/varianti soprastante senza allargare troppo la card. */
-.ship-pills { margin-top: 0.1rem; }
+/* Dicitura sotto le taglie/varianti: spiega che taglia, quantita e ritiro/spedizione
+   si scelgono dentro il checkout Stripe (non piu' sul sito, vedi merch.html). */
+.merch-options { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: 1.4; margin: 0 0 var(--space-sm); }
 
 .merch-card-actions { display: flex; flex-direction: column; gap: 0.4rem; margin-top: auto; }
 
