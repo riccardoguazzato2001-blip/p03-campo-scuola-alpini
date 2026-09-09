@@ -145,6 +145,16 @@ section.section-alt { background: var(--color-bg-alt); }
 .mt-md { margin-top: var(--space-md); }
 .mt-lg { margin-top: var(--space-lg); }
 
+/* --- Testo condiviso desktop/mobile ---------------------------------------
+   Su alcuni hero/intro (index.html, il-campo.html) il testo desktop e'
+   troppo lungo per lo schermo del telefono. Si tiene UN solo elemento: la
+   coda in eccesso sta in <span class="solo-desktop"> e sparisce sotto i
+   768px (regola nel blocco Responsive). Dove la frase e' unica si aggiunge
+   il solo punto di chiusura in <span class="solo-mobile">, nascosto qui su
+   desktop cosi' il paragrafo desktop resta identico al carattere. Uso
+   previsto: inline dentro h1/p. */
+.solo-mobile { display: none; }
+
 /* --- Reveal on scroll --- */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
@@ -1497,6 +1507,10 @@ video.hero-slide { display: block; padding: 0; object-fit: cover; width: 100%; h
 @media (max-width: 768px) {
   h1 { font-size: var(--fs-2xl); }
   h2 { font-size: var(--fs-xl); }
+  /* Testo condiviso: mostra la versione mobile, nascondi la coda desktop
+     (vedi .solo-mobile nel blocco Utility). */
+  .solo-desktop { display: none; }
+  .solo-mobile  { display: inline; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .form-field.full { grid-column: auto; }
