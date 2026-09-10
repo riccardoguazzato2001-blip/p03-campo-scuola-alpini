@@ -2356,6 +2356,11 @@ body[data-iscrizioni-chiusa="true"] .avviso-iscrizioni-chiuse-testo { display: b
 @media (max-width: 860px) {
   .resp-accordion { flex-direction: column; gap: 0.6rem; }
   .resp-panel {
+    /* In colonna il flex-basis 0% della regola base diventa la dimensione
+       principale: con i soli figli in position:absolute il min-content e' 0
+       e i pannelli collassano (foto invisibili). flex:0 0 auto ridà valore
+       alla height qui sotto. */
+    flex: 0 0 auto;
     height: 92px;
     transition: height 0.45s ease;
   }
