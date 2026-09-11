@@ -2074,6 +2074,7 @@ body[data-iscrizioni-chiusa="true"] .avviso-iscrizioni-chiuse-testo { display: b
   color: var(--color-text);
   font-style: italic;
 }
+.timeline-content .timeline-prose { margin: 0 0 var(--space-sm); font-size: var(--fs-md); }
 .timeline-note { color: var(--color-text-muted); font-size: var(--fs-sm); margin-bottom: var(--space-md); }
 .timeline-images .real-photo { border-radius: var(--radius-sm); }
 
