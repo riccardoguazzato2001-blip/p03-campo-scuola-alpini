@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSponsorSphere();
   initIscrizioniChiuse();
   initResponsabiliAccordion();
+  initWaCommunity();
 });
 
 /* --- Carosello video drone nell'header hero (index) ---
@@ -2673,4 +2674,300 @@ function initPhotoCarousels() {
     }, { rootMargin: '600px 0px' });
     grids.forEach((g) => io.observe(g));
   }
+}
+
+/* --- Community WhatsApp (contatti.html) ---
+   Porting vanilla di due componenti del catalogo-animazioni-21st di P03, ripresi
+   dai porting già collaudati sulla landing QUADRALABS (outreach/landing-page/script.js):
+   - text-rotate.tsx  -> coda del titolo che ruota per carattere (uscita completa
+     prima dell'entrata, come AnimatePresence mode="wait" del sorgente);
+   - ember-footer-cta -> PixelFireButton (fuoco a celle che riempie il bottone dal
+     basso, si piega verso il cursore, burst al click) + FlameBand (fascia di fuoco
+     sul fondo sezione). Ricolorati ambra su verde bosco.
+   Esce subito sulle altre 10 pagine (nessun #community). Con prefers-reduced-motion
+   niente canvas né rotazione: resta la sezione statica. */
+function initWaCommunity() {
+  const section = document.getElementById('community');
+  if (!section) return;
+  const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  initWaTextRotate(reduceMotion);
+  if (reduceMotion) return;
+  initWaEmberButton(document.getElementById('waCommunityBtn'));
+  initWaFlameBand(section);
+}
+
+function waLerp(a, b, t) { return a + (b - a) * t; }
+
+// Palette a 3 tratti (t<0.4, t<0.75, resto) come nel sorgente, alpha crescente.
+function waBuildPalette(stops, steps, alpha) {
+  const p = new Uint8Array(steps * 4);
+  for (let s = 0; s < steps; s++) {
+    const t = s / (steps - 1);
+    let a, b, e;
+    if (t < 0.4) { a = stops[0]; b = stops[1]; e = t / 0.4; }
+    else if (t < 0.75) { a = stops[1]; b = stops[2]; e = (t - 0.4) / 0.35; }
+    else { a = stops[2]; b = stops[3]; e = (t - 0.75) / 0.25; }
+    p[s * 4] = waLerp(a[0], b[0], e);
+    p[s * 4 + 1] = waLerp(a[1], b[1], e);
+    p[s * 4 + 2] = waLerp(a[2], b[2], e);
+    p[s * 4 + 3] = Math.round(Math.pow(t, 1.2) * alpha);
+  }
+  return p;
+}
+
+function initWaTextRotate(reduceMotion) {
+  const charsEl = document.getElementById('waRotateChars');
+  const srEl = document.getElementById('waRotateSR');
+  if (!charsEl || !srEl) return;
+
+  const PHRASES = ['le date del campo', 'le iscrizioni', 'le foto delle giornate', 'gli eventi del gruppo'];
+  const INTERVAL = 2800; // ms
+  const STAGGER = 0.03;  // s per carattere, dall'ultimo
+  const DURATION = 0.5;  // s, = animation-duration di .wa-rotate-char
+
+  function build(text, cls) {
+    charsEl.innerHTML = '';
+    const total = text.replace(/ /g, '').length;
+    let i = 0;
+    text.split(' ').forEach(word => {
+      const w = document.createElement('span');
+      w.className = 'wa-rotate-word';
+      [...word].forEach(ch => {
+        const c = document.createElement('span');
+        c.className = 'wa-rotate-char' + (cls ? ' ' + cls : '');
+        c.textContent = ch;
+        c.style.animationDelay = ((total - 1 - i) * STAGGER) + 's';
+        w.appendChild(c);
+        i++;
+      });
+      charsEl.appendChild(w);
+    });
+  }
+
+  let index = 0;
+  build(PHRASES[0], null);
+  srEl.textContent = PHRASES[0];
+  if (reduceMotion) return;
+
+  setInterval(() => {
+    index = (index + 1) % PHRASES.length;
+    const next = PHRASES[index];
+    const exiting = [...charsEl.querySelectorAll('.wa-rotate-char')];
+    const n = exiting.length;
+    exiting.forEach((el, i) => {
+      el.style.animationDelay = ((n - 1 - i) * STAGGER) + 's';
+      el.className = 'wa-rotate-char is-exit';
+    });
+    const exitTotal = (n ? (n - 1) * STAGGER : 0) + DURATION;
+    setTimeout(() => { srEl.textContent = next; build(next, 'is-enter'); }, exitTotal * 1000);
+  }, INTERVAL);
+}
+
+function initWaEmberButton(btn) {
+  if (!btn) return;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'btn-ember-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  btn.insertBefore(canvas, btn.firstChild);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const CELL = 3, STEPS = 38;
+  // Ancora di blend = ambra del sito (--color-accent #c8892f), stop t=0.4 della palette.
+  const BASE = [200, 137, 47];
+  const palette = waBuildPalette([[90, 40, 12], BASE, [232, 170, 72], [248, 214, 150]], STEPS, 200);
+
+  let cols = 8, rows = 8, heat = new Uint8Array(0), waterline = new Float32Array(0), img = null;
+  let pointerX = 0, hover = false, pressed = false;
+
+  function size() {
+    cols = Math.max(8, Math.ceil((btn.offsetWidth || 160) / CELL));
+    rows = Math.max(6, Math.ceil((btn.offsetHeight || 38) / CELL));
+    canvas.width = cols; canvas.height = rows;
+    heat = new Uint8Array(cols * rows);
+    waterline = new Float32Array(cols);
+    pointerX = cols / 2;
+    img = ctx.createImageData(cols, rows);
+  }
+  size();
+  if ('ResizeObserver' in window) new ResizeObserver(size).observe(btn);
+
+  btn.addEventListener('pointermove', e => {
+    const r = btn.getBoundingClientRect();
+    if (r.width > 0) pointerX = ((e.clientX - r.left) / r.width) * cols;
+  });
+  btn.addEventListener('mouseenter', () => { hover = true; });
+  btn.addEventListener('mouseleave', () => { hover = false; pressed = false; });
+  btn.addEventListener('pointerdown', () => { pressed = true; });
+  window.addEventListener('pointerup', () => { pressed = false; });
+
+  let level = 0, lastT = 0, acc = 0, burst = 0, wasPressed = false;
+  const TICK = 1000 / 30;
+
+  function step(t) {
+    requestAnimationFrame(step);
+    if (!lastT) lastT = t;
+    const dt = Math.min(64, t - lastT);
+    lastT = t;
+    level += (1 - level) * (1 - Math.exp(-dt / 240));
+
+    acc += dt;
+    if (acc >= TICK) {
+      acc %= TICK;
+      for (let x = 0; x < cols; x++) waterline[x] = Math.max(-4, Math.min(4, waterline[x] + (Math.random() - 0.5) * 1.6));
+      for (let x = 1; x < cols - 1; x++) waterline[x] = (waterline[x - 1] + waterline[x] * 2 + waterline[x + 1]) / 4;
+
+      for (let y = 0; y < rows - 1; y++) {
+        for (let x = 0; x < cols; x++) {
+          const src = (y + 1) * cols + x;
+          const dst = y * cols + Math.min(cols - 1, Math.max(0, x + ((Math.random() * 3) | 0) - 1));
+          const v = heat[src] - (1 + ((Math.random() * 2.4) | 0));
+          heat[dst] = v > 0 ? v : 0;
+        }
+      }
+
+      const churn = level * (1 - level) * 4;
+      const fill = level * (rows + 6);
+      if (pressed && !wasPressed) burst = 1;
+      wasPressed = pressed;
+      burst = pressed ? Math.max(burst * 0.86, 0.45) : burst * 0.8;
+
+      for (let x = 0; x < cols; x++) {
+        const h = fill + waterline[x] * (0.4 + churn);
+        const surface = rows - 1 - Math.floor(h);
+        if (level > 0.02 && surface >= 0 && surface < rows) {
+          heat[surface * cols + x] = STEPS - 1;
+          if (surface + 1 < rows) heat[(surface + 1) * cols + x] = STEPS - 1;
+        }
+        if (level > 0.97) {
+          if (burst > 0.05) {
+            heat[(rows - 1) * cols + x] = STEPS - 1;
+            heat[(rows - 2) * cols + x] = STEPS - 1;
+            if (rows > 2 && Math.random() < burst) heat[(rows - 3) * cols + x] = STEPS - 1;
+            if (Math.random() < burst * 0.3) heat[((Math.random() * rows) | 0) * cols + x] = STEPS - 1;
+          } else if (hover) {
+            heat[(rows - 1) * cols + x] = STEPS - 1;
+            if (Math.random() < 0.7) heat[(rows - 2) * cols + x] = STEPS - 2;
+            const d = x - pointerX;
+            const near = Math.exp(-(d * d) / 18);
+            if (near > 0.35 && rows > 2) heat[(rows - 3) * cols + x] = STEPS - 1;
+            if (near > 0.7 && rows > 3) heat[(rows - 4) * cols + x] = STEPS - 3;
+          } else if (Math.random() < 0.55) {
+            heat[(rows - 1) * cols + x] = Math.random() < 0.5 ? STEPS - 11 : STEPS - 17;
+          }
+        }
+      }
+    }
+
+    const churn = level * (1 - level) * 4;
+    const fill = level * (rows + 6);
+    const d = img.data;
+    for (let cx = 0; cx < cols; cx++) {
+      const h = fill + waterline[cx] * (0.4 + churn);
+      for (let cy = 0; cy < rows; cy++) {
+        const idx = cy * cols + cx, o = idx * 4, pi = heat[idx] * 4, a = palette[pi + 3];
+        if (rows - cy <= h) {
+          d[o] = BASE[0] + (((palette[pi] - BASE[0]) * a) >> 8);
+          d[o + 1] = BASE[1] + (((palette[pi + 1] - BASE[1]) * a) >> 8);
+          d[o + 2] = BASE[2] + (((palette[pi + 2] - BASE[2]) * a) >> 8);
+          d[o + 3] = 255;
+        } else {
+          d[o] = palette[pi]; d[o + 1] = palette[pi + 1]; d[o + 2] = palette[pi + 2]; d[o + 3] = a;
+        }
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  requestAnimationFrame(step);
+}
+
+function initWaFlameBand(mountEl) {
+  if (!mountEl) return;
+  const canvas = document.createElement('canvas');
+  canvas.className = 'flame-band-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  mountEl.insertBefore(canvas, mountEl.firstChild);
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const CELL = 8, ALPHA = 235, SPEED = 30, STEPS = 38;
+  // Probabilità che una cella si raffreddi di 1 salendo di una riga: più alta =
+  // fiamme più basse. Qui il fuoco deve restare sotto il testo, non coprirlo.
+  const COOL_CHANCE = 0.75;
+  // brace scura -> rosso brace -> ambra -> ambra pallida, alpha crescente.
+  // Blending normale (non plus-lighter come sulla landing): sommare ambra al verde
+  // del fondo dava una fiamma color oliva.
+  const palette = waBuildPalette([[60, 20, 5], [170, 60, 8], [235, 140, 35], [255, 220, 150]], STEPS, ALPHA);
+
+  let cols = 8, rows = 8, m = new Uint8Array(0), img = null;
+  function size() {
+    cols = Math.max(8, Math.ceil(mountEl.clientWidth / CELL));
+    rows = Math.max(6, Math.ceil(mountEl.clientHeight / CELL));
+    canvas.width = cols; canvas.height = rows;
+    m = new Uint8Array(cols * rows);
+    img = ctx.createImageData(cols, rows);
+  }
+  size();
+  if ('ResizeObserver' in window) new ResizeObserver(size).observe(mountEl);
+
+  const pointer = { x: 0, y: 0, lastX: 0, vel: 0, active: false };
+  window.addEventListener('pointermove', e => {
+    pointer.x = e.clientX; pointer.y = e.clientY; pointer.active = e.pointerType !== 'touch';
+  }, { passive: true });
+
+  let last = 0, visible = true;
+  function step(tms) {
+    requestAnimationFrame(step);
+    if (!visible || tms - last < 1000 / SPEED) return;
+    last = tms;
+    const t = tms / 1000;
+
+    const crest = STEPS * 0.55;
+    for (let x = 0; x < cols; x++) {
+      const n = 0.5 + 0.5 * (Math.sin(x * 0.035 + t * 0.45) * 0.6 + Math.sin(x * 0.011 - t * 0.2) * 0.4);
+      const ripple = Math.sin(x * 0.21 + t * 1.7) + Math.sin(x * 0.047 - t * 0.9);
+      const jitter = (Math.random() * 6) | 0;
+      m[(rows - 1) * cols + x] = Math.max(0, Math.round(STEPS - 3 - crest * (1 - n) + ripple * 1.5 - jitter));
+    }
+
+    // Vento: il passaggio del mouse vicino alla fascia piega le fiamme.
+    pointer.vel = pointer.vel * 0.8 + (pointer.x - pointer.lastX) * 0.2;
+    pointer.lastX = pointer.x;
+    const wind = new Float32Array(cols);
+    if (pointer.active && Math.abs(pointer.vel) > 0.5) {
+      const r = canvas.getBoundingClientRect();
+      if (r.width > 0 && pointer.y >= r.top - 120 && pointer.y <= r.bottom + 40 &&
+          pointer.x >= r.left - 100 && pointer.x <= r.right + 100) {
+        const px = ((pointer.x - r.left) / r.width) * cols;
+        const amp = Math.max(-1, Math.min(1, pointer.vel / 28));
+        for (let x = 0; x < cols; x++) { const dd = (x - px) / 20; wind[x] = amp * Math.exp(-dd * dd); }
+      }
+    }
+
+    for (let y = 1; y < rows; y++) {
+      const rowStart = y * cols;
+      for (let x = 0; x < cols; x++) {
+        const idx = rowStart + x;
+        const v = m[idx];
+        const r4 = (Math.random() * 3.99) | 0;
+        let drift = r4 > 1 ? r4 - 2 : 0;
+        const w = wind[x];
+        if (w !== 0 && Math.random() < Math.abs(w)) drift += w > 0 ? 1 : -1;
+        const decay = Math.random() < COOL_CHANCE ? 1 : 0;
+        m[Math.max(0, Math.min(cols * rows - 1, idx - cols + drift))] = v > decay ? v - decay : 0;
+      }
+    }
+
+    const d = img.data;
+    for (let i = 0, o = 0; i < cols * rows; i++, o += 4) {
+      const pi = m[i] * 4;
+      d[o] = palette[pi]; d[o + 1] = palette[pi + 1]; d[o + 2] = palette[pi + 2]; d[o + 3] = palette[pi + 3];
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => { visible = entries[0].isIntersecting; }).observe(canvas);
+  }
+  requestAnimationFrame(step);
 }
