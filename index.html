@@ -215,7 +215,8 @@
 </section>
 
 <!-- Responsabili del campo: image-accordion sul modello di prompt-responsabili
-     (tailwind-image-accordion). 3 foto affiancate; hover su desktop, tap su mobile
+     (tailwind-image-accordion). 2 foto di gruppo affiancate (dal 2026-10-01, prima 3
+     ritratti singoli dal libro); hover su desktop, tap su mobile
      (initResponsabiliAccordion() in script.js) espandono il pannello mostrando nome +
      ruolo. Le bio complete dal libro "...una tenda, mille storie..." restano in
      frasi-libro-sito.md.
@@ -227,26 +228,19 @@
       <h2>I responsabili del campo</h2>
       <p>Le persone che hanno ideato il campo scuola e ne seguono l'organizzazione, edizione dopo edizione. Passa il mouse (o tocca) una foto per scoprire chi è.</p>
     </div>
-    <div class="resp-accordion" aria-label="Responsabili del campo">
+    <div class="resp-accordion resp-accordion--gruppi" aria-label="Responsabili del campo">
       <article class="resp-panel">
-        <picture><source type="image/webp" srcset="foto/libro-web/pagina-004-02-480.webp 480w, foto/libro-web/pagina-004-02-622.webp 622w" sizes="(max-width: 768px) 100vw, 320px"><img class="resp-panel-img" src="foto/libro/pagina-004-02.jpg" alt="Ritratto di Mauro Guazzato, ideatore del campo scuola" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/webp" srcset="foto/sito/reali-web/responsabili-diego-mauro-domenico-480.webp 480w, foto/sito/reali-web/responsabili-diego-mauro-domenico-960.webp 960w, foto/sito/reali-web/responsabili-diego-mauro-domenico-1440.webp 1440w" sizes="(max-width: 768px) 100vw, 640px"><img class="resp-panel-img" src="foto/sito/reali/responsabili-diego-mauro-domenico.jpg" alt="Diego Brumana, Mauro Guazzato e Domenico Donghi seduti davanti alla struttura del campo" loading="lazy" decoding="async"></picture>
         <button type="button" class="resp-panel-info" aria-expanded="false">
-          <span class="resp-panel-role">Ideatore</span>
-          <span class="resp-panel-name">Mauro Guazzato</span>
+          <span class="resp-panel-role">Ideatori e responsabile</span>
+          <span class="resp-panel-name">Diego, Mauro e Domenico</span>
         </button>
       </article>
       <article class="resp-panel">
-        <picture><source type="image/webp" srcset="foto/libro-web/pagina-004-04-480.webp 480w, foto/libro-web/pagina-004-04-621.webp 621w" sizes="(max-width: 768px) 100vw, 320px"><img class="resp-panel-img" src="foto/libro/pagina-004-04.jpg" alt="Ritratto di Diego Brumana, ideatore del campo scuola" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/webp" srcset="foto/sito/reali-web/responsabili-elisa-valentina-elena-480.webp 480w, foto/sito/reali-web/responsabili-elisa-valentina-elena-960.webp 960w, foto/sito/reali-web/responsabili-elisa-valentina-elena-1440.webp 1440w" sizes="(max-width: 768px) 100vw, 640px"><img class="resp-panel-img" src="foto/sito/reali/responsabili-elisa-valentina-elena.jpg" alt="Elisa, Valentina ed Elena al campo, con le felpe del campo scuola" loading="lazy" decoding="async"></picture>
         <button type="button" class="resp-panel-info" aria-expanded="false">
-          <span class="resp-panel-role">Ideatore</span>
-          <span class="resp-panel-name">Diego Brumana</span>
-        </button>
-      </article>
-      <article class="resp-panel">
-        <picture><source type="image/webp" srcset="foto/libro-web/pagina-011-01-480.webp 480w, foto/libro-web/pagina-011-01-723.webp 723w" sizes="(max-width: 768px) 100vw, 320px"><img class="resp-panel-img" src="foto/libro/pagina-011-01.jpg" alt="Ritratto di Domenico Donghi, responsabile del campo scuola" loading="lazy" decoding="async"></picture>
-        <button type="button" class="resp-panel-info" aria-expanded="false">
-          <span class="resp-panel-role">Responsabile</span>
-          <span class="resp-panel-name">Domenico Donghi</span>
+          <span class="resp-panel-role">Responsabili</span>
+          <span class="resp-panel-name">Elisa, Valentina ed Elena</span>
         </button>
       </article>
     </div>

@@ -2382,6 +2382,16 @@ body[data-iscrizioni-chiusa="true"] .avviso-iscrizioni-chiuse-testo { display: b
   .resp-panel-role { opacity: 0.85 !important; }
 }
 
+/* Foto di gruppo orizzontali (2026-10-01): da chiuso il pannello stretto deve
+   mostrare i volti, non il cielo o le gambe. Su mobile il pannello aperto e'
+   piu' alto perche' la foto ritrae tre persone affiancate. */
+.resp-accordion--gruppi .resp-panel-img { object-position: 50% 32%; }
+.resp-accordion--gruppi .resp-panel:nth-child(2) .resp-panel-img { object-position: 50% 46%; }
+@media (max-width: 860px) {
+  .resp-accordion--gruppi .resp-panel { height: 120px; }
+  .resp-accordion--gruppi .resp-panel.is-open { height: 260px; }
+}
+
 /* --- Community WhatsApp (contatti.html) ---
    Porting vanilla di due componenti del catalogo-animazioni-21st (P03):
    ember-footer-cta (bottone a fuoco PixelFireButton + fascia FlameBand) e
